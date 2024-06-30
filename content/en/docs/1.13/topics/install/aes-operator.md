@@ -26,7 +26,7 @@ Start by installing the operator:
 
 1. Create the Operator Custom Resource schema with the following command:
    `kubectl apply -f https://github.com/datawire/ambassador-operator/releases/latest/download/ambassador-operator-crds.yaml`
-2. To install the Ambassador Operator CRD. To change the namespace for the isntall, you can specify it in `NS` and then run the following command. We recommend using the `default` namespace if you are installing $productName$ and the `ambassador` namespace if you are installing $AESproductName$:
+2. To install the Ambassador Operator CRD. To change the namespace for the isntall, you can specify it in `NS` and then run the following command. We recommend using the `default` namespace if you are installing $productName$ and the `ambassador` namespace if you are installing Emissary:
 
     ```
     $ NS="default"
@@ -102,7 +102,7 @@ The Operator cannot guarantee minute time granularity, so specifying a minute in
 expression can lead to some updates happening sooner/later than expected.
 
 `installOSS` in an optional field which, if set to `true`, installs $OSSproductName$ instead of
-$AESproductName$.
+Emissary.
 Default: `false`.
 
 ## Customizing the installation with some Helm values
@@ -135,7 +135,7 @@ spec:
 ```
 
 * Note that the `spec.installOSS` parameter should be used instead of `spec.helmValues.enableAES` to control whether
-  $OSSproductName$ or $AESproductName$ is installed. A configuration where both `installOSS` and `enableAES` are set to the same value will
+  $OSSproductName$ or Emissary is installed. A configuration where both `installOSS` and `enableAES` are set to the same value will
   introduce a conflict and result in an error.
 
 ## Install via Helm Chart

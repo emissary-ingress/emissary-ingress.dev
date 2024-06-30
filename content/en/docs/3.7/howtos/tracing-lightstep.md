@@ -1,16 +1,18 @@
-# Distributed Tracing with OpenTelemetry and Lightstep
+---
+title: Distributed Tracing with OpenTelemetry and Lightstep
+---
 
-In this tutorial, we'll configure [$productName$](https://www.getambassador.io/products/edge-stack/api-gateway) to initiate a trace on some sample requests, collect them with the OpenTelemetry Collector and use Lightstep to visualize them.
+In this tutorial, we'll configure [Emissary](https://www.getambassador.io/products/edge-stack/api-gateway) to initiate a trace on some sample requests, collect them with the OpenTelemetry Collector and use Lightstep to visualize them.
 
 <Alert severity="warning">
-  Please note that the <code>TracingService</code> no longer supports the native Envoy Lightstep tracing driver as of $productName$ version 3.4.0. If you are currently using the native Lightstep tracing driver, please refer to the bottom of the page on how to migrate.
+  Please note that the <code>TracingService</code> no longer supports the native Envoy Lightstep tracing driver as of Emissary version 3.4.0. If you are currently using the native Lightstep tracing driver, please refer to the bottom of the page on how to migrate.
 </Alert>
 
 ## Before you get started
 
-This tutorial assumes you have already followed the $productName$ [Getting Started](../../tutorials/getting-started) guide. If you haven't done that already, you should do that now.
+This tutorial assumes you have already followed the Emissary [Getting Started](../../tutorials/getting-started) guide. If you haven't done that already, you should do that now.
 
-After completing the Getting Started guide you will have a Kubernetes cluster running $productName$ and the Quote service. Let's walk through adding tracing to this setup.
+After completing the Getting Started guide you will have a Kubernetes cluster running Emissary and the Quote service. Let's walk through adding tracing to this setup.
 
 ## 1. Setup Lightstep
 
@@ -189,19 +191,19 @@ spec:
   driver: zipkin
 ```
 
-As a final step we want to restart $productName$ as this is necessary to add the distributed tracing headers. This command will restart all the Pods (assuming $productName$ is installed in the <code>ambassador</code> namespace):
+As a final step we want to restart Emissary as this is necessary to add the distributed tracing headers. This command will restart all the Pods (assuming Emissary is installed in the <code>ambassador</code> namespace):
 
 ```bash
   kubectl -n ambassador rollout restart deploy
 ```
 
 <Alert severity="warning">
-  Restarting $productName$ is required after deploying a Tracing Service for changes to take effect.
+  Restarting Emissary is required after deploying a Tracing Service for changes to take effect.
 </Alert>
 
 ## 4. Testing our Distributed Tracing
 
-Finally, we are going to test our Distributed Tracing. Use `curl` to generate a few requests to an existing $productName$ `Mapping`. You may need to perform many requests since only a subset of random requests are sampled and instrumented with traces.
+Finally, we are going to test our Distributed Tracing. Use `curl` to generate a few requests to an existing Emissary `Mapping`. You may need to perform many requests since only a subset of random requests are sampled and instrumented with traces.
 
 ```bash
   curl -Li http://$LB_ENDPOINT/backend/
@@ -212,18 +214,18 @@ At this point, we should be able to view and check our traces on the [Lightstep 
 ## Migrating from the Lightstep Tracing Driver
 
 <Alert severity="warning">
-  Please be sure to follow these steps prior to upgrading to $productName$ version 3.4.0.
+  Please be sure to follow these steps prior to upgrading to Emissary version 3.4.0.
 </Alert>
 
-As of $productName$ version 3.4.0, the Lightstep tracing driver will no longer be supported. This is due to the upgrade to Envoy version 1.24, where the team at LightStep has completely removed support for the LightStep Tracing driver in favor of using the OpenTelemetry Collector. In order to continue to use Lightstep to visualize our traces, we can follow similar steps to the above tutorial.
+As of Emissary version 3.4.0, the Lightstep tracing driver will no longer be supported. This is due to the upgrade to Envoy version 1.24, where the team at LightStep has completely removed support for the LightStep Tracing driver in favor of using the OpenTelemetry Collector. In order to continue to use Lightstep to visualize our traces, we can follow similar steps to the above tutorial.
 
 First, make sure that the OpenTelemetry Collector is installed. This can be done by following the same commands as step 2 of this page. Please be sure to create/update the Kubernetes secret to include your Lightstep Access Token.
 
-Then, we simply need to edit our TracingService to point to the OpenTelemetry Collector (instead of the ingest endpoint of Lightstep) and to use the Zipkin driver. Please note that $productName$ can only support 1 TracingService per instance. Because of this, we must edit our previous TracingService rather than applying a second one.
+Then, we simply need to edit our TracingService to point to the OpenTelemetry Collector (instead of the ingest endpoint of Lightstep) and to use the Zipkin driver. Please note that Emissary can only support 1 TracingService per instance. Because of this, we must edit our previous TracingService rather than applying a second one.
 
 If you were using the Lightstep tracing driver, you may have your Lightstep Access Token information set in your TracingService config. Using a Kubernetes Secret, we no longer need to reference the token here.
 
-Once our TracingService configuration has been updated, a restart of $productName$ is necessary for Lightstep to recieve our Distributed Tracing information. This can be done with the following command:
+Once our TracingService configuration has been updated, a restart of Emissary is necessary for Lightstep to recieve our Distributed Tracing information. This can be done with the following command:
 
 ```bash
   kubectl -n ambassador rollout restart deploy

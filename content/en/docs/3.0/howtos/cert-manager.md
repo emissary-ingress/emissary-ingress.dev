@@ -2,7 +2,7 @@
 
 [//]: # (+FIX+ link to "TLS and certificates" concept)
 
-$AESproductName$ has simple and easy built-in support for automatically [using ACME] with the
+Emissary has simple and easy built-in support for automatically [using ACME] with the
 `http-01` challenge to create and renew TLS certificates. However, this support is not available
 in $OSSproductName$, and it is limited to the ACME `http-01` challenge type. If you're running
 $OSSproductName$, or if you require more flexible certificate management (such as using ACME's

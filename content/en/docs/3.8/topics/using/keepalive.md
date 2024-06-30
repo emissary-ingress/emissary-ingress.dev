@@ -1,10 +1,12 @@
-# Keepalive
+---
+title: Keepalive
+---
 
 Keepalive option indicates whether `SO_KEEPALIVE` on the socket should be enabled.
 
 ## Keepalive configuration
 
-Keepalive configuration can be set for all $productName$ mappings in the [`ambassador Module`](../../running/ambassador) or set per [`Mapping`](../mappings).
+Keepalive configuration can be set for all Emissary mappings in the [`ambassador Module`](../../running/ambassador) or set per [`Mapping`](../mappings).
 
 The `keepalive` attribute configures keepalive. The following fields are supported:
 

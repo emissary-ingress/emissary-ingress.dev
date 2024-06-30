@@ -1,6 +1,6 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Mutual TLS (mTLS)
+---
+title: Mutual TLS (mTLS)
+---
 
 Many organizations have security concerns that require all network traffic
 throughout their cluster be encrypted. With traditional architectures,
@@ -13,15 +13,15 @@ provide a certificate and key that the other trusts before establishing a
 connection. This action of both the client and server providing and validating
 certificates is referred to as mutual TLS.
 
-## mTLS with $productName$
+## mTLS with Emissary
 
-Since $productName$ is a reverse proxy acting as the entry point to your cluster,
-$productName$ is acting as the client as it proxies requests to services upstream.
+Since Emissary is a reverse proxy acting as the entry point to your cluster,
+Emissary is acting as the client as it proxies requests to services upstream.
 
-It is trivial to configure $productName$ to simply originate TLS connections as
+It is trivial to configure Emissary to simply originate TLS connections as
 the client to upstream services by setting
 `service: https://{{UPSTREAM_SERVICE}}` in the `Mapping` configuration.
-However, in order to do mTLS with services upstream, $productName$ must also
+However, in order to do mTLS with services upstream, Emissary must also
 have certificates to authenticate itself with the service.
 
 To do this, we can use the `TLSContext` object to get certificates from a
@@ -46,12 +46,12 @@ requests upstream.
 
   The Kubernetes Secret must contain a valid TLS certificate. If the environment
   variable `AMBASSADOR_FORCE_SECRET_VALIDATION` is set and the Secret contains an invalid
-  certificate, $productName$ will reject the Secret and completely disable the `Host`;
+  certificate, Emissary will reject the Secret and completely disable the `Host`;
   see [**Certificates and Secrets**](../#certificates-and-secrets) in the TLS overview.
 
 </Alert>
 
-After loading the certificates, we can tell $productName$ when to use them by
+After loading the certificates, we can tell Emissary when to use them by
 setting the `tls` parameter in a `Mapping`:
 
 ```yaml
@@ -66,7 +66,7 @@ spec:
   tls: upstream-context
 ```
 
-Now, when $productName$ proxies a request to `upstream-service`, it will provide
+Now, when Emissary proxies a request to `upstream-service`, it will provide
 the certificates in the `upstream-certs` secret for authentication when
 encrypting traffic.
 
@@ -79,9 +79,9 @@ very big challenge.
 For this reason, many organizations rely on a service mesh for their
 service-to-service authentication and encryption.
 
-$productName$ integrates with multiple service meshes and makes it easy to
+Emissary integrates with multiple service meshes and makes it easy to
 configure mTLS to upstream services for all of them. Click the links below to
-see how to configure $productName$ to do mTLS with any of these service meshes:
+see how to configure Emissary to do mTLS with any of these service meshes:
 
 - [Consul Connect](../../../../howtos/consul/)
 

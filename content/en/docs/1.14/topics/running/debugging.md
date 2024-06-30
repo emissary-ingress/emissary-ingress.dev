@@ -83,12 +83,12 @@ You can turn on Debug mode in the [Edge Policy Console](/docs/edge-stack/latest/
 
 #### $productName$ debug logging
 
-$AESproductName$ is built on top of $OSSproductName$ and runs an
+Emissary is built on top of $OSSproductName$ and runs an
 additional process for authentication, rate limiting, the developer portal,
 ACME, etc. Debug logging for this process will give more information on why you
 may see errors with these functions.
 
-You can adjust the $AESproductName$ log level by setting the
+You can adjust the Emissary log level by setting the
 [`AES_LOG_LEVEL` environment variable](/docs/edge-stack/latest/topics/running/aes-extensions/#aes_log_level).
 
 ### Viewing logs

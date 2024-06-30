@@ -24,7 +24,7 @@ Use the following variables for the environment of your $productName$ container:
 | Core                              | `AMBASSADOR_UPDATE_MAPPING_STATUS`                                                       | `false`                                             | Boolean; `true`=true, any other value=false |
 | Core                              | `AMBASSADOR_DISABLE_SNAPSHOT_SERVER`                                                     | `false`                                             | Boolean; non-empty=true, empty=false |
 | Core                              | `AMBASSADOR_JSON_LOGGING`                                                                | `false`                                             | Boolean; non-empty=true, empty=false |
-| $AESproductName$                  | `AES_LOG_LEVEL`                                                                          | `warn`                                              | Log level |
+| Emissary                  | `AES_LOG_LEVEL`                                                                          | `warn`                                              | Log level |
 | Developer Portal                  | `DEVPORTAL_CONTENT_URL`                                                                  | `https://github.com/datawire/devportal-content`     | git-remote URL |
 | Developer Portal                  | `DEVPORTAL_CONTENT_DIR`                                                                  | `/`                                                 | Rooted Git directory |
 | Developer Portal                  | `DEVPORTAL_CONTENT_BRANCH`                                                               | `master`                                            | Git branch name |

@@ -1,11 +1,13 @@
-# Diagnostics
+---
+title: Diagnostics
+---
 
-With $productName$ Diagnostics and Ambassador Cloud, you get a summary of the current status and Mappings of your cluster and it's services, which gets displayed
+With Emissary Diagnostics and Ambassador Cloud, you get a summary of the current status and Mappings of your cluster and it's services, which gets displayed
 in [Diagnostics Overview](https://www.getambassador.io/docs/cloud/latest/diagnostics-ui/view-diagnostics/).
 
 ## Troubleshooting
 
-### Can't access $productName$ Diagnostics Overview?
+### Can't access Emissary Diagnostics Overview?
 
 Create an Ambassador `Module` if one does not already exist, and add the following config to enable diagnostics data.
 
@@ -37,9 +39,9 @@ Finally, set the `AES_DIAGNOSTICS_URL` environment variable to `"http://emissary
 
 After setting up `AES_DIAGNOSTICS_URL`, you can access diagnostics information by using the same URL value. 
 
-### Still can't see $productName$ Diagnostics?
+### Still can't see Emissary Diagnostics?
 
-Do a port forward on your $productName$ pod
+Do a port forward on your Emissary pod
 
   ```shell
   # Namespace, deployment name, and pod url/port depend on your current install
@@ -49,6 +51,6 @@ Do a port forward on your $productName$ pod
 
 You will be able to access the diagnostics overview page by going to `http://localhost:8877/ambassador/v0/diag/`
 
-### $productName$ not routing your services as expected?
+### Emissary not routing your services as expected?
 
-You will need to examine the logs and $productName$ pod status. See [Debugging](../debugging) for more information.
+You will need to examine the logs and Emissary pod status. See [Debugging](../debugging) for more information.

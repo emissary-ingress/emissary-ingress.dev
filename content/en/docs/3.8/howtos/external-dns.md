@@ -13,9 +13,9 @@ Start by checking the [ExternalDNS repo's deployment instructions](https://githu
 
 ### Installation
 
-Configuration for a `ServiceAccount`, `ClusterRole`, and `ClusterRoleBinding` are necessary for the ExternalDNS deployment to support compatability with $productName$ and allow ExternalDNS to get hostnames from $productName$'s `Hosts`.
+Configuration for a `ServiceAccount`, `ClusterRole`, and `ClusterRoleBinding` are necessary for the ExternalDNS deployment to support compatability with Emissary and allow ExternalDNS to get hostnames from Emissary's `Hosts`.
 
-The following configuration is an example configuring $productName$ - ExternalDNS integration with [AWS Route53](https://aws.amazon.com/route53/) as the DNS provider. Refer to the ExternalDNS documentation above for annotations and arguments for your DNS Provider.
+The following configuration is an example configuring Emissary - ExternalDNS integration with [AWS Route53](https://aws.amazon.com/route53/) as the DNS provider. Refer to the ExternalDNS documentation above for annotations and arguments for your DNS Provider.
 
 
 1. Create a YAML file named `externaldns-config.yaml`, and copy the following configuration into it.
@@ -96,9 +96,9 @@ The following configuration is an example configuring $productName$ - ExternalDN
 
   Configure or remove arguments to fit your needs. Additional arguments required for your DNS provider can be found by checking the [ExternalDNS repo's deployment instructions](https://github.com/kubernetes-sigs/external-dns#deploying-to-a-cluster).
 
-   * `--source=ambassador-host` - required across all DNS providers to tell ExternalDNS to look for hostnames in the $productName$ `Host` configurations.
+   * `--source=ambassador-host` - required across all DNS providers to tell ExternalDNS to look for hostnames in the Emissary `Host` configurations.
 
-3. Apply the above config with the following command to deploy ExternalDNS to your cluster and configure support for $productName$
+3. Apply the above config with the following command to deploy ExternalDNS to your cluster and configure support for Emissary
 
   ```shell
   kubectl apply -f externaldns-ambassador.yaml
@@ -110,7 +110,7 @@ The following configuration is an example configuring $productName$ - ExternalDN
 
 ## Usage
 
-After applying the above configuration, ExternalDNS is ready to use. Configure a `Host` with the following annotation to allow ExternalDNS to get the IP address of your $productName$'s LoadBalancer and register it with your DNS provider.
+After applying the above configuration, ExternalDNS is ready to use. Configure a `Host` with the following annotation to allow ExternalDNS to get the IP address of your Emissary's LoadBalancer and register it with your DNS provider.
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1
@@ -126,4 +126,4 @@ spec:
 ```
 
 
-<Alert severity="success"><b>Victory!</b> ExternalDNS is now running and configured to report $productName$'s IP and hostname with your DNS provider.</Alert>
+<Alert severity="success"><b>Victory!</b> ExternalDNS is now running and configured to report Emissary's IP and hostname with your DNS provider.</Alert>

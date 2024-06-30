@@ -3,7 +3,7 @@ title: "HTTP/3 support for Google Kubernetes Engine (GKE)"
 description: "How to configure HTTP/3 support for Google Kubernetes Engine (GKE). This guide shows how to setup the LoadBalancer service for GKE to support both TCP and UDP communications."
 ---
 
-This guide shows how to setup HTTP/3 support for Google Kubernetes Engine (GKE). The instructions provided in this page are a continuation of the [HTTP/3 in $productName$](../../topics/running/http3) documentation.
+This guide shows how to setup HTTP/3 support for Google Kubernetes Engine (GKE). The instructions provided in this page are a continuation of the [HTTP/3 in Emissary](../../topics/running/http3) documentation.
 
 ## Configuring an external load balancer for GKE
 

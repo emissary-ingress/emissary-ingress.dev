@@ -3,11 +3,11 @@ title: TLS Termination and Enabling HTTPS
 ---
 
 TLS encryption is one of the basic requirements of having a secure system.
-$AESproductName$ [automatically enables TLS termination/HTTPs
+Emissary [automatically enables TLS termination/HTTPs
 ](../../topics/running/host-crd#tls-settings), making TLS encryption
 easy and centralizing TLS termination for all of your services in Kubernetes.
 
-While this automatic certificate management in $AESproductName$ helps
+While this automatic certificate management in Emissary helps
 simply TLS configuration in your cluster, the Open-Source $OSSproductName$
 still requires you provide your own certificate to enable TLS.
 
@@ -15,7 +15,7 @@ The following will walk you through the process of enabling TLS with a
 self-signed certificate created with the `openssl` utility.
 
 **Note** these instructions also work if you would like to provide your own
-certificate to $AESproductName$.
+certificate to Emissary.
 
 ## Prerequisites
 

@@ -19,7 +19,7 @@ These guides are designed to help users quickly accomplish common tasks. The gui
 * Security. $productName$ supports a number of strategies for securing Kubernetes services.
   * [Protecting the Diagnostics Interface](protecting-diag-access)
   * [HTTPS and TLS termination](tls-termination)
-  * [Certificate Manager](cert-manager) can be used to automatically obtain and renew TLS certificates; $AESproductName$ natively integrates this functionality.
+  * [Certificate Manager](cert-manager) can be used to automatically obtain and renew TLS certificates; Emissary natively integrates this functionality.
   * [Client Certificate Validation](client-cert-validation)
   * [Basic Authentication](basic-auth) is a tutorial on how to use the external authentication API to code your own authentication service.
   * [Basic Rate Limiting](rate-limiting-tutorial)

@@ -29,7 +29,7 @@ via the `NodePort`. $productName$ is then doing all the routing to the other int
 
 ## 0. $productName$
 
-This guide will install [$OSSproductName$](../../../tutorials/quickstart-demo/). You can also install $AESproductName$. Please note:
+This guide will install [$OSSproductName$](../../../tutorials/quickstart-demo/). You can also install Emissary. Please note:
 - The ingress and the `ambassador` service need to run in the same namespace
 - The `ambassador` service needs to be of type `NodePort` and not `LoadBalancer`. Also remove the line with `externalTrafficPolicy: Local`
 - Ambassador-Admin needs to be of type `NodePort` instead of `ClusterIP` since it needs to be available for health checks

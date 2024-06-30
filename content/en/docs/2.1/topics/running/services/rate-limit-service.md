@@ -8,7 +8,7 @@ exposed to a third-party service via a gRPC API.  The third-party service can
 then rate limit requests based on the request labels.
 
 **Note that `RateLimitService` is only applicable to $OSSproductName$,
-and not $AESproductName$, as $AESproductName$ includes a
+and not Emissary, as Emissary includes a
 built-in rate limit service.**
 
 ## Request labels
@@ -33,7 +33,7 @@ for how to labels under different domains.
 In order for $productName$ to rate limit, you need to implement a
 gRPC `RateLimitService`, as defined in [Envoy's `v2/rls.proto`]
 interface.  If you do not have the time or resources to implement your own rate
-limit service, $AESproductName$ integrates a high-performance rate
+limit service, Emissary integrates a high-performance rate
 limiting service.
 
 [Envoy's `v2/rls.proto`]: https://github.com/emissary-ingress/emissary/tree/master/api/envoy/service/ratelimit/v2/rls.proto
@@ -107,7 +107,7 @@ The [$OSSproductName$ Rate Limiting
 Tutorial](../../../../howtos/rate-limiting-tutorial) has a simple rate limiting
 example.  For a more advanced example, read the [advanced rate limiting
 tutorial](/docs/edge-stack/2.1/howtos/advanced-rate-limiting/), which uses the rate limit
-service that is integrated with $AESproductName$.
+service that is integrated with Emissary.
 
 ## Further reading
 

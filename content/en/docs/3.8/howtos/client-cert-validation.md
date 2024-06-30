@@ -6,16 +6,16 @@ Sometimes, for additional security or authentication purposes, you will want
 the server to validate who the client is before establishing an encrypted
 connection.
 
-To support this, $productName$ can be configured to use a provided CA certificate
+To support this, Emissary can be configured to use a provided CA certificate
 to validate certificates sent from your clients. This allows for client-side
-mTLS where both $productName$ and the client provide and validate each other's
+mTLS where both Emissary and the client provide and validate each other's
 certificates.
 
 ## Prerequisites
 
 - [openssl](https://www.openssl.org/source/) For creating client certificates
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [$productName$](../../tutorials/getting-started)
+- [Emissary](../../tutorials/getting-started)
 - [cURL](https://curl.haxx.se/download.html)
 
 
@@ -30,7 +30,7 @@ certificates.
    ```
 
    Enter a passcode for PEM files and fill in the certificate information.
-   Since this certificate will only be shared between a client and $productName$,
+   Since this certificate will only be shared between a client and Emissary,
    the Common Name must be set to something. Everything else can be left blank.
 
    **Note:** If using MacOS,
@@ -55,7 +55,7 @@ certificates.
    kubectl create secret generic client-cacert --from-file=tls.crt=cert.pem
    ```
 
-3. Configure $productName$ to use this certificate for client certificate validation.
+3. Configure Emissary to use this certificate for client certificate validation.
 
    First create a `Host` to manage your domain:
 
@@ -84,14 +84,14 @@ certificates.
       - host.example.com
       secret: host.example.com
       ca_secret: client-cacert
-      cert_required: false      # Optional: Configures $productName$ to reject the request if the client does not provide a certificate. Default: false
+      cert_required: false      # Optional: Configures Emissary to reject the request if the client does not provide a certificate. Default: false
     ```
 
-    **Note**: Client certificate validation requires $productName$ be configured to terminate TLS
+    **Note**: Client certificate validation requires Emissary be configured to terminate TLS
 
-    $productName$ is now be configured to validate certificates that the client provides.
+    Emissary is now be configured to validate certificates that the client provides.
 
-4. Test that $productName$ is validating the client certificates with `curl`
+4. Test that Emissary is validating the client certificates with `curl`
 
    **Linux**:
    ```
@@ -104,7 +104,7 @@ certificates.
    ```
 
    Looking through the verbose output, you can see we are sending a client
-   certificate and $productName$ is validating it.
+   certificate and Emissary is validating it.
 
    If you need further proof, simply create a new set of certificates and
-   try sending the curl with those. You will see $productName$ deny the request.
+   try sending the curl with those. You will see Emissary deny the request.

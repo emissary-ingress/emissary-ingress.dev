@@ -1,9 +1,9 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Upgrade $productName$ 2.5.Z (Helm)
+---
+title: 2.5 to latest 3.x
+---
 
 <Alert severity="info">
-  This guide covers migrating from $productName$ 2.5.Z to $productName$ $version$. If
+  This guide covers migrating from Emissary 2.5.Z to Emissary $version$. If
   this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
   matrix</a>.
 </Alert>
@@ -19,23 +19,23 @@ import Alert from '@material-ui/lab/Alert';
   <code>protocol_version: "v3"</code> or else an error will be posted and a static response will be returned in $version$.
 </Alert>
 
-Since $productName$'s configuration is entirely stored in Kubernetes resources, upgrading between minor
+Since Emissary's configuration is entirely stored in Kubernetes resources, upgrading between minor
 versions is straightforward.
 
-$productName$ 3 is functionally compatible with $productName$ 2.x, but with any major upgrade there are some changes to consider. Such as, Envoy removing support for V2 Transport Protocol features. Below we will outline some of these changes and things to consider when upgrading.
+Emissary 3 is functionally compatible with Emissary 2.x, but with any major upgrade there are some changes to consider. Such as, Envoy removing support for V2 Transport Protocol features. Below we will outline some of these changes and things to consider when upgrading.
 
 ### Resources to check before migrating to $version$.
 
-$productName$ 3.X has been upgraded from Envoy 1.17.X to Envoy 1.22 which removed support for the Envoy V2 Transport Protocol. This means all `AuthService`, `RatelimitService`, and `LogServices` must be updated to use the V3 Protocol. Additionally support for some of the runtime bootstrap flags has been removed.
+Emissary 3.X has been upgraded from Envoy 1.17.X to Envoy 1.22 which removed support for the Envoy V2 Transport Protocol. This means all `AuthService`, `RatelimitService`, and `LogServices` must be updated to use the V3 Protocol. Additionally support for some of the runtime bootstrap flags has been removed.
 
-You can refer to the [Major changes in $productName$ 3.x](../../../../../../about/changes-3.y/) guide for an overview of the changes.
+You can refer to the [Major changes in Emissary 3.x](../../../../../../about/changes-3.y/) guide for an overview of the changes.
 
-1. $productName$ 3.2 fixed a bug with `Host.spec.selector\mappingSelector` and `Listener.spec.selector` not being properly enforced.
+1. Emissary 3.2 fixed a bug with `Host.spec.selector\mappingSelector` and `Listener.spec.selector` not being properly enforced.
    In previous versions, if only a single label from the selector was present on the resource then they would be associated. Additionally, when associating `Hosts` with `Mappings`, if the `Mapping` configured a `hostname` that matched the `hostname` of the `Host` then they would be associated regardless of the configuration of the `selector\mappingSelector` on the `Host`.
 
    Before upgrading, review your Ambassador resources, and if you make use of the selectors, ensure that every other resource you want it to be associated with contains all the required labels.
 
-   The environment variable `DISABLE_STRICT_LABEL_SELECTORS` can be set to `"true"` on the $productName$ deployment to revert to the
+   The environment variable `DISABLE_STRICT_LABEL_SELECTORS` can be set to `"true"` on the Emissary deployment to revert to the
    old incorrect behavior to help prevent any configuration issues after upgrading in the event that not all manifests making use of the selectors have been corrected yet.
 
    For more information on `DISABLE_STRICT_LABEL_SELECTORS` see the [Environment Variables page](../../../../../running/environment).
@@ -44,7 +44,7 @@ You can refer to the [Major changes in $productName$ 3.x](../../../../../../abou
 
     The `AuthService`, `RatelimitService`, and `LogServices` that use the `grpc` protocol will now need to explicilty set `protocol_version: "v3"`. If not set or set to `v2` then an error will be posted and a static response will be returned.
 
-    `protocol_version` should be updated to `v3` for all of the above resources while still running $productName$ $versionTwoX$. As of version `2.3.z`+, support for `protocol_version` `v2` and `v3` is supported in order to allow migration from `protocol_version` `v2` to `v3` before upgrading to $productName$ $version$ where support for `v2` is removed.
+    `protocol_version` should be updated to `v3` for all of the above resources while still running Emissary $versionTwoX$. As of version `2.3.z`+, support for `protocol_version` `v2` and `v3` is supported in order to allow migration from `protocol_version` `v2` to `v3` before upgrading to Emissary $version$ where support for `v2` is removed.
 
     Upgrading any application code for your own implementations of these services is very straightforward.
 
@@ -68,7 +68,7 @@ You can refer to the [Major changes in $productName$ 3.x](../../../../../../abou
 
    ```yaml
    # No longer necessary because this was removed from Envoy
-   # $productName$ already was converted to use the compressor API
+   # Emissary already was converted to use the compressor API
    # https://www.envoyproxy.io/docs/envoy/v1.22.0/configuration/http/http_filters/compressor_filter#config-http-filters-compressor
    "envoy.deprecated_features.allow_deprecated_gzip_http_filter": true,
 
@@ -86,10 +86,10 @@ You can refer to the [Major changes in $productName$ 3.x](../../../../../../abou
 4. Support for LightStep tracing driver removed
 
 <Alert severity="warning">
-  As of $productName$ 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read before upgrading.
+  As of Emissary 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read before upgrading.
 </Alert>
 
-$productName$ 3.4 is based on Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/3.4/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
+Emissary 3.4 is based on Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/3.4/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
 
 ## Migration Steps
 
@@ -98,10 +98,10 @@ Migration is a two-step process:
 1. **Install new CRDs.**
 
    After reviewing the changes in 3.x and confirming that you are ready to upgrade, the process is the same as upgrading minor versions
-   in previous version of $productName$ and does not require the complex migration steps that the migration from 1.x tto 2.x required.
+   in previous version of Emissary and does not require the complex migration steps that the migration from 1.x tto 2.x required.
 
-   Before installing $productName$ $version$ itself, you need to update the CRDs in
-   your cluster. This is mandatory during any upgrade of $productName$.
+   Before installing Emissary $version$ itself, you need to update the CRDs in
+   your cluster. This is mandatory during any upgrade of Emissary.
 
    ```bash
    kubectl apply -f https://app.getambassador.io/yaml/emissary/$version$/emissary-crds.yaml
@@ -109,9 +109,9 @@ Migration is a two-step process:
    ```
 
    <Alert severity="info">
-     $productName$ $version$ includes a Deployment in the `emissary-system` namespace
+     Emissary $version$ includes a Deployment in the `emissary-system` namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
-     that supports converting $productName$ CRDs between <code>getambassador.io/v2</code>
+     that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at
      all times.
    </Alert>
@@ -123,13 +123,13 @@ Migration is a two-step process:
    </Alert>
 
    <Alert severity="warning">
-    There is a known issue with the <code>emissary-apiext</code> service that impacts all $productName$ 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running $productName$/$AESproductName$ 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
+    There is a known issue with the <code>emissary-apiext</code> service that impacts all Emissary 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running Emissary/Emissary 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
     This will create a new certificate with a one year expiration. We will issue a software patch to address this issue well before the one year expiration. Note that certificate renewal will not cause any downtime.
    </Alert>
 
-2. **Install $productName$ $version$.**
+2. **Install Emissary $version$.**
 
-   After installing the new CRDs, use Helm to install $productName$ $version$. Start by
+   After installing the new CRDs, use Helm to install Emissary $version$. Start by
    making sure that your `datawire` Helm repo is set correctly:
 
    ```bash
@@ -138,7 +138,7 @@ Migration is a two-step process:
    helm repo update
    ```
 
-   Then, update your $productName$ installation in the `$productNamespace$` namespace.
+   Then, update your Emissary installation in the `$productNamespace$` namespace.
    If necessary for your installation (e.g. if you were running with
    `AMBASSADOR_SINGLE_NAMESPACE` set), you can choose a different namespace.
 
@@ -149,5 +149,5 @@ Migration is a two-step process:
    ```
 
    <Alert severity="warning">
-    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/$ossChartVersion$"><code>$productHelmName$</code> Helm chart</a> for $productName$ 3.Y.
+    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/$ossChartVersion$"><code>$productHelmName$</code> Helm chart</a> for Emissary 3.Y.
    </Alert>

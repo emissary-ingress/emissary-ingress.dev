@@ -1,23 +1,21 @@
 ---
-title: "HTTP/3 configuration in $productName$"
-description: "Configure HTTP/3 support with $productName$. Create services to handle UDP and TCP traffic and setup HTTP/3 with your cloud service provider."
+title: "HTTP/3 configuration in Emissary"
+description: "Configure HTTP/3 support with Emissary. Create services to handle UDP and TCP traffic and setup HTTP/3 with your cloud service provider."
 ---
-
-# HTTP/3 in $productName$
 
 HTTP/3 is the third version of the Hypertext Transfer Protocol (HTTP). It is built on the [QUIC](https://www.chromium.org/quic/) network protocol rather than Transmission Control Protocol (TCP) like previous versions.
 
 ## The changes and challenges of HTTP/3
 
-Since the QUIC network protocol is built on UDP, most clients will require $productName$ to advertise its support for HTTP/3 using the `alt-svc` response header. This header is added to the response of the HTTP/2 and HTTP/1.1 connections. When the client sees the `alt-svc` it can choose to upgrade to HTTP/3 and connect to $productName$ using the QUIC protocol.
+Since the QUIC network protocol is built on UDP, most clients will require Emissary to advertise its support for HTTP/3 using the `alt-svc` response header. This header is added to the response of the HTTP/2 and HTTP/1.1 connections. When the client sees the `alt-svc` it can choose to upgrade to HTTP/3 and connect to Emissary using the QUIC protocol.
 
-QUIC requires Transport Layer Security (TLS) version 1.3 to communicate. Otherwise, $productName$ will fall back to HTTP/2 or HTTP/1.1, both of which support other TLS versions if client does not support TLS v1.3. Due to this restriction, some clients also require valid certificatesand will not upgrade to HTTP/3 traffic with self-signed certificates.
+QUIC requires Transport Layer Security (TLS) version 1.3 to communicate. Otherwise, Emissary will fall back to HTTP/2 or HTTP/1.1, both of which support other TLS versions if client does not support TLS v1.3. Due to this restriction, some clients also require valid certificatesand will not upgrade to HTTP/3 traffic with self-signed certificates.
 
-Because HTTP/3 adoption is still growing and and changing, the $productName$ team will continue update this documentation as features change and mature.
+Because HTTP/3 adoption is still growing and and changing, the Emissary team will continue update this documentation as features change and mature.
 
-## Setting up HTTP/3 with $productName$
+## Setting up HTTP/3 with Emissary
 
-To configure $productName$ for HTTP/3 you need to do the following:
+To configure Emissary for HTTP/3 you need to do the following:
 
 1. Configure `Listener` resources.
 2. Configure a `Host`.
@@ -26,13 +24,13 @@ To configure $productName$ for HTTP/3 you need to do the following:
 
 ### Configuring the Listener resources
 
-To make $productName$ listen for HTTP/3 connections over the QUIC network protocol, you need to configure a `Listener` with `TLS`, `HTTP`, and `UDP` configured within `protocolStack`.
+To make Emissary listen for HTTP/3 connections over the QUIC network protocol, you need to configure a `Listener` with `TLS`, `HTTP`, and `UDP` configured within `protocolStack`.
 
 <Alert severity="info">
 The <code>protocolStack</code> elements need to be entered in the specific order of <code>TLS, HTTP, UDP.</code>
 </Alert>
 
-The `Listener` configured for HTTP/3 can be bound to the same address and port (`0.0.0.0:8443`) as the `Listener` that supports HTTP/2 and HTTP/1.1. This is not required, but it allows $productName$ to inject the default `alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400` header into the responses returned over the TCP connection with no additional configuration needed. **Most clients such as browsers require the `alt-svc` header to upgrade to HTTP/3**.
+The `Listener` configured for HTTP/3 can be bound to the same address and port (`0.0.0.0:8443`) as the `Listener` that supports HTTP/2 and HTTP/1.1. This is not required, but it allows Emissary to inject the default `alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400` header into the responses returned over the TCP connection with no additional configuration needed. **Most clients such as browsers require the `alt-svc` header to upgrade to HTTP/3**.
 
 <Alert severity="info">
 The current default of <code>alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400</code> means that the external load balancer must be configured to accept traffic on port <code>:443</code> for the client to upgrade the request.

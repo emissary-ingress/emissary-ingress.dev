@@ -1,8 +1,10 @@
-# Advanced Mapping configuration
+---
+title: Advanced Mapping configuration
+---
 
-$productName$ is designed so that the author of a given Kubernetes service can easily and flexibly configure how traffic gets routed to the service. The core abstraction used to support service authors is a mapping, which maps a target backend service to a given host or prefix. For Layer 7 protocols such as HTTP, gRPC, or WebSockets, the `Mapping` resource is used. For TCP, the `TCPMapping` resource is used.
+Emissary is designed so that the author of a given Kubernetes service can easily and flexibly configure how traffic gets routed to the service. The core abstraction used to support service authors is a mapping, which maps a target backend service to a given host or prefix. For Layer 7 protocols such as HTTP, gRPC, or WebSockets, the `Mapping` resource is used. For TCP, the `TCPMapping` resource is used.
 
-$productName$ _must_ have one or more mappings defined to provide access to any services at all. The name of the mapping must be unique.
+Emissary _must_ have one or more mappings defined to provide access to any services at all. The name of the mapping must be unique.
 
 ## System-wide defaults for Mappings
 
@@ -12,13 +14,13 @@ the `httpmapping` default class.
 
 ## Mapping evaluation order
 
-$productName$ sorts mappings such that those that are more highly constrained are evaluated before those less highly constrained. The prefix length, the request method, constraint headers, and query parameters are all taken into account.
+Emissary sorts mappings such that those that are more highly constrained are evaluated before those less highly constrained. The prefix length, the request method, constraint headers, and query parameters are all taken into account.
 
-If absolutely necessary, you can manually set a `precedence` on the mapping (see below). In general, you should not need to use this feature unless you're using the `regex_headers` or `host_regex` matching features. If there's any question about how $productName$ is ordering rules, the diagnostic service is a good first place to look: the order in which mappings appear in the diagnostic service is the order in which they are evaluated.
+If absolutely necessary, you can manually set a `precedence` on the mapping (see below). In general, you should not need to use this feature unless you're using the `regex_headers` or `host_regex` matching features. If there's any question about how Emissary is ordering rules, the diagnostic service is a good first place to look: the order in which mappings appear in the diagnostic service is the order in which they are evaluated.
 
 ## Optional fallback Mapping
 
-$productName$ will respond with a `404 Not Found` to any request for which no mapping exists. If desired, you can define a fallback "catch-all" mapping so all unmatched requests will be sent to an upstream service.
+Emissary will respond with a `404 Not Found` to any request for which no mapping exists. If desired, you can define a fallback "catch-all" mapping so all unmatched requests will be sent to an upstream service.
 
 For example, defining a mapping with only a `/` prefix will catch all requests previously unhandled and forward them to an external service:
 
@@ -35,15 +37,15 @@ spec:
 
 ### Using `precedence`
 
-$productName$ sorts mappings such that those that are more highly constrained are evaluated before those less highly constrained. The prefix length, the request method, and the constraint headers are all taken into account. These mechanisms, however, may not be sufficient to guarantee the correct ordering when regular expressions or highly complex constraints are in play.
+Emissary sorts mappings such that those that are more highly constrained are evaluated before those less highly constrained. The prefix length, the request method, and the constraint headers are all taken into account. These mechanisms, however, may not be sufficient to guarantee the correct ordering when regular expressions or highly complex constraints are in play.
 
 For those situations, a `Mapping` can explicitly specify the `precedence`. A `Mapping` with no `precedence` is assumed to have a `precedence` of 0; the higher the `precedence` value, the earlier the `Mapping` is attempted.
 
-If multiple `Mapping`s have the same `precedence`, $productName$'s normal sorting determines the ordering within the `precedence`; however, there is no way that $productName$ can ever sort a `Mapping` with a lower `precedence` ahead of one at a higher `precedence`.
+If multiple `Mapping`s have the same `precedence`, Emissary's normal sorting determines the ordering within the `precedence`; however, there is no way that Emissary can ever sort a `Mapping` with a lower `precedence` ahead of one at a higher `precedence`.
 
 ### Using `tls`
 
-To originate TLS, use a `service` with an `https://` prefix. By itself, this will cause $productName$ to originate TLS without presenting a client certificate to the upstream service:
+To originate TLS, use a `service` with an `https://` prefix. By itself, this will cause Emissary to originate TLS without presenting a client certificate to the upstream service:
 
 ```yaml
 ---
@@ -70,7 +72,7 @@ spec:
   tls: upstream-cert-context
 ```
 
-(If `tls` is present, $productName$ will originate TLS even if the `service` does not have an `https://` prefix.)
+(If `tls` is present, Emissary will originate TLS even if the `service` does not have an `https://` prefix.)
 
 ### Using `cluster_tag`
 
@@ -93,29 +95,29 @@ If `dns_type` is not given, `strict_dns` is the default, as this is the most con
 
 ## Namespaces and Mappings
 
-If `AMBASSADOR_NAMESPACE` is correctly set, $productName$ can map to services in other namespaces by taking advantage of Kubernetes DNS:
+If `AMBASSADOR_NAMESPACE` is correctly set, Emissary can map to services in other namespaces by taking advantage of Kubernetes DNS:
 
-- `service: servicename` will route to a service in the same namespace as $productName$, and
+- `service: servicename` will route to a service in the same namespace as Emissary, and
 - `service: servicename.namespace` will route to a service in a different namespace.
 
 ### Linkerd interoperability (`add_linkerd_headers`)
 
 When using Linkerd, requests going to an upstream service need to include the `l5d-dst-override` header to ensure that Linkerd will route them correctly. Setting `add_linkerd_headers` does this automatically, based on the `service` attribute in the `Mapping`.
 
-If `add_linkerd_headers` is not specified for a given `Mapping`, the default is taken from the `ambassador`[Module](../../running/ambassador). The overall default is `false`: you must explicitly enable `add_linkerd_headers` for $productName$ to add the header for you (although you can always add it yourself with `add_request_headers`, of course).
+If `add_linkerd_headers` is not specified for a given `Mapping`, the default is taken from the `ambassador`[Module](../../running/ambassador). The overall default is `false`: you must explicitly enable `add_linkerd_headers` for Emissary to add the header for you (although you can always add it yourself with `add_request_headers`, of course).
 
 ### "Upgrading" to non-HTTP protocols (`allow_upgrade`)
 
 HTTP has [a mechanism][upgrade-mechanism] where the client can say
 `Connection: upgrade` / `Upgrade: PROTOCOL` to switch ("upgrade") from
 the current HTTP version to a different one, or even a different
-protocol entirely.  $productName$ itself understands and can handle the
+protocol entirely.  Emissary itself understands and can handle the
 different HTTP versions, but for other protocols you need to tell
-$productName$ to get out of the way, and let the client speak that
+Emissary to get out of the way, and let the client speak that
 protocol directly with your upstream service.  You can do this by
 setting the `allow_upgrade` field to a case-insensitive list of
-protocol names $productName$ will allow switching to from HTTP.  After
-the upgrade, $productName$ does not interpret the traffic, and behaves
+protocol names Emissary will allow switching to from HTTP.  After
+the upgrade, Emissary does not interpret the traffic, and behaves
 similarly to how it does for `TCPMapping`s.
 
 [upgrade-mechanism]: https://tools.ietf.org/html/rfc7230#section-6.7
@@ -134,7 +136,7 @@ allow_upgrade:
 
 The Kubernetes apiserver itself uses this "upgrade" mechanism to
 perform HTTP authentication before switching to SPDY for endpoint used
-by `kubectl exec`; if you wanted to use $productName$ to expose the
+by `kubectl exec`; if you wanted to use Emissary to expose the
 Kubernetes apiserver such that `kubectl exec` functions, you would
 write
 

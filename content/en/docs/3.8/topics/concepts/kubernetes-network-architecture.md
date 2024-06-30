@@ -3,7 +3,6 @@ title: "Kubernetes Network Architecture"
 description: "This section of the documentation provides an overview of the Kubernetes network architecture"
 ---
 
-
 # Kubernetes Network architecture
 
 ## Kubernetes has its own isolated network

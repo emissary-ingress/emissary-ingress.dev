@@ -62,7 +62,7 @@ For more advanced configuration and details about helm values,
 
 ## Upgrading an existing installation
 
-**Note: Do not use these instructions** to migrate from $OSSproductName$ to $AESproductName$. See [Migrating to $AESproductName$](../upgrade-to-edge-stack/) instead.
+**Note: Do not use these instructions** to migrate from $OSSproductName$ to Emissary. See [Migrating to Emissary](../upgrade-to-edge-stack/) instead.
 
 Upgrading an existing installation of $productName$ is a two-step process:
 

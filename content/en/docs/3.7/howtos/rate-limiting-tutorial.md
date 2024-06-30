@@ -1,21 +1,18 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Rate Limiting Tutorial
+---
 
-# Basic rate limiting
-
-<Alert severity="info">This guide applies to $OSSproductName$. It will not work correctly
-on $AESproductName$.</Alert>
-
-$productName$ can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure $productName$ to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, $AESproductName$ integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
+Emissary can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, Emissary integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
 
 ## Before you get started
 
-This tutorial assumes you have already followed the $productName$ [Installation](../../topics/install/) and [Quickstart Tutorial](../../tutorials/quickstart-demo) guides. If you haven't done that already, you should do so now.
+This tutorial assumes you have already followed the Emissary [Installation](../../topics/install/) and [Quickstart Tutorial](../../tutorials/quickstart-demo) guides. If you haven't done that already, you should do so now.
 
-Once completed, you'll have a Kubernetes cluster running $productName$ and the Quote service. Let's walk through adding rate limiting to this setup.
+Once completed, you'll have a Kubernetes cluster running Emissary and the Quote service. Let's walk through adding rate limiting to this setup.
 
 ## 1. Deploy the rate limit service
 
-$productName$ delegates the actual rate limit logic to a third party service. We've written a [simple rate limit service](https://github.com/emissary-ingress/ratelimit-example) that:
+Emissary delegates the actual rate limit logic to a third party service. We've written a [simple rate limit service](https://github.com/emissary-ingress/ratelimit-example) that:
 
 - listens for requests on port 5000;
 - handles gRPC `shouldRateLimit` requests;
@@ -76,17 +73,17 @@ spec:
             cpu: "100m"
 ```
 
-Once this configuration is applied Kubernetes will startup the example ratelimit service and $productName$ will be configured to use the rate limit service. The `RateLimitService` configuration tells $productName$ to:
+Once this configuration is applied Kubernetes will startup the example ratelimit service and Emissary will be configured to use the rate limit service. The `RateLimitService` configuration tells Emissary to:
 
 - Send `ShouldRateLimit` check request to `ratelimit-example.default:5000`
 - Configure Envoy to talk with the example ratelimit service using  transport protocol `v3` (*only supported version*)
 - Set the labels `domain` to `emissary` (*labels discussed below*)
 
-<Alert severity="info">If $productName$ cannot contact the rate limit service, it can either fail open or closed. The default is to fail open but in the example `RateLimitService` above we toggled it via the `failure_mode_deny: true` setting.</Alert>
+<Alert severity="info">If Emissary cannot contact the rate limit service, it can either fail open or closed. The default is to fail open but in the example `RateLimitService` above we toggled it via the `failure_mode_deny: true` setting.</Alert>
 
-## 2. Configure $productName$ Mappings
+## 2. Configure Emissary Mappings
 
-$productName$ only validates requests on `Mapping`s which set labels to use for rate limiting, so you'll need to apply `labels` to your `Mapping`s to enable rate limiting. For more information
+Emissary only validates requests on `Mapping`s which set labels to use for rate limiting, so you'll need to apply `labels` to your `Mapping`s to enable rate limiting. For more information
 on the labelling process, see the [Rate Limits configuration documentation](../../topics/using/rate-limits/).
 
 <Alert severity="info">

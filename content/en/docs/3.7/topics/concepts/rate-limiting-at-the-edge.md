@@ -1,4 +1,6 @@
-# Rate limiting concepts at the edge
+---
+title: "Rate limiting at the edge"
+---
 
 Rate limiting at the edge is a technique that is used to prevent a sudden or sustained increase in user traffic from breaking an API or underlying service. On the Internet, users can do whatever they want to your APIs, as you have no direct control over these end-users. Whether it’s intentional or not, these users can impact the availability, responsiveness, and scalability of your service.
 
@@ -22,9 +24,9 @@ The table below outlines several scenarios where rate limiting and load shedding
 
 ## Avoiding contention with rate limiting configuration: Decoupling Dev and Ops
 
-One of the core features of $productName$ is the decentralization of configuration, allowing operations and development teams to independently control $productName$, as well as individual application development teams to minimize collaboration when configuring independently deployable services. This same approach applies to rate limiting configuration.
+One of the core features of Emissary is the decentralization of configuration, allowing operations and development teams to independently control Emissary, as well as individual application development teams to minimize collaboration when configuring independently deployable services. This same approach applies to rate limiting configuration.
 
-The $productName$ rate limiting configuration allows centralized operations teams to define and implement global rate limiting and load shedding policies to protect the system, while still allowing individual application teams to define rate limiting policies that enforce business rules, for example, around paying and non-paying customers (perhaps implementing the so-called “freemium” model). See [Advanced Rate Limiting](../../../../2.0/howtos/advanced-rate-limiting) documentation for examples.
+The Emissary rate limiting configuration allows centralized operations teams to define and implement global rate limiting and load shedding policies to protect the system, while still allowing individual application teams to define rate limiting policies that enforce business rules, for example, around paying and non-paying customers (perhaps implementing the so-called “freemium” model). See [Advanced Rate Limiting](../../../../2.0/howtos/advanced-rate-limiting) documentation for examples.
 
 ## Benefits of applying a rate limiter to the edge
 

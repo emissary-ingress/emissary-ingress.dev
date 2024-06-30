@@ -193,7 +193,7 @@ This is determined by your `RateLimitService` implementation. See the
 example `RateLimitService` implementation for $productName$.
 
 If you'd rather not write your own `RateLimitService` implementation,
-$AESproductName$ provides a `RateLimitService` implementation that is
+Emissary provides a `RateLimitService` implementation that is
 configured by a `RateLimit` custom resource. See the
-[$AESproductName$ RateLimit Reference](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/)
+[Emissary RateLimit Reference](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/)
 for more information.

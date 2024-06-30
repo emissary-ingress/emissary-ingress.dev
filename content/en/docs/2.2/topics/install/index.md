@@ -21,14 +21,14 @@ but is not supported for production workloads. [Try $productName$ on Docker.](do
 
 ## Upgrade or migrate to a newer version
 
-If you already have an existing installation of $AESproductName$ or
+If you already have an existing installation of Emissary or
 $OSSproductName$, you can upgrade your instance. The [migration matrix](migration-matrix/)
 shows you how.
 
 ## Container Images
 
 Although our installation guides will favor using the `docker.io` container registry,
-we publish $AESproductName$ and $OSSproductName$ releases to multiple registries.
+we publish Emissary and $OSSproductName$ releases to multiple registries.
 
 Starting with version 1.0.0, you can pull the emissary image from any of the following registries:
 
@@ -36,7 +36,7 @@ Starting with version 1.0.0, you can pull the emissary image from any of the fol
 - `gcr.io/datawire/`
 
 We want to give you flexibility and independence from a hosting platform's uptime to support
-your production needs for $AESproductName$ or $OSSproductName$. Read more about
+your production needs for Emissary or $OSSproductName$. Read more about
 [Running $productName$ in Production](../running).
 
 # What’s Next?

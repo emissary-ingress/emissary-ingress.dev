@@ -24,7 +24,7 @@ The table below outlines several scenarios where rate limiting and load shedding
 
 ## Avoiding contention with rate limiting configuration: Decoupling Dev and Ops
 
-One of the core features of Emissary is the decentralization of configuration, allowing operations and development teams to independently control $productName$, as well as individual application development teams to minimize collaboration when configuring independently deployable services. This same approach applies to rate limiting configuration.
+One of the core features of Emissary is the decentralization of configuration, allowing operations and development teams to independently control Emissary, as well as individual application development teams to minimize collaboration when configuring independently deployable services. This same approach applies to rate limiting configuration.
 
 The Emissary rate limiting configuration allows centralized operations teams to define and implement global rate limiting and load shedding policies to protect the system, while still allowing individual application teams to define rate limiting policies that enforce business rules, for example, around paying and non-paying customers (perhaps implementing the so-called “freemium” model). See [Advanced Rate Limiting](../../../../2.0/howtos/advanced-rate-limiting) documentation for examples.
 

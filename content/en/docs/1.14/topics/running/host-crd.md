@@ -44,15 +44,15 @@ certificates.
 
 ### ACME support
 
-$AESproductName$ comes with built in support for automatic certificate
+Emissary comes with built in support for automatic certificate
 management using the [ACME protocol](https://tools.ietf.org/html/rfc8555).
 
 It does this by using the `hostname` of a `Host` to request a certificate from
 the `acmeProvider.authority` using the `HTTP-01` challenge. After requesting a
-certificate, $AESproductName$ will then manage the renewal process automatically.
+certificate, Emissary will then manage the renewal process automatically.
 
 The `acmeProvider` element of the `Host` configures the Certificate Authority
-$AESproductName$ will request the certificate from and the email address that the CA
+Emissary will request the certificate from and the email address that the CA
 will use to notify about any lifecycle events of the certificate.
 
 ```yaml
@@ -79,16 +79,16 @@ set using the `tlsSecret` element:
    ```
    if not supplied, a name will be automatically generated from the `hostname` and `email`.
 
-* $AESproductName$ uses the [`HTTP-01` challenge
+* Emissary uses the [`HTTP-01` challenge
 ](https://letsencrypt.org/docs/challenge-types/) for ACME support:
    - Does not require permission to edit DNS records
    - The `hostname` must be reachable from the internet so the CA can check
-   `POST` to an endpoint in $AESproductName$.
+   `POST` to an endpoint in Emissary.
    - Wildcard domains are not supported.
 
 ### TLS configuration
 
-Regardless of if you are using the built in ACME support in the $AESproductName$, the `Host` is responsible for reading TLS certificates from Kubernetes
+Regardless of if you are using the built in ACME support in the Emissary, the `Host` is responsible for reading TLS certificates from Kubernetes
 `Secret`s and configuring $productName$ to terminate TLS using those certificates.
 
 If you are using the Open-Source $OSSproductName$ or choosing to not use
@@ -150,7 +150,7 @@ Some special cases to be aware of here:
 * **Case matters in the actions:** you must use e.g. `Reject`, not `reject`.
 * The `X-Forwarded-Proto` header is honored when determining whether a request is secure or insecure. For more information, see "Load Balancers, the `Host` Resource, and `X-Forwarded-Proto`" below.
 * ACME challenges with prefix `/.well-known/acme-challenge/` are always forced to be considered insecure, since they are not supposed to arrive over HTTPS.
-* $AESproductName$ provides native handling of ACME challenges. If you are using this support, $AESproductName$ will automatically arrange for insecure ACME challenges to be handled correctly. If you are handling ACME yourself - as you must when running $OSSproductName$ - you will need to supply appropriate Host resources and Mappings to correctly direct ACME challenges to your ACME challenge handler.
+* Emissary provides native handling of ACME challenges. If you are using this support, Emissary will automatically arrange for insecure ACME challenges to be handled correctly. If you are handling ACME yourself - as you must when running $OSSproductName$ - you will need to supply appropriate Host resources and Mappings to correctly direct ACME challenges to your ACME challenge handler.
 
 ## Load balancers, the Host resource, and `X-Forwarded-Proto`
 
@@ -217,7 +217,7 @@ LB" refers to a layer 7 load balancer.
         action: Reject
   ```
 
-  The `acmeProvider` must be set appropriately for your certificate-management needs; by default, it is set to allow $AESproductName$ to manage certificates for you. Or, you could set `acmeProvider.authority` to `none` if you want to manage certificates by hand.
+  The `acmeProvider` must be set appropriately for your certificate-management needs; by default, it is set to allow Emissary to manage certificates for you. Or, you could set `acmeProvider.authority` to `none` if you want to manage certificates by hand.
 
   An example using the default `acmeProvider`, ACME with Let's Encrypt:
 
@@ -367,7 +367,7 @@ See [Service Preview](/docs/edge-stack/latest/topics/using/edgectl/service-previ
 
 ## Host specification
 
-$AESproductName$ automates the creation of TLS certificates via the [Edge Policy Console](/docs/edge-stack/latest/topics/using/edge-policy-console), which provides HTTPS for your hosts. Note that **in order to have TLS and automatic HTTPS, your host must be an FQDN.**
+Emissary automates the creation of TLS certificates via the [Edge Policy Console](/docs/edge-stack/latest/topics/using/edge-policy-console), which provides HTTPS for your hosts. Note that **in order to have TLS and automatic HTTPS, your host must be an FQDN.**
 
 The Host CRD defines how $productName$ will be visible to the outside world. A minimal Host defines a hostname by which $productName$ will be reachable, but a Host can also tell $productName$ how to manage TLS, and which resources to examine for further configuration.
 

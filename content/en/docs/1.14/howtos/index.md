@@ -9,7 +9,7 @@ These guides are designed to help users quickly accomplish common tasks. The gui
 * Distributed tracing. $productName$ natively supports a number of distributed tracing systems to enable developers to visualize request flow in microservice and service-oriented architectures.
   * [Datadog](tracing-datadog)
   * [Zipkin](tracing-zipkin)
-* Identity providers. $AESproductName$ integrates with a number of OAuth Identity Providers via OpenID Connect.
+* Identity providers. Emissary integrates with a number of OAuth Identity Providers via OpenID Connect.
 * Monitoring. $productName$ integrates with a number of different monitoring/metrics providers.
   * [Prometheus](prometheus)
 * Frameworks and Protocols. $productName$ supports a wide range of protocols and cloud-native frameworks.
@@ -18,7 +18,7 @@ These guides are designed to help users quickly accomplish common tasks. The gui
   * [WebSockets](websockets)
 * Security. $productName$ supports a number of strategies for securing Kubernetes services.
   * [HTTPS and TLS termination](tls-termination)
-  * [Certificate Manager](cert-manager) can be used to automatically obtain and renew TLS certificates; $AESproductName$ natively integrates this functionality.
+  * [Certificate Manager](cert-manager) can be used to automatically obtain and renew TLS certificates; Emissary natively integrates this functionality.
   * [Client Certificate Validation](client-cert-validation)
   * [Basic Authentication](basic-auth) is a tutorial on how to use the external authentication API to code your own authentication service.
   * [Basic Rate Limiting](rate-limiting-tutorial)

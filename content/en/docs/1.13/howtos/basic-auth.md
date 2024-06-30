@@ -3,7 +3,7 @@ import Alert from '@material-ui/lab/Alert';
 # Basic authentication (for $productName$)
 
 <Alert severity="info">
-  This guide applies to $OSSproductName$, use of this guide with $AESproductName$ is not recommended.  $AESproductName$ does <a href="../ext-filters">authentication using the Filter resource</a> instead of the AuthService resource as described below.
+  This guide applies to $OSSproductName$, use of this guide with Emissary is not recommended.  Emissary does <a href="../ext-filters">authentication using the Filter resource</a> instead of the AuthService resource as described below.
 </Alert>
 
 

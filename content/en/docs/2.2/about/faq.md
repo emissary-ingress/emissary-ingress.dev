@@ -13,17 +13,17 @@ the Kubernetes world with:
 
 We've written about [the history of $productName$](https://blog.getambassador.io/building-ambassador-an-open-source-api-gateway-on-kubernetes-and-envoy-ed01ed520844), [Why $productName$ In Depth](../why-ambassador), [Features and Benefits](../features-and-benefits) and about the [evolution of API Gateways](../../topics/concepts/microservices-api-gateways/).
 
-### What's the difference between $OSSproductName$ and $AESproductName$?
+### What's the difference between $OSSproductName$ and Emissary?
 
-$OSSproductName$ is a CNCF Incubating project and provides the open-source core of $AESproductName$. Originally we called [$OSSproductName$](../../tutorials/getting-started/) the "Ambassador API Gateway", but as the project evolved, we realized that the functionality we were building had extended far beyond an API Gateway. In particular, the $AESproductName$ is intended to provide all the functionality you need at the edge -- hence, an "edge stack." This includes an API Gateway, [ingress controller](/learn/kubernetes-glossary/ingress-controller/), load balancer, developer portal, and more.
+$OSSproductName$ is a CNCF Incubating project and provides the open-source core of Emissary. Originally we called [$OSSproductName$](../../tutorials/getting-started/) the "Ambassador API Gateway", but as the project evolved, we realized that the functionality we were building had extended far beyond an API Gateway. In particular, the Emissary is intended to provide all the functionality you need at the edge -- hence, an "edge stack." This includes an API Gateway, [ingress controller](/learn/kubernetes-glossary/ingress-controller/), load balancer, developer portal, and more.
 
-### How is $AESproductName$ licensed?
+### How is Emissary licensed?
 
-The core $OSSproductName$ is open source under the Apache Software License 2.0. The GitHub repository for the core is [https://github.com/emissary-ingress/emissary](https://github.com/emissary-ingress/emissary). Some additional features of the $AESproductName$ (e.g., Single Sign-On) are not open source and available under a proprietary license.
+The core $OSSproductName$ is open source under the Apache Software License 2.0. The GitHub repository for the core is [https://github.com/emissary-ingress/emissary](https://github.com/emissary-ingress/emissary). Some additional features of the Emissary (e.g., Single Sign-On) are not open source and available under a proprietary license.
 
-### Can I use the add-on features for $AESproductName$ for free?
+### Can I use the add-on features for Emissary for free?
 
-Yes! The core functionality of the $AESproductName$ is free and has no limits whatsoever. If you wish to use one of our additional, proprietary features such as Single Sign-On, you can get a free community license for up to 5 requests per second by registering your connected $AESproductName$ installation in [Ambassador Cloud](https://app.getambassador.io/cloud/). Please contact [sales](/contact-us/) if you need more than 5 RPS.
+Yes! The core functionality of the Emissary is free and has no limits whatsoever. If you wish to use one of our additional, proprietary features such as Single Sign-On, you can get a free community license for up to 5 requests per second by registering your connected Emissary installation in [Ambassador Cloud](https://app.getambassador.io/cloud/). Please contact [sales](/contact-us/) if you need more than 5 RPS.
 
 For more details on core unlimited features and premium features, see the [editions page](/editions).
 

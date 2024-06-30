@@ -13,7 +13,7 @@ for different TLS use cases including:
 
 A `Host` represents a domain in $productName$ and defines how the domain manages TLS. For more information on the Host resource, see [The Host CRD reference documentation](../host-crd).
 
-In $AESproductName$, the simplest configuration
+In Emissary, the simplest configuration
 of a `Host` will enable TLS with a self-signed certificate and redirect cleartext traffic to HTTPS.
 
 > The example below does not define a `requestPolicy`; however, this is something to keep in mind as you begin using the `Host` `CRD` in $productName$.
@@ -23,12 +23,12 @@ of a `Host` will enable TLS with a self-signed certificate and redirect cleartex
 
 ### Automatic TLS with ACME
 
-With $AESproductName$, you can configure the `Host` to manage TLS by
+With Emissary, you can configure the `Host` to manage TLS by
 requesting a certificate from a Certificate Authority using the
 [ACME HTTP-01 challenge](https://letsencrypt.org/docs/challenge-types/).
 
 
-After you create a DNS record, configure $AESproductName$ to get a certificate from the default CA, [Let's Encrypt](https://letsencrypt.org), by providing a hostname and your email for the certificate:
+After you create a DNS record, configure Emissary to get a certificate from the default CA, [Let's Encrypt](https://letsencrypt.org), by providing a hostname and your email for the certificate:
 
 ```yaml
 ---
@@ -43,12 +43,12 @@ spec:
     email: julian@example.com
 ```
 
-$AESproductName$ will now request a certificate from the CA and store it in a Secret
+Emissary will now request a certificate from the CA and store it in a Secret
 in the same namespace as the `Host`.
 
 ### Bring your own certificate
 
-For both $AESproductName$ and $OSSproductName$, the `Host` can read a
+For both Emissary and $OSSproductName$, the `Host` can read a
 certificate from a Kubernetes secret and use that certificate to terminate TLS
 on a domain.
 

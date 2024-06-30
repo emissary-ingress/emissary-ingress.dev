@@ -1,6 +1,8 @@
-# Remove request headers
+---
+title: Remove request headers
+---
 
-$productName$ can remove a list of HTTP headers that would be sent to the upstream from the request.
+Emissary can remove a list of HTTP headers that would be sent to the upstream from the request.
 
 ## The `remove_request_headers` attribute
 

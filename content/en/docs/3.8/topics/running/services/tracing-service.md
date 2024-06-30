@@ -1,12 +1,12 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Tracing Service
+---
+title: Tracing service
+---
 
 Applications that consist of multiple services can be difficult to debug, as a single request can span multiple services. Distributed tracing tells the story of your request as it is processed through your system. Distributed tracing is a powerful tool to debug and analyze your system in addition to request logging and metrics.
 
-When enabled, the `TracingService` will instruct $productName$ to initiate a trace on requests by generating and populating an `x-request-id` HTTP header. Services can make use of this `x-request-id` header in logging and forward it in downstream requests for tracing. $productName$ also integrates with external trace visualization services, including Zipkin-compatible APIs such as [Zipkin](https://zipkin.io/) and [Jaeger](https://github.com/jaegertracing/) to allow you to store and visualize traces. You can read further on [Envoy's Tracing capabilities](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/observability/tracing).
+When enabled, the `TracingService` will instruct Emissary to initiate a trace on requests by generating and populating an `x-request-id` HTTP header. Services can make use of this `x-request-id` header in logging and forward it in downstream requests for tracing. Emissary also integrates with external trace visualization services, including Zipkin-compatible APIs such as [Zipkin](https://zipkin.io/) and [Jaeger](https://github.com/jaegertracing/) to allow you to store and visualize traces. You can read further on [Envoy's Tracing capabilities](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/observability/tracing).
 
-A `TracingService` manifest configures $productName$ to use an external trace visualization service:
+A `TracingService` manifest configures Emissary to use an external trace visualization service:
 
 ```yaml
 ---
@@ -20,11 +20,11 @@ spec:
   config: {}
   custom_tags:  # optional
   - tag: host
-    request_header: 
+    request_header:
       name: ":authority"
       default_value: "unknown"
   - tag: path
-    request_header: 
+    request_header:
       name: ":path"
       default_value: "unknown"
   sampling:
@@ -47,8 +47,8 @@ Please note that you must use the HTTP/2 pseudo-header names. For example:
 - the `method` header should be specified as the `:method` header.
 
 <Alert severity="info">
-$productName$ supports a single Global <code>TracingService</code> which is configured during Envoy bootstrap. $productName$ must be restarted for changes to the
-<code>TracingService</code> manifest to take affect. If you have multiple instances of $productName$ in your cluster, ensure [ambassador_id](../../running#ambassador_id)
+Emissary supports a single Global <code>TracingService</code> which is configured during Envoy bootstrap. Emissary must be restarted for changes to the
+<code>TracingService</code> manifest to take affect. If you have multiple instances of Emissary in your cluster, ensure [ambassador_id](../../running#ambassador_id)
 is set correctly in the <code>TracingService</code> manifest.
 </Alert>
 
@@ -61,11 +61,11 @@ The `TracingService` currently supports the following drivers:
 - `opentelemetry`
 
 <Alert severity="warning">
-In Envoy 1.24, support for the <code>LightStep</code> driver was removed. As of $productName$ 3.4.0, the <code>TracingService</code> no longer supports the <code>lightstep</code> tracing driver. If you are currently using the native Lightstep tracing driver, please refer to <a href="../../../../howtos/tracing-lightstep/">Distributed Tracing with Open Telemetry and LightStep</a>
+In Envoy 1.24, support for the <code>LightStep</code> driver was removed. As of Emissary 3.4.0, the <code>TracingService</code> no longer supports the <code>lightstep</code> tracing driver. If you are currently using the native Lightstep tracing driver, please refer to <a href="../../../../howtos/tracing-lightstep/">Distributed Tracing with Open Telemetry and LightStep</a>
 </Alert>
 
 <Alert severity="info">
-In $productName$ 3.5.0, support for Envoy's native OpenTelemetry driver was added to the <code>TracingService</code>. Envoy still considers this driver experimental.
+In Emissary 3.5.0, support for Envoy's native OpenTelemetry driver was added to the <code>TracingService</code>. Envoy still considers this driver experimental.
 </Alert>
 
 ## Sampling
@@ -81,9 +81,9 @@ traced. Defaults to 100.
 
 ## Custom Tags and Tag Headers
 
-When collecting traces, $productName$ will attach tags to the `span`'s that are generated which are useful for observability. See the [Envoy Tracing Docs](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/observability/tracing#what-data-each-trace-contains) for the default list of data collected.
+When collecting traces, Emissary will attach tags to the `span`'s that are generated which are useful for observability. See the [Envoy Tracing Docs](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/observability/tracing#what-data-each-trace-contains) for the default list of data collected.
 
-Previous versions of $productName$ only supported adding additional tags through the use of the `tag_headers` field. This field is now **deprecated** and it is recommended to use `custom_tags` which supports a more powerful set of features for adding additional tags to a span.
+Previous versions of Emissary only supported adding additional tags through the use of the `tag_headers` field. This field is now **deprecated** and it is recommended to use `custom_tags` which supports a more powerful set of features for adding additional tags to a span.
 
 <Alert severity="info">
 If both <code>tag_headers</code> and <code>custom_tags</code> are set then <code>tag_headers</code> will be ignored.

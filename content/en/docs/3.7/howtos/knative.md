@@ -1,4 +1,6 @@
-# Knative Serverless Framework
+---
+title: Knative
+---
 
 [Knative](https://knative.dev/) is a popular Kubernetes-based platform for managing serverless workloads with two main components:
 

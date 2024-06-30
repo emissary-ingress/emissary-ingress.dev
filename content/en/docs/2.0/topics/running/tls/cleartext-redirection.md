@@ -21,8 +21,8 @@ The default for the Open-Source $OSSproductName$ is to serve cleartext on
 port 8080 in the container. See [TLS documentation](../) for information on
 how to configure TLS termination.
 
-For $AESproductName$, TLS termination is enabled by default with a
-self-signed certificate or an ACME `Host`. To disable TLS termination in $AESproductName$, delete any existing `Host`s and set the
+For Emissary, TLS termination is enabled by default with a
+self-signed certificate or an ACME `Host`. To disable TLS termination in Emissary, delete any existing `Host`s and set the
 `requestPolicy.insecure.action` to `Route` in a `Host`:
 
 ```yaml
@@ -51,7 +51,7 @@ spec:
 $productName$ can also support serving both HTTPS and cleartext traffic from a
 single $productName$.
 
-This configuration is the same whether you are running the Open-Source $OSSproductName$ or the $AESproductName$. The configuration is very similar to the
+This configuration is the same whether you are running the Open-Source $OSSproductName$ or the Emissary. The configuration is very similar to the
 `Host` above but with the `Host` configured to terminate TLS.
 
 ```yaml
@@ -78,7 +78,7 @@ comes in over port `8080`.
 ## HTTP->HTTPS redirection
 
 Most websites that force HTTPS will also automatically redirect any
-requests that come into it over HTTP. In $AESproductName$, this is
+requests that come into it over HTTP. In Emissary, this is
 enabled by default but can easily be enabled in any version of $productName$.
 
 ```
@@ -142,7 +142,7 @@ to $productName$. A couple of options are
 
 ## Summary
 
-$AESproductName$ will enable cleartext redirection by default.
+Emissary will enable cleartext redirection by default.
 
 To enable cleartext redirection in any version of $productName$, simply configure
 a `Host` to redirect cleartext to HTTPS like below:

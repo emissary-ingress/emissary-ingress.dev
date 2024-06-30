@@ -2,17 +2,17 @@ import Alert from '@material-ui/lab/Alert';
 
 # Convert Configuration to `getambassador.io/v3alpha1`
 
-Once your $productName$ $version$ installation is running, it is **strongly recommended** that
+Once your Emissary $version$ installation is running, it is **strongly recommended** that
 you convert your existing configuration resources from `getambassador.io/v2` to
 `getambassador.io/v3alpha1`.
 
 <Alert severity="info">
   While it is not necessary to convert all your resources to <code>getambassador.io/v3alpha1</code>
-  immediately, you should ultimately update them all for full functionality with $productName$
+  immediately, you should ultimately update them all for full functionality with Emissary
 </Alert>
 
 In general, the best way to convert any resource is to start with `kubectl get`: using
-`kubectl get -o yaml` on any `getambassador.io/v2` resource will cause $productName$ to
+`kubectl get -o yaml` on any `getambassador.io/v2` resource will cause Emissary to
 translate it to a `getambassador.io/v3alpha1` resource. You can then verify that the
 `getambassador.io/v3alpha1` resource looks correct and re-apply it, which will convert the
 stored copy to `getambassador.io/v3alpha1`.
@@ -23,10 +23,10 @@ As you do the conversion, here are the things to bear in mind:
 
 `getambassador.io/v2` allowed `ambassador_id` to be either an array of strings, or a simple
 string. In `getambassador.io/v3alpha1`, only the array form is supported: instead of
-`ambassador_id: "foo"`, use `ambassador_id: [ "foo" ]`. This applies to all $productName$
+`ambassador_id: "foo"`, use `ambassador_id: [ "foo" ]`. This applies to all Emissary
 resources, and is supported by all versions of Ambassador 1.X.
 
-## 2. You must have a `Listener` for each port on which $productName$ should listen.
+## 2. You must have a `Listener` for each port on which Emissary should listen.
 
 <Alert severity="info">
   <a href="../../running/listener">Learn more about <code>Listener</code></a>
@@ -38,7 +38,7 @@ are matched with them (see below).
 
 ## 3. `Listener`, `Host`, and `Mapping` must be explicit about how they associate.
 
-You need to have `Listener`s, `Host`s, and `Mapping`s correctly associated with each other for $productName$ 2.X configuration.
+You need to have `Listener`s, `Host`s, and `Mapping`s correctly associated with each other for Emissary 2.X configuration.
 
 ### 3.1. `Listener` and `Host` are associated through `Listener.hostBinding`
 
@@ -76,8 +76,8 @@ can also result in larger Envoy configurations that slow reconfiguration.
 ### 3.2. `Host` and `Mapping` are associated through `Host.mappingSelector`
 
 
-In $productName$ 1.X, `Mapping`s were nearly always associated with every `Host`. Since this
-tends to result in larger Envoy configurations that slow down reconfiguration, $productName$ 2.X
+In Emissary 1.X, `Mapping`s were nearly always associated with every `Host`. Since this
+tends to result in larger Envoy configurations that slow down reconfiguration, Emissary 2.X
 inverts this behavior: **`Host` and `Mapping` will not associate without explicit selection**.
 
 To have a `Mapping` associate with a `Host`, at least one of the following must hold:
@@ -117,7 +117,7 @@ has no `mappingSelector`, and
   <a href="../../running/tls#tlscontext">Learn more about <code>TLSContext</code></a>
 </Alert>
 
-In $productName$ 1.X, simply creating a `TLSContext` is sufficient to terminate TLS, but in
+In Emissary 1.X, simply creating a `TLSContext` is sufficient to terminate TLS, but in
 2.X you _must_ use a `Host`. The minimal setup to terminate TLS is now something like this:
 
 ```yaml
@@ -265,7 +265,7 @@ certificate (the semantic of `tls: true`), omit the `tls` element and prefix the
 A few settings have moved from the `Module` in 2.0. Make sure you review the following settings
 and move them to their new locations if you are using them in a `Module`:
 
-- Configuration for the `PROXY` protocol is part of the `Listener` resource in $productName$ 2.0,
+- Configuration for the `PROXY` protocol is part of the `Listener` resource in Emissary 2.0,
 so the `use_proxy_protocol` element of the `ambassador` `Module` is no longer supported.
 
 - `xff_num_trusted_hops` has been removed from the `Module`, and its functionality has been moved

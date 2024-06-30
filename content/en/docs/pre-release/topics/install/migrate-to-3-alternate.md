@@ -2,13 +2,13 @@ import Alert from '@material-ui/lab/Alert';
 
 # Upgrading $productName$ $version$ with a separate cluster
 
-You can upgrade from any version of $AESproductName$ or $OSSproductName$ to
+You can upgrade from any version of Emissary or $OSSproductName$ to
 any version of either by installing the new version in a new Kubernetes cluster,
 then copying over configuration as needed. This is the way to be absolutely
 certain that each installation cannot affect the other: it is extremely safe,
 but is also significantly more effort.
 
-For example, to upgrade from some other version of $AESproductName$ or
+For example, to upgrade from some other version of Emissary or
 $OSSproductName$ to $productName$ $version$:
 
 1. Install $productName$ $version$ in a completely new cluster.

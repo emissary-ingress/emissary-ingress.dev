@@ -1,6 +1,6 @@
-# Upgrade to $AESproductName$
+# Upgrade to Emissary
 
-If you currently have the open source version of $OSSproductName$, you can upgrade to $AESproductName$ with a few simple commands. When you upgrade to $AESproductName$, you'll be able to access additional capabilities such as **automatic HTTPS/TLS termination, Swagger/OpenAPI support, API catalog, Single Sign-On, the Edge Policy Console UI, and more.** For more about the differences between $AESproductName$ and $OSSproductName$, see the [Editions page](/editions).
+If you currently have the open source version of $OSSproductName$, you can upgrade to Emissary with a few simple commands. When you upgrade to Emissary, you'll be able to access additional capabilities such as **automatic HTTPS/TLS termination, Swagger/OpenAPI support, API catalog, Single Sign-On, the Edge Policy Console UI, and more.** For more about the differences between Emissary and $OSSproductName$, see the [Editions page](/editions).
 
 ## Upgrading on supported Kubernetes environments
 
@@ -12,12 +12,12 @@ If you currently have the open source version of $OSSproductName$, you can upgra
   * the `ambassador` name and `ambassador` namespace
   * `installOSS: true`
 
-> **Note:** It is always advised to migrate your install of $OSSproductName$ to the `ambassador` namespace before upgrading to $AESproductName$ with any method.
+> **Note:** It is always advised to migrate your install of $OSSproductName$ to the `ambassador` namespace before upgrading to Emissary with any method.
 
 First, install `edgectl` by following the instructions
 [here](/docs/edge-stack/latest/topics/using/edgectl/edge-control/#installing-edge-control).
 
-Then, use the following command to upgrade the $OSSproductName$ installation to $AESproductName$:
+Then, use the following command to upgrade the $OSSproductName$ installation to Emissary:
 
 ```
 edgectl upgrade
@@ -51,11 +51,11 @@ If they are not, the initial migration tests may fail.
 
 ## 1. Apply the migration manifest
 
-First, install $AESproductName$ alongside your existing $OSSproductName$ installation so you can test your workload against the new deployment.
+First, install Emissary alongside your existing $OSSproductName$ installation so you can test your workload against the new deployment.
 
 Note: Make sure you apply the manifests in the same namespace as your current $OSSproductName$ installation.
 
-Use the following command to install $AESproductName$, replacing `<namespace>` appropriately:
+Use the following command to install Emissary, replacing `<namespace>` appropriately:
 
 ```
 kubectl apply -n <namespace> -f https://app.getambassador.io/yaml/ambassador-docs/$version$/oss-migration.yaml
@@ -63,22 +63,22 @@ kubectl apply -n <namespace> -f https://app.getambassador.io/yaml/ambassador-doc
 
 ## 2. Test the new Deployment
 
-At this point, you have $OSSproductName$ and $AESproductName$ running side by side in your cluster. $AESproductName$ is configured using the same configuration (Mappings, Modules, etc) as your current $OSSproductName$.
+At this point, you have $OSSproductName$ and Emissary running side by side in your cluster. Emissary is configured using the same configuration (Mappings, Modules, etc) as your current $OSSproductName$.
 
-Get the IP address to connect to $AESproductName$ by running the following command:
+Get the IP address to connect to Emissary by running the following command:
 `kubectl get service test-aes -n <namespace>`
 
-Test that $AESproductName$ is working properly.
+Test that Emissary is working properly.
 
 ## 3. Redirect traffic
 
-Once you’re satisfied with the new deployment, update your current $OSSproductName$ service to redirect traffic to $AESproductName$.
+Once you’re satisfied with the new deployment, update your current $OSSproductName$ service to redirect traffic to Emissary.
 
 Edit the current $OSSproductName$ service with `kubectl edit service -n <namespace> ambassador` and change the selector to `product: aes`.
 
 ## 4. Delete the old Deployment
 
-You can now safely delete the older $OSSproductName$ deployment and $AESproductName$ service.
+You can now safely delete the older $OSSproductName$ deployment and Emissary service.
 
 ```
 kubectl delete deployment -n <namespace> ambassador
@@ -87,7 +87,7 @@ kubectl delete service -n <namespace> test-aes
 
 ## 5. Update and restart
 
-Apply the new CRDs, resources and restart the $AESproductName$ pod for changes to take effect:
+Apply the new CRDs, resources and restart the Emissary pod for changes to take effect:
 
 ```
 kubectl apply -n <namespace> -f https://app.getambassador.io/yaml/ambassador-docs/$version$/aes-crds.yaml && \
@@ -103,4 +103,4 @@ You can now access the Edge Policy Console with the following options:
 
 ## 7. What's next?
 
-Now that you have $AESproductName$ up and running, check out the [Getting Started](../../../tutorials/getting-started) guide for recommendations on what to do next and take full advantage of its features.
+Now that you have Emissary up and running, check out the [Getting Started](../../../tutorials/getting-started) guide for recommendations on what to do next and take full advantage of its features.

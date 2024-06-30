@@ -231,9 +231,9 @@ Also note that the YAML files in the configuration directory must contain the $p
 
 ## Log levels and debugging
 
-The $OSSproductName$ and $AESproductName$ support more verbose debugging levels. If using $OSSproductName$, the [diagnostics](../diagnostics) service has a button to enable debug logging. Be aware that if you're running $productName$ on multiple pods, the debug log levels are not enabled for all pods -- they are configured on a per-pod basis.
+The $OSSproductName$ and Emissary support more verbose debugging levels. If using $OSSproductName$, the [diagnostics](../diagnostics) service has a button to enable debug logging. Be aware that if you're running $productName$ on multiple pods, the debug log levels are not enabled for all pods -- they are configured on a per-pod basis.
 
-If using $AESproductName$, you can adjust the log level by setting the `AES_LOG_LEVEL` environment variable; from least verbose to most verbose, the valid values are `error`, `warn`/`warning`, `info`, `debug`, and `trace`; the default is `info`.
+If using Emissary, you can adjust the log level by setting the `AES_LOG_LEVEL` environment variable; from least verbose to most verbose, the valid values are `error`, `warn`/`warning`, `info`, `debug`, and `trace`; the default is `info`.
 
 ## Log format
 

@@ -1,8 +1,8 @@
 # Basic rate limiting
 
-IMPORTANT: This guide applies to $OSSproductName$, use of this guide on $AESproductName$ is not fully supported.  Use the existing [RateLimitService](../../topics/using/rate-limits/) instead.
+IMPORTANT: This guide applies to $OSSproductName$, use of this guide on Emissary is not fully supported.  Use the existing [RateLimitService](../../topics/using/rate-limits/) instead.
 
-$OSSproductName$ can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure the $OSSproductName$ to use a simple third party rate limit service. If you don't want to implement your own rate limiting service, $AESproductName$ integrates a [powerful, flexible rate limiting service](../../topics/using/rate-limits/).
+$OSSproductName$ can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure the $OSSproductName$ to use a simple third party rate limit service. If you don't want to implement your own rate limiting service, Emissary integrates a [powerful, flexible rate limiting service](../../topics/using/rate-limits/).
 
 ## Before you get started
 

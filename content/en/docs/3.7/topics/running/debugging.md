@@ -1,22 +1,24 @@
-# Debugging
+---
+title: Debugging
+---
 
-If you’re experiencing issues with the $productName$ and cannot diagnose the issue through the `/ambassador/v0/diag/` diagnostics endpoint, this document covers various approaches and advanced use cases for debugging $productName$ issues.
+If you’re experiencing issues with the Emissary and cannot diagnose the issue through the `/ambassador/v0/diag/` diagnostics endpoint, this document covers various approaches and advanced use cases for debugging Emissary issues.
 
-We assume that you already have a running $productName$ installation in the following sections.
+We assume that you already have a running Emissary installation in the following sections.
 
 ## A Note on TLS
 
 [TLS] can appear intractable if you haven't set up [certificates] correctly. If you're
-having trouble with TLS, always [check the logs] of your $productName$ Pods and look for
+having trouble with TLS, always [check the logs] of your Emissary Pods and look for
 certificate errors.
 
 [TLS]: ../tls
 [certificates]: ../tls#certificates-and-secrets
 [check the logs]: #review-logs
 
-## Check $productName$ status
+## Check Emissary status
 
-1. First, check the $productName$ Deployment with the following: `kubectl get -n $productNamespace$ deployments`
+1. First, check the Emissary Deployment with the following: `kubectl get -n $productNamespace$ deployments`
 
     After a brief period, the terminal will print something similar to the following:
 
@@ -81,30 +83,30 @@ In both the Deployment Pod and the individual Pods, take the necessary action to
 
 ## Review logs
 
-$productName$ logging can provide information on anything that might be abnormal or malfunctioning. While there may be a large amount of data to sort through, look for key errors such as the $productName$ process restarting unexpectedly, or a malformed Envoy configuration.
+Emissary logging can provide information on anything that might be abnormal or malfunctioning. While there may be a large amount of data to sort through, look for key errors such as the Emissary process restarting unexpectedly, or a malformed Envoy configuration.
 
-$productName$ has two major log mechanisms: $productName$ logging and Envoy logging. Both appear in the normal `kubectl logs` output, and both can have additional debug-level logging enabled.
+Emissary has two major log mechanisms: Emissary logging and Envoy logging. Both appear in the normal `kubectl logs` output, and both can have additional debug-level logging enabled.
 
 <Alert severity="info">
   Enabling debug-level logging can produce a <i>lot</i> of log output &mdash; enough to
-  potentially impact the performance of $productName$. We don't recommend running with debug
+  potentially impact the performance of Emissary. We don't recommend running with debug
   logging enabled as a matter of course; it's usually better to enable it only when needed,
   then reset logging to normal once you're finished debugging.
 </Alert>
 
-### $productName$ debug logging
+### Emissary debug logging
 
-Much of $productName$'s logging is concerned with the business of noticing changes to
-Kubernetes resources that specify the $productName$ configuration, and generating new
+Much of Emissary's logging is concerned with the business of noticing changes to
+Kubernetes resources that specify the Emissary configuration, and generating new
 Envoy configuration in response to those changes. Enabling debug logging for this part
 of the system is under the control of two environment variables:
 
-- Set `AES_LOG_LEVEL=debug` to debug the early boot sequence and $productName$'s interactions
+- Set `AES_LOG_LEVEL=debug` to debug the early boot sequence and Emissary's interactions
   with the Kubernetes cluster (finding changed resources, etc.).
 - Set `AMBASSADOR_DEBUG=diagd` to debug the process of generating an Envoy configuration from
   the input resources.
 
-### $productName$ Envoy logging
+### Emissary Envoy logging
 
 Envoy logging is concerned with the actions Envoy is taking for incoming requests.
 Typically, Envoy will only output access logs, and certain errors, but enabling Envoy
@@ -114,7 +116,7 @@ an error status is coming from Envoy or from the upstream service.
 
 It is possible to enable Envoy logging at boot, but for the most part, it's safer to
 enable it at runtime, right before sending a request that is known to have problems.
-To enable Envoy debug logging, use `kubectl exec` to get a shell on the $productName$
+To enable Envoy debug logging, use `kubectl exec` to get a shell on the Emissary
 pod, then:
 
     ```
@@ -127,9 +129,9 @@ This will turn on Envoy debug logging for ten seconds, then turn it off again.
 
 ### Viewing logs
 
-To view the logs from $productName$:
+To view the logs from Emissary:
 
-1. Use the following command to target an individual $productName$ Pod: `kubectl get pods -n $productNamespace$`
+1. Use the following command to target an individual Emissary Pod: `kubectl get pods -n $productNamespace$`
 
     The terminal will print something similar to the following:
 
@@ -163,21 +165,21 @@ Note that many deployments will have multiple logs, and the logs are independent
 
 ## Examine Pod and container contents
 
-You can examine the contents of the $productName$ Pod for issues, such as if volume mounts are correct and TLS certificates are present in the required directory, to determine if the Pod has the latest $productName$ configuration, or if the generated Envoy configuration is correct or as expected. In these instructions, we will look for problems related to the Envoy configuration.
+You can examine the contents of the Emissary Pod for issues, such as if volume mounts are correct and TLS certificates are present in the required directory, to determine if the Pod has the latest Emissary configuration, or if the generated Envoy configuration is correct or as expected. In these instructions, we will look for problems related to the Envoy configuration.
 
-1. To look into an $productName$ Pod, get a shell on the Pod using `kubectl exec`. For example,
+1. To look into an Emissary Pod, get a shell on the Pod using `kubectl exec`. For example,
 
     ```
     kubectl exec -it -n $productNamespace$ <$productDeploymentName$-pod-name> -- bash
     ```
 
-2. Determine the latest configuration. If you haven't overridden the configuration directory, the latest configuration will be in `/ambassador/snapshots`. If you have overridden it, $productName$ saves configurations in `$AMBASSADOR_CONFIG_BASE_DIR/snapshots`.
+2. Determine the latest configuration. If you haven't overridden the configuration directory, the latest configuration will be in `/ambassador/snapshots`. If you have overridden it, Emissary saves configurations in `$AMBASSADOR_CONFIG_BASE_DIR/snapshots`.
 
     In the snapshots directory:
 
-    * `snapshot.yaml` contains the full input configuration that $productName$ has found;
-    * `aconf.json` contains the $productName$ configuration extracted from the snapshot;
-    * `ir.json` contains the IR constructed from the $productName$ configuration; and
+    * `snapshot.yaml` contains the full input configuration that Emissary has found;
+    * `aconf.json` contains the Emissary configuration extracted from the snapshot;
+    * `ir.json` contains the IR constructed from the Emissary configuration; and
     * `econf.json` contains the Envoy configuration generated from the IR.
 
     In the snapshots directory, the current configuration will be stored in files with no digit suffix, and older configurations have increasing numbers. For example, `ir.json` is current, `ir-1.json` is the next oldest, then `ir-2.json`, etc.

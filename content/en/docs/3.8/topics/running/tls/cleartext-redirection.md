@@ -1,9 +1,9 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Cleartext support
+---
+title: Cleartext support
+---
 
 While most modern web applications choose to encrypt all traffic, there remain
-cases where supporting cleartext communications is important. $productName$ supports
+cases where supporting cleartext communications is important. Emissary supports
 both forcing [automatic redirection to HTTPS](#http-https-redirection) and
 [serving cleartext](#cleartext-routing) traffic on a `Host`.
 
@@ -11,7 +11,7 @@ both forcing [automatic redirection to HTTPS](#http-https-redirection) and
   The <a href="../../listener"><code>Listener</code></a> and
   <a href="../../host-crd"><code>Host</code></a> CRDs work together to manage HTTP and HTTPS routing.
   This document is meant as a quick reference to the <code>Host</code> resource: for a more complete
-  treatment of handling cleartext and HTTPS, see <a href="../../../../howtos/configure-communications">Configuring $productName$ Communications</a>.
+  treatment of handling cleartext and HTTPS, see <a href="../../../../howtos/configure-communications">Configuring Emissary Communications</a>.
 </Alert>
 
 ## Cleartext Routing
@@ -33,7 +33,7 @@ This allows routing for either HTTP and HTTPS, or _only_ HTTP, depending on `tls
   The <a href="../../listener"><code>Listener</code></a> and
   <a href="../../host-crd"><code>Host</code></a> CRDs work together to manage HTTP and HTTPS routing.
   This document is meant as a quick reference to the <code>Host</code> resource: for a more complete
-  treatment of handling cleartext and HTTPS, see <a href="../../../../howtos/configure-communications">Configuring $productName$ Communications</a>.
+  treatment of handling cleartext and HTTPS, see <a href="../../../../howtos/configure-communications">Configuring Emissary Communications</a>.
 </Alert>
 
 ## HTTP->HTTPS redirection
@@ -42,7 +42,7 @@ Most websites that force HTTPS will also automatically redirect any
 requests that come into it over HTTP:
 
 ```
-Client              $productName$
+Client              Emissary
 |                             |
 | http://<hostname>/api       |
 | --------------------------> |
@@ -55,7 +55,7 @@ Client              $productName$
 |                             |
 ```
 
-In $productName$, this is configured by setting the `insecure.action` in a `Host` to `Redirect`.
+In Emissary, this is configured by setting the `insecure.action` in a `Host` to `Redirect`.
 
 ```yaml
 requestPolicy:
@@ -63,7 +63,7 @@ requestPolicy:
     action: Redirect
 ```
 
-$productName$ determines which requests are secure and which are insecure using the
+Emissary determines which requests are secure and which are insecure using the
 `securityModel` of the [`Listener`] that accepts the request.
 
 [`Listener`]: ../../listener
@@ -72,5 +72,5 @@ $productName$ determines which requests are secure and which are insecure using 
   The <a href="../../listener"><code>Listener</code></a> and
   <a href="../../host-crd"><code>Host</code></a> CRDs work together to manage HTTP and HTTPS routing.
   This document is meant as a quick reference to the <code>Host</code> resource: for a more complete
-  treatment of handling cleartext and HTTPS, see <a href="../../../../howtos/configure-communications">Configuring $productName$ Communications</a>.
+  treatment of handling cleartext and HTTPS, see <a href="../../../../howtos/configure-communications">Configuring Emissary Communications</a>.
 </Alert>

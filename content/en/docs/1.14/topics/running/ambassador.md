@@ -372,8 +372,8 @@ use_ambassador_namespace_for_service_resolution: false
 
 Enable or disable the [Edge Policy Console](/docs/edge-stack/latest/topics/using/edge-policy-console/) and `/ambassador/v0/diag/` endpoints.
 
-- Both $OSSproductName$ and $AESproductName$ provide low-level diagnostics at `/ambassador/v0/diag/`.
-- $AESproductName$ also provides the higher-level Edge Policy Console at `/edge_stack/admin/`.
+- Both $OSSproductName$ and Emissary provide low-level diagnostics at `/ambassador/v0/diag/`.
+- Emissary also provides the higher-level Edge Policy Console at `/edge_stack/admin/`.
 
 By default, both services are enabled.
 

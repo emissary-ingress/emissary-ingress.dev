@@ -17,15 +17,15 @@ $productName$ is listed. If so, you installed using Helm.)
   <b>Read the instructions below</b> before making any changes to your cluster!
 </Alert>
 
-## If you are currently running $AESproductName$
+## If you are currently running Emissary
 
-See the [instructions on updating $AESproductName$](../../../../../edge-stack/$aesDocsVersion$/topics/install/migration-matrix).
+See the [instructions on updating Emissary](../../../../../edge-stack/$aesDocsVersion$/topics/install/migration-matrix).
 
 ## If you installed $OSSproductName$ using Helm
 
 | If you're running.               | You can upgrade to                                                                                                         |
 |----------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| $OSSproductName$ $version$       | [$AESproductName$ $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/helm/emissary-2.5/edge-stack-2.5) |
+| $OSSproductName$ $version$       | [Emissary $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/helm/emissary-2.5/edge-stack-2.5) |
 | $OSSproductName$ 2.4.X           | [$OSSproductName$ $version$](../upgrade/helm/emissary-2.4/emissary-2.5)                                                    |
 | $OSSproductName$ 2.0.5           | [$OSSproductName$ $version$](../upgrade/helm/emissary-2.0/emissary-2.5)                                                    |
 | $OSSproductName$ 1.14.X          | [$OSSproductName$ $version$](../upgrade/helm/emissary-1.14/emissary-2.5)                                                   |
@@ -35,7 +35,7 @@ See the [instructions on updating $AESproductName$](../../../../../edge-stack/$a
 
 | If you're running.               | You can upgrade to                                                                                                         |
 |----------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| $OSSproductName$ $version$       | [$AESproductName$ $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/yaml/emissary-2.5/edge-stack-2.5) |
+| $OSSproductName$ $version$       | [Emissary $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/yaml/emissary-2.5/edge-stack-2.5) |
 | $OSSproductName$ 2.4.X           | [$OSSproductName$ $version$](../upgrade/yaml/emissary-2.4/emissary-2.5)                                                    |
 | $OSSproductName$ 2.0.5           | [$OSSproductName$ $version$](../upgrade/yaml/emissary-2.0/emissary-2.5)                                                    |
 | $OSSproductName$ 1.14.X          | [$OSSproductName$ $version$](../upgrade/yaml/emissary-1.14/emissary-2.5)                                                   |

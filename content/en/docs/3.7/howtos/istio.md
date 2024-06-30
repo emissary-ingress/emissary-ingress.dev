@@ -1,19 +1,19 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Istio
+---
 
-# Istio integration
+Emissary and Istio: Edge Proxy and Service Mesh together in one. Emissary is deployed at the edge of your network and routes incoming traffic to your internal services (aka "north-south" traffic). [Istio](https://istio.io/) is a service mesh for microservices, and is designed to add application-level Layer (L7) observability, routing, and resilience to service-to-service traffic (aka "east-west" traffic). Both Istio and Emissary are built using [Envoy](https://www.envoyproxy.io).
 
-$productName$ and Istio: Edge Proxy and Service Mesh together in one. $productName$ is deployed at the edge of your network and routes incoming traffic to your internal services (aka "north-south" traffic). [Istio](https://istio.io/) is a service mesh for microservices, and is designed to add application-level Layer (L7) observability, routing, and resilience to service-to-service traffic (aka "east-west" traffic). Both Istio and $productName$ are built using [Envoy](https://www.envoyproxy.io).
-
-$productName$ and Istio can be deployed together on Kubernetes. In this configuration, $productName$ manages
+Emissary and Istio can be deployed together on Kubernetes. In this configuration, Emissary manages
 traditional edge functions such as authentication, TLS termination, and edge routing. Istio mediates communication
-from $productName$ to services, and communication between services.
+from Emissary to services, and communication between services.
 
-This allows the operator to have the best of both worlds: a high performance, modern edge service ($productName$) combined with a state-of-the-art service mesh (Istio). While Istio has introduced a [Gateway](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/) abstraction, $productName$ still has a much broader feature set for edge routing than Istio. For more on this topic, see our blog post on [API Gateway vs Service Mesh](https://blog.getambassador.io/api-gateway-vs-service-mesh-104c01fa4784).
+This allows the operator to have the best of both worlds: a high performance, modern edge service (Emissary) combined with a state-of-the-art service mesh (Istio). While Istio has introduced a [Gateway](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/) abstraction, Emissary still has a much broader feature set for edge routing than Istio. For more on this topic, see our blog post on [API Gateway vs Service Mesh](https://blog.getambassador.io/api-gateway-vs-service-mesh-104c01fa4784).
 
-This guide explains how to take advantage of both $productName$ and Istio to have complete control and observability over how requests are made in your cluster:
+This guide explains how to take advantage of both Emissary and Istio to have complete control and observability over how requests are made in your cluster:
 
 - [Install Istio](#install-istio) and configure auto-injection
-- [Install $productName$ with Istio integration](#install-edge)
+- [Install Emissary with Istio integration](#install-edge)
 - [Configure an mTLS `TLSContext`](#configure-an-mtls-tlscontext)
 - [Route to services using mTLS](#route-to-services-using-mtls)
 
@@ -32,12 +32,12 @@ To follow this guide, you need:
 ## Install Istio
 
 Start by [installing Istio](https://istio.io/docs/setup/getting-started/). Any supported installation method for
-Istio will work for use with $productName$.
+Istio will work for use with Emissary.
 
 ### Configure Istio Auto-Injection
 
 Istio functions by supplying a sidecar container running Envoy with every service in the mesh (including
-$productName$). The sidecar is what enforces Istio policies for traffic to and from the service, notably
+Emissary). The sidecar is what enforces Istio policies for traffic to and from the service, notably
 including mTLS encryption and certificate handling. As such, it is very important that the sidecar be
 correctly supplied for every service in the mesh!
 
@@ -56,16 +56,16 @@ kubectl label namespace $namespace istio-injection=enabled --overwrite
   sidecar.
 </Alert>
 
-## <a name="install-edge"></a> Install $productName$ with Istio Integration
+## <a name="install-edge"></a> Install Emissary with Istio Integration
 
-Properly integrating $productName$ with Istio provides support for:
+Properly integrating Emissary with Istio provides support for:
 
 * [Mutual TLS (mTLS)](../../topics/running/tls/mtls/), with certificates managed by Istio, to allow end-to-end encryption
 for east-west traffic;
 * Automatic generation of Prometheus metrics for services; and
 * Istio distributed tracing for end-to-end observability.
 
-The simplest way to enable everything is to install $productName$ using [Helm](https://helm.sh), though
+The simplest way to enable everything is to install Emissary using [Helm](https://helm.sh), though
 you can use manual installation with YAML if you wish.
 
 ### Installation with Helm (Recommended)
@@ -73,28 +73,28 @@ you can use manual installation with YAML if you wish.
 To install with Helm, write the following YAML to a file called `istio-integration.yaml`:
 
 ```yaml
-# Listeners are required in $productName$ 2.0.
+# Listeners are required in Emissary 2.0.
 # This will create the two default Listeners for HTTP on port 8080 and HTTPS on port 8443.
 createDefaultListeners: true
 
-# These are annotations that will be added to the $productName$ pods.
+# These are annotations that will be added to the Emissary pods.
 podAnnotations:
   # These first two annotations tell Istio not to try to do port management for the
-  # $productName$ pod itself. Though these annotations are placed on the $productName$
+  # Emissary pod itself. Though these annotations are placed on the Emissary
   # pods, they are interpreted by Istio.
   traffic.sidecar.istio.io/includeInboundPorts: ""      # do not intercept any inbound ports
   traffic.sidecar.istio.io/includeOutboundIPRanges: ""  # do not intercept any outbound traffic
 
   # We use proxy.istio.io/config to tell the Istio proxy to write newly-generated mTLS certificates
   # into /etc/istio-certs, which will be mounted below. Though this annotation is placed on the
-  # $productName$ pods, it is interpreted by Istio.
+  # Emissary pods, it is interpreted by Istio.
   proxy.istio.io/config: |
     proxyMetadata:
       OUTPUT_CERTS: /etc/istio-certs
 
   # We use sidecar.istio.io/userVolumeMount to tell the Istio sidecars to mount the istio-certs
   # volume at /etc/istio-certs, allowing the sidecars to see the generated certificates. Though
-  # this annotation is placed on the $productName$ pods, it is interpreted by Istio.
+  # this annotation is placed on the Emissary pods, it is interpreted by Istio.
   sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-certs"}]'
 
 # We define a single storage volume called "istio-certs". It starts out empty, and Istio
@@ -105,16 +105,16 @@ volumes:
       medium: Memory
     name: istio-certs
 
-# We also tell $productName$ to mount the "istio-certs" volume at /etc/istio-certs in the
-# $productName$ pod. This gives $productName$ access to the mTLS certificates, too.
+# We also tell Emissary to mount the "istio-certs" volume at /etc/istio-certs in the
+# Emissary pod. This gives Emissary access to the mTLS certificates, too.
 volumeMounts:
   - name: istio-certs
     mountPath: /etc/istio-certs/
     readOnly: true
 
-# Finally, we need to set some environment variables for $productName$.
+# Finally, we need to set some environment variables for Emissary.
 env:
-  # AMBASSADOR_ISTIO_SECRET_DIR tells $productName$ to look for Istio mTLS certs, and to
+  # AMBASSADOR_ISTIO_SECRET_DIR tells Emissary to look for Istio mTLS certs, and to
   # make them available as a secret named "istio-certs".
   AMBASSADOR_ISTIO_SECRET_DIR: "/etc/istio-certs"
 
@@ -123,7 +123,7 @@ env:
   AMBASSADOR_ENVOY_BASE_ID: "1"
 ```
 
-To install $productName$ with Helm, use these values to configure Istio integration:
+To install Emissary with Helm, use these values to configure Istio integration:
 
 1. Create the `$productNamespace$` Namespace:
 
@@ -144,7 +144,7 @@ To install $productName$ with Helm, use these values to configure Istio integrat
     helm repo update
     ```
 
-4. Use Helm to install $productName$ in $productNamespace$:
+4. Use Helm to install Emissary in $productNamespace$:
 
     ```bash
     helm install $productHelmName$ --namespace $productNamespace$ -f istio-integration.yaml datawire/$productHelmName$ && \
@@ -156,31 +156,31 @@ To install $productName$ with Helm, use these values to configure Istio integrat
 To install using YAML files, you need to manually incorporate the contents of the `istio-integration.yaml`
 file shown above into your deployment YAML:
 
-* `pod-annotations` should be configured as Kubernetes `annotations` on the $productName$ Pods;
+* `pod-annotations` should be configured as Kubernetes `annotations` on the Emissary Pods;
 * `volumes`, `volumeMounts`, and `env` contents should be included in the $productDeploymentName$ Deployment; and
 * you must also label the $productNamespace$ Namespace for auto-injection as described above.
 
 ### Configuring an Existing Installation
 
-If you have already installed $productName$ and want to enable Istio:
+If you have already installed Emissary and want to enable Istio:
 
 1. Install Istio.
 2. Label the $productNamespace$ namespace for Istio auto-injection, as above.
-2. Edit the $productName$ Deployments to contain the `annotations`, `volumes`, `volumeMounts`, and `env` elements
+2. Edit the Emissary Deployments to contain the `annotations`, `volumes`, `volumeMounts`, and `env` elements
    shown above.
     * If you installed with Helm, you can use `helm upgrade` with `-f istio-integration.yaml` to modify the
       installation for you.
-3. Restart the $productName$ pods.
+3. Restart the Emissary pods.
 
 ## Configure an mTLS `TLSContext`
 
-After configuring $productName$ for Istio integration, the Istio mTLS certificates are available within
-$productName$:
+After configuring Emissary for Istio integration, the Istio mTLS certificates are available within
+Emissary:
 
-- Both the `istio-proxy` sidecar and $productName$ mount the `istio-certs` volume at `/etc/istio-certs`.
+- Both the `istio-proxy` sidecar and Emissary mount the `istio-certs` volume at `/etc/istio-certs`.
 - The `istio-proxy` sidecar saves the mTLS certificates into `/etc/istio-certs` (per the `OUTPUT_CERTS`
   environment variable).
-- $productName$ reads the mTLS certificates from `/etc/istio-certs` (per the `AMBASSADOR_ISTIO_SECRET_DIR`
+- Emissary reads the mTLS certificates from `/etc/istio-certs` (per the `AMBASSADOR_ISTIO_SECRET_DIR`
   environment variable) and creates a Secret named `istio-certs`.
 
    <Alert severity="warning">
@@ -221,7 +221,7 @@ This `Mapping` will use mTLS when communicating with its upstream service.
 
 ## Route to Services Using mTLS
 
-After integrating $productName$ with Istio, $productName$'s feature-rich routing capabilities and Istio's mTLS
+After integrating Emissary with Istio, Emissary's feature-rich routing capabilities and Istio's mTLS
 and observability are all available for all incoming traffic. To take full advantage of both, you need to:
 
 - configure upstream services with the Istio sidecar;
@@ -242,7 +242,7 @@ as discussed above.
 
 ### Configure `Mapping`s to Use mTLS
 
-Traffic routing in $productName$ is configured with the [`Mapping`](../../topics/using/intro-mappings) resource.
+Traffic routing in Emissary is configured with the [`Mapping`](../../topics/using/intro-mappings) resource.
 This is a powerful configuration object that lets you configure different routing rules for different services.
 
 To configure a `Mapping` to use mTLS, you need to use the `tls` element of the `Mapping` to tell it to originate
@@ -301,9 +301,9 @@ The behavior of your service will not seem to change, even though mTLS is active
    }
    ```
 
-This request first went to $productName$, which routed it over an mTLS connection to the quote service in the
+This request first went to Emissary, which routed it over an mTLS connection to the quote service in the
 default namespace. That connection was intercepted by the `istio-proxy` which authenticated the request as
-being from $productName$, exported various metrics, and finally forwarded it on to the actual quote service.
+being from Emissary, exported various metrics, and finally forwarded it on to the actual quote service.
 
 ### Configure Service Ports
 
@@ -401,7 +401,7 @@ The Istio sidecar also supports [distributed tracing](https://istio.io/docs/task
 by default. To take advantage of this support, you need to:
 
 1. Install a tracing provider, for example [Zipkin](../tracing-zipkin) into your cluster.
-2. Add a [`TracingService`](../../topics/running/services/tracing-service) to tell $productName$ to send tracing
+2. Add a [`TracingService`](../../topics/running/services/tracing-service) to tell Emissary to send tracing
    to your tracing provider, for example:
 
    ```yaml
@@ -420,7 +420,7 @@ by default. To take advantage of this support, you need to:
        - ":path"
    ```
 
-After adding a `TracingService`, restart $productName$ for the configuration to take effect. Istio propagates
+After adding a `TracingService`, restart Emissary for the configuration to take effect. Istio propagates
 the tracing headers automatically, allowing for end-to-end observability within the cluster.
 
 ## FAQ
@@ -429,9 +429,9 @@ the tracing headers automatically, allowing for end-to-end observability within 
 
 By default, Istio mTLS certificates are valid for 90 days, but get rotated every day.
 
-$productName$ updates the mTLS certificates as they are rotated, so you don't need to worry about certificate expiration.
+Emissary updates the mTLS certificates as they are rotated, so you don't need to worry about certificate expiration.
 
-To test that $productName$ is properly rotating certificates, shorten the TTL of the Istio certificates by
+To test that Emissary is properly rotating certificates, shorten the TTL of the Istio certificates by
 setting the following environment variables in the `istiod` container in the `istio-system` Namespace:
 
    ```yaml

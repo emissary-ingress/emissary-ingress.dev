@@ -17,15 +17,15 @@ $productName$ is listed. If so, you installed using Helm.)
   <b>Read the instructions below</b> before making any changes to your cluster!
 </Alert>
 
-## If you are currently running $AESproductName$
+## If you are currently running Emissary
 
-See the [instructions on updating $AESproductName$](/docs/edge-stack/$aesDocsVersion$/topics/install/migration-matrix/).
+See the [instructions on updating Emissary](/docs/edge-stack/$aesDocsVersion$/topics/install/migration-matrix/).
 
 ## If you installed $OSSproductName$ using Helm
 
 | If you're running.                      | You can upgrade to                                                                                                          |
 |-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| $OSSproductName$ $version$              | [$AESproductName$ $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/helm/emissary-3.4/edge-stack-3.X/) |
+| $OSSproductName$ $version$              | [Emissary $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/helm/emissary-3.4/edge-stack-3.X/) |
 | $OSSproductName$ 3.3.X                  | [$OSSproductName$ $version$](../upgrade/helm/emissary-3.3/emissary-3.X)                                                     |
 | $OSSproductName$ $versionTwoX$          | [$OSSproductName$ $version$](../upgrade/helm/emissary-2.5/emissary-3.X)                                                     |
 | $OSSproductName$ 2.4.X                  | [$OSSproductName$ $version$](../upgrade/helm/emissary-2.4/emissary-2.X)                                                     |
@@ -37,7 +37,7 @@ See the [instructions on updating $AESproductName$](/docs/edge-stack/$aesDocsVer
 
 | If you're running.                      | You can upgrade to                                                                                                          |
 |-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| $OSSproductName$ $version$              | [$AESproductName$ $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/yaml/emissary-3.4/edge-stack-3.X/) |
+| $OSSproductName$ $version$              | [Emissary $aesVersion$](/docs/edge-stack/$aesDocsVersion$/topics/install/upgrade/yaml/emissary-3.4/edge-stack-3.X/) |
 | $OSSproductName$ 3.3.X                  | [$OSSproductName$ $version$](../upgrade/yaml/emissary-3.3/emissary-3.X)                                                     |
 | $OSSproductName$ $versionTwoX$          | [$OSSproductName$ $version$](../upgrade/yaml/emissary-2.5/emissary-3.X)                                                     |
 | $OSSproductName$ 2.4.X                  | [$OSSproductName$ $version$](../upgrade/yaml/emissary-2.4/emissary-2.X)                                                     |

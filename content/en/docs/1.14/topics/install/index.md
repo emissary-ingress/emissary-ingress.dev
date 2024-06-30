@@ -36,7 +36,7 @@ import './index.less'
 
 3. The installer will provision a load balancer, configure TLS,
 and provide you with an `edgestack.me` subdomain. The `edgestack.me` subdomain
-allows $AESproductName$ to automatically provision TLS and HTTPS
+allows Emissary to automatically provision TLS and HTTPS
 for a domain name, so you can get started right away.
 
 4. [Set up Service Catalog](../../tutorials/getting-started/#3-connect-your-cluster-to-ambassador-cloud) to view all of your service metadata in Ambassador Cloud.
@@ -54,7 +54,7 @@ for a domain name, so you can get started right away.
 
 3. The installer will provision a load balancer, configure TLS,
 and provide you with an `edgestack.me` subdomain. The `edgestack.me` subdomain
-allows $AESproductName$ to automatically provision TLS and HTTPS
+allows Emissary to automatically provision TLS and HTTPS
 for a domain name, so you can get started right away.
 
 4. [Set up Service Catalog](../../tutorials/getting-started/#3-connect-your-cluster-to-ambassador-cloud) to view all of your service metadata in Ambassador Cloud.
@@ -65,7 +65,7 @@ for a domain name, so you can get started right away.
 2. Run the installer with `edgectl install`
 3. The installer will provision a load balancer, configure TLS,
 and provide you with an `edgestack.me` subdomain. The `edgestack.me` subdomain
-allows $AESproductName$ to automatically provision TLS and HTTPS
+allows Emissary to automatically provision TLS and HTTPS
 for a domain name, so you can get started right away.
 
 4. [Set up Service Catalog](../../tutorials/getting-started/#3-connect-your-cluster-to-ambassador-cloud) to view all of your service metadata in Ambassador Cloud.
@@ -97,15 +97,15 @@ We've got [instructions for bare metal installations](bare-metal) including expo
 $productName$ via a NodePort or the host network.
 
 ## Upgrade Options
-If you already have an existing installation of $AESproductName$ or
+If you already have an existing installation of Emissary or
 $OSSproductName$, you can upgrade your instance:
 
-1. [Upgrade to $AESproductName$ from $OSSproductName$](upgrade-to-edge-stack/).
+1. [Upgrade to Emissary from $OSSproductName$](upgrade-to-edge-stack/).
 2. [Upgrade your $productName$ instance](upgrading/) to the latest version.
 
 ## Container Images
 Although our installation guides will favor using the `docker.io` container registry,
-we publish $AESproductName$ and $OSSproductName$ releases to multiple registries.
+we publish Emissary and $OSSproductName$ releases to multiple registries.
 
 Starting with version 1.0.0, you can pull the `ambassador` and `aes` images from any of the following registries:
 - `docker.io/datawire/`
@@ -113,7 +113,7 @@ Starting with version 1.0.0, you can pull the `ambassador` and `aes` images from
 - `gcr.io/datawire/`
 
 We want to give you flexibility and independence from a hosting platform's uptime to support
-your production needs for $AESproductName$ or $OSSproductName$. Read more about
+your production needs for Emissary or $OSSproductName$. Read more about
 [Running $productName$ in Production](../running).
 
 # What’s Next?

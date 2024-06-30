@@ -161,13 +161,13 @@ spec:
   <a href="../../topics/running/host-crd">Learn more about <code>Host</code></a>
 </Alert>
 
-### TLS using ACME ($AESproductName$ only)
+### TLS using ACME (Emissary only)
 
 This scenario uses ACME to get certificates for `foo.example.com` and `bar.example.com`. HTTPS traffic to either
 host is routed; HTTP traffic to `foo.example.com` will be redirected to HTTPS, but HTTP traffic to `bar.example.com`
 will be rejected outright.
 
-Since this example uses ACME, **it is only supported in $AESproductName$**.
+Since this example uses ACME, **it is only supported in Emissary**.
 
 For demonstration purposes, we show this example listening for HTTPS on port 9999, using `X-Forwarded-Proto`.
 
@@ -227,7 +227,7 @@ This scenario uses TLS without ACME. Each of our two `Host`s uses a distinct TLS
 traffic to either`foo.example.com` or `bar.example.com` is routed, but this time `foo.example.com` will redirect
 HTTP requests, while `bar.example.com` will route them.
 
-Since this example does not use ACME, it is supported in $productName$ as well as $AESproductName$.
+Since this example does not use ACME, it is supported in $productName$ as well as Emissary.
 
 For demonstration purposes, we show this example listening for HTTPS on port 4848, using `X-Forwarded-Proto`.
 
@@ -368,10 +368,10 @@ spec:
   <a href="../../topics/running/host-crd">Learn more about <code>Host</code></a>
 </Alert>
 
-### ACME With a TLSContext ($AESproductName$ Only)
+### ACME With a TLSContext (Emissary Only)
 
-In $AESproductName$, you can use a `TLSContext` with ACME as well. This example is the same as "TLS using ACME",
-but we use a `TLSContext` to set `ALPN` information. Again, ACME is only supported in $AESproductName$.
+In Emissary, you can use a `TLSContext` with ACME as well. This example is the same as "TLS using ACME",
+but we use a `TLSContext` to set `ALPN` information. Again, ACME is only supported in Emissary.
 
 ```yaml
 ---

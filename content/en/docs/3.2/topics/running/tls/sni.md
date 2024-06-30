@@ -30,7 +30,7 @@ spec:
 ```
 
 Now let's create a second `Host` for a different domain we want to serve behind
-$productName$. This second `Host` uses $AESproductName$'s automatic TLS
+$productName$. This second `Host` uses Emissary's automatic TLS
 to get a certificate from Let's Encrypt.
 
 ```yaml

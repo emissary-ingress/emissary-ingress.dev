@@ -1,9 +1,9 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Upgrade $productName$ 3.4.Z (YAML)
+---
+title: 3.4 to latest 3.x
+---
 
 <Alert severity="info">
-  This guide covers migrating from $productName$ 3.4.Z to $productName$ $version$. If
+  This guide covers migrating from Emissary 3.4.Z to Emissary $version$. If
   this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
   matrix</a>.
 </Alert>
@@ -14,16 +14,16 @@ import Alert from '@material-ui/lab/Alert';
   upgrade instructions</a>.
 </Alert>
 
-Since $productName$'s configuration is entirely stored in Kubernetes resources, upgrading
+Since Emissary's configuration is entirely stored in Kubernetes resources, upgrading
 between versions is straightforward.
 
 ### Resources to check before migrating to $version$.
 
 <Alert severity="warning">
-  As of $productName$ 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read below before upgrading.
+  As of Emissary 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read below before upgrading.
 </Alert>
 
-$productName$ 3.4 has been upgraded from Envoy 1.23 to Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/3.4/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
+Emissary 3.4 has been upgraded from Envoy 1.23 to Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/3.4/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
 
 ## Migration Steps
 
@@ -31,8 +31,8 @@ Migration is a two-step process:
 
 1. **Install new CRDs.**
 
-   Before installing $productName$ $version$ itself, you need to update the CRDs in
-   your cluster. This is mandatory during any upgrade of $productName$.
+   Before installing Emissary $version$ itself, you need to update the CRDs in
+   your cluster. This is mandatory during any upgrade of Emissary.
 
    ```bash
    kubectl apply -f https://app.getambassador.io/yaml/emissary/$version$/emissary-crds.yaml
@@ -40,9 +40,9 @@ Migration is a two-step process:
    ```
 
    <Alert severity="info">
-     $productName$ $version$ includes a Deployment in the `emissary-system` namespace
+     Emissary $version$ includes a Deployment in the `emissary-system` namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
-     that supports converting $productName$ CRDs between <code>getambassador.io/v2</code>
+     that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at
      all times.
    </Alert>
@@ -54,17 +54,17 @@ Migration is a two-step process:
    </Alert>
 
    <Alert severity="warning">
-    There is a known issue with the <code>emissary-apiext</code> service that impacts all $productName$ 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running $productName$/$AESproductName$ 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
+    There is a known issue with the <code>emissary-apiext</code> service that impacts all Emissary 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running Emissary/Emissary 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
     This will create a new certificate with a one year expiration. We will issue a software patch to address this issue well before the one year expiration. Note that certificate renewal will not cause any downtime.
    </Alert>
 
-2. **Install $productName$ $version$.**
+2. **Install Emissary $version$.**
 
-   After installing the new CRDs, upgrade $productName$ $version$.
+   After installing the new CRDs, upgrade Emissary $version$.
 
    <Alert severity="info">
      Our <a href="https://app.getambassador.io/yaml/emissary/$version$/emissary-emissaryns.yaml"><code>emissary-emissaryns.yaml</code></a> file
-     uses the `emissary` namespace, since this is the default for $productName$.
+     uses the `emissary` namespace, since this is the default for Emissary.
      We also publish <a href="https://app.getambassador.io/yaml/emissary/$version$/emissary-defaultns.yaml"><code>emissary-defaultns.yaml</code></a> for the
      `default` namespace. For any other namespace, you should download one of these files and edit the namespaces manually.
    </Alert>

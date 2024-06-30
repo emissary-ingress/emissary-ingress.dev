@@ -1,6 +1,6 @@
-import Alert from '@material-ui/lab/Alert';
-
-# The `Ambassador` `Module` Resource
+---
+title: Ambassador Module Resource
+---
 
 <div class="docs-article-toc">
 <h3>Contents</h3>
@@ -18,9 +18,9 @@ import Alert from '@material-ui/lab/Alert';
 
 </div>
 
-If present, the `ambassador` `Module` defines system-wide configuration for $productName$. You won't need it unless you need to change one of the system-wide configuration settings below.
+If present, the `ambassador` `Module` defines system-wide configuration for Emissary. You won't need it unless you need to change one of the system-wide configuration settings below.
 
-To use the `ambassador` `Module` to configure $productName$, it MUST be named `ambassador`, otherwise it will be ignored.  To create multiple `ambassador` `Module`s in the same Kubernetes namespace, you will need to apply them as annotations with separate `ambassador_id`s: you will not be able to use multiple CRDs.
+To use the `ambassador` `Module` to configure Emissary, it MUST be named `ambassador`, otherwise it will be ignored.  To create multiple `ambassador` `Module`s in the same Kubernetes namespace, you will need to apply them as annotations with separate `ambassador_id`s: you will not be able to use multiple CRDs.
 
 There are many items that can be configured on the `ambassador` `Module`. They are listed below with examples and grouped by category.
 
@@ -30,7 +30,7 @@ There are many items that can be configured on the `ambassador` `Module`. They a
 
 * `allow_chunked_length: true` tells Envoy to allow requests or responses with both `Content-Length` and `Transfer-Encoding` headers set. The default is `false`.
 
-By default, messages with both `Content-Length` and `Content-Transfer-Encoding` are rejected. If `allow_chunked_length` is `true`, $productName$ will remove the `Content-Length` header and process the message. See the [Envoy documentation for more details](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/protocol.proto.html?highlight=allow_chunked_length#config-core-v3-http1protocoloptions).
+By default, messages with both `Content-Length` and `Content-Transfer-Encoding` are rejected. If `allow_chunked_length` is `true`, Emissary will remove the `Content-Length` header and process the message. See the [Envoy documentation for more details](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/protocol.proto.html?highlight=allow_chunked_length#config-core-v3-http1protocoloptions).
 
 ##### Envoy access logs
 
@@ -70,7 +70,7 @@ would allow 30 seconds to validate the generated Envoy configuration.
 
 * `error_response_overrides` permits changing the status code and body text for 4XX and 5XX response codes. The default is not to override any error responses.
 
-By default, $productName$ will pass through error responses without modification, and errors generated locally will use Envoy's default response body, if any.
+By default, Emissary will pass through error responses without modification, and errors generated locally will use Envoy's default response body, if any.
 
 See [using error response overrides](../custom-error-responses) for usage details. For example, this configuration:
 
@@ -92,7 +92,7 @@ Two attributes allow providing information about the client's TLS certificate to
 * `set_current_client_cert_details` will tell Envoy what information to include in the
   `X-Forwarded-Client-Cert` header. The default is not to include the `X-Forwarded-Client-Cert` header at all.
 
-$productName$ will not forward information about a certificate that it cannot validate.
+Emissary will not forward information about a certificate that it cannot validate.
 
 See the Envoy documentation on [X-Forwarded-Client-Cert](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers.html?highlight=xfcc#x-forwarded-client-cert) and [SetCurrentClientCertDetails](https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto.html#extensions-filters-network-http-connection-manager-v3-httpconnectionmanager-setcurrentclientcertdetails) for more information.
 
@@ -107,7 +107,7 @@ set_current_client_cert_details: SANITIZE
 
 ##### Suppress Envoy headers
 
-* `suppress_envoy_headers: true` will prevent $productName$ from emitting certain additional
+* `suppress_envoy_headers: true` will prevent Emissary from emitting certain additional
   headers to HTTP requests and responses. The default is `false`.
 
 For the exact set of headers covered by this config, see the [Envoy documentation](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#config-http-filters-router-headers-set)
@@ -117,9 +117,9 @@ For the exact set of headers covered by this config, see the [Envoy documentatio
 
 ##### Ambassador ID
 
-* `ambassador_id` allows using multiple instances of $productName$ in the same cluster. The default is unset.
+* `ambassador_id` allows using multiple instances of Emissary in the same cluster. The default is unset.
 
-We recommend _not_ setting `ambassador_id` if you are running only one instance of $productName$ in your cluster. For more information, see the [Running and Deployment documentation](../running/#ambassador_id).
+We recommend _not_ setting `ambassador_id` if you are running only one instance of Emissary in your cluster. For more information, see the [Running and Deployment documentation](../running/#ambassador_id).
 
 If used, the `ambassador_id` value must be an array, for example:
 
@@ -129,7 +129,7 @@ ambassador_id: [ "test_environment" ]
 
 ##### Defaults
 
-* `defaults` provides a dictionary of default values that will be applied to various $productName$ resources. The default is to have no defaults configured.
+* `defaults` provides a dictionary of default values that will be applied to various Emissary resources. The default is to have no defaults configured.
 
 See [Using `ambassador` `Module` Defaults](../../using/defaults) for more information.
 
@@ -144,9 +144,9 @@ See [Using `ambassador` `Module` Defaults](../../using/defaults) for more inform
 
 gRPC is a binary HTTP/2-based protocol. While this allows high performance, it can be problematic for clients that are unable to speak HTTP/2 (such as JavaScript in many browsers, or legacy clients in difficult-to-update environments).
 
-The gRPC-HTTP/1.1 bridge can translate HTTP/1.1 calls with `Content-Type: application/grpc` into gRPC calls: $productName$ will perform buffering and translation as necessary. For more details on the translation process, see the [Envoy gRPC HTTP/1.1 bridge documentation](https://www.envoyproxy.io/docs/envoy/v1.11.2/configuration/http_filters/grpc_http1_bridge_filter.html).
+The gRPC-HTTP/1.1 bridge can translate HTTP/1.1 calls with `Content-Type: application/grpc` into gRPC calls: Emissary will perform buffering and translation as necessary. For more details on the translation process, see the [Envoy gRPC HTTP/1.1 bridge documentation](https://www.envoyproxy.io/docs/envoy/v1.11.2/configuration/http_filters/grpc_http1_bridge_filter.html).
 
-Likewise, gRPC-Web is a JSON and HTTP-based protocol that allows browser-based clients to take advantage of gRPC protocols. The gRPC-Web specification requires a server-side proxy to translate between gRPC-Web requests and gRPC backend services, and $productName$ can fill this role when the gRPC-Web bridge is enabled. For more details on the translation process, see the [Envoy gRPC HTTP/1.1 bridge documentation](https://www.envoyproxy.io/docs/envoy/v1.11.2/configuration/http_filters/grpc_http1_bridge_filter.html); for more details on gRPC-Web itself, see the [gRPC-Web client GitHub repo](https://github.com/grpc/grpc-web).
+Likewise, gRPC-Web is a JSON and HTTP-based protocol that allows browser-based clients to take advantage of gRPC protocols. The gRPC-Web specification requires a server-side proxy to translate between gRPC-Web requests and gRPC backend services, and Emissary can fill this role when the gRPC-Web bridge is enabled. For more details on the translation process, see the [Envoy gRPC HTTP/1.1 bridge documentation](https://www.envoyproxy.io/docs/envoy/v1.11.2/configuration/http_filters/grpc_http1_bridge_filter.html); for more details on gRPC-Web itself, see the [gRPC-Web client GitHub repo](https://github.com/grpc/grpc-web).
 
 ##### Statistics
 
@@ -221,13 +221,13 @@ header_case_overrides:
 - X-EXPERIMENTAL
 ```
 
-If the upstream service responds with `x-my-header: 1`, $productName$ will return `X-MY-Header: 1` to the client. Similarly, if the client includes `x-ExperiMENTAL: yes` in its request, the request to the upstream service will include `X-EXPERIMENTAL: yes`. Other headers will not be altered; $productName$ will use its default lowercase header.
+If the upstream service responds with `x-my-header: 1`, Emissary will return `X-MY-Header: 1` to the client. Similarly, if the client includes `x-ExperiMENTAL: yes` in its request, the request to the upstream service will include `X-EXPERIMENTAL: yes`. Other headers will not be altered; Emissary will use its default lowercase header.
 
 Please see the [Envoy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/protocol.proto.html#config-core-v3-http1protocoloptions-headerkeyformat) for more information. Note that in general, we recommend updating clients and services rather than relying on `header_case_overrides`.
 
 ##### Linkerd interoperability
 
-* `add_linkerd_headers: true` will force $productName$ to include the `l5d-dst-override` header for Linkerd. The default is `false`.
+* `add_linkerd_headers: true` will force Emissary to include the `l5d-dst-override` header for Linkerd. The default is `false`.
 
 When using older Linkerd installations, requests going to an upstream service may need to include the `l5d-dst-override` header to ensure that Linkerd will route them correctly. Setting `add_linkerd_headers` does this automatically.  See the [Mapping](../../using/mappings#linkerd-interoperability-add_linkerd_headers) documentation for more details.
 
@@ -243,9 +243,9 @@ See [Envoy documentation](https://www.envoyproxy.io/docs/envoy/latest/api-v3/ext
 
 ##### Strip matching host port
 
-* `strip_matching_host_port: true` will tell $productName$ to strip any port number from the host/authority header before processing and routing the request if that port number matches the port number of Envoy's listener. The default is `false`, which will preserve any port number.
+* `strip_matching_host_port: true` will tell Emissary to strip any port number from the host/authority header before processing and routing the request if that port number matches the port number of Envoy's listener. The default is `false`, which will preserve any port number.
 
-In the default installation of $productName$ the public port is 443, which then maps internally to 8443, so this only works in custom installations where the public Service port and Envoy listener port match.
+In the default installation of Emissary the public port is 443, which then maps internally to 8443, so this only works in custom installations where the public Service port and Envoy listener port match.
 
 A common reason to try using this property is if you are using gRPC with TLS and your client library appends the port to the Host header (i.e. `myurl.com:443`). We have an alternative solution in our [gRPC guide](../../../howtos/grpc#working-with-host-headers-that-include-the-port) that uses a [Lua script](#lua-scripts) to remove all ports from every Host header for that use case.
 
@@ -256,7 +256,7 @@ A common reason to try using this property is if you are using gRPC with TLS and
 
 ##### Envoy's admin port
 
-* `admin_port` specifies the port where $productName$'s Envoy will listen for low-level admin requests. The default is 8001; it should almost never need changing.
+* `admin_port` specifies the port where Emissary's Envoy will listen for low-level admin requests. The default is 8001; it should almost never need changing.
 
 ##### Lua scripts
 
@@ -277,29 +277,29 @@ Some caveats around the embedded scripts:
 
 * They run in-process, so any bugs in your Lua script can break every request.
 * They're run on every request/response to every URL.
-* They're inlined in the $productName$ YAML; as such, we do not recommend using Lua scripts for long, complex logic.
+* They're inlined in the Emissary YAML; as such, we do not recommend using Lua scripts for long, complex logic.
 
-If you need more flexible and configurable options, $AESproductName$ supports a [pluggable Filter system](/docs/edge-stack/latest/topics/using/filters/).
+If you need more flexible and configurable options, Emissary supports a [pluggable Filter system](/docs/edge-stack/latest/topics/using/filters/).
 
 ##### Merge slashes
 
-* `merge_slashes: true` will cause $productName$ to merge adjacent slashes in incoming paths when doing route matching and request filtering. The default is `false`.
+* `merge_slashes: true` will cause Emissary to merge adjacent slashes in incoming paths when doing route matching and request filtering. The default is `false`.
 
 For example, with `merge_slashes: true`, a request for `//foo///bar` would be matched to a `Mapping` with prefix `/foo/bar`.
 
 ##### Modify Default Buffer Size
 
-By default, the Envoy that ships with $productName$ uses a defailt of 1MiB soft limit for an upstream service's read and write buffer limits. This setting allows you to configure that buffer limit. See the [Envoy docs](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/v3/cluster.proto.html?highlight=per_connection_buffer_limit_bytes) for more information.
+By default, the Envoy that ships with Emissary uses a defailt of 1MiB soft limit for an upstream service's read and write buffer limits. This setting allows you to configure that buffer limit. See the [Envoy docs](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/cluster/v3/cluster.proto.html?highlight=per_connection_buffer_limit_bytes) for more information.
 
 ```yaml
 buffer_limit_bytes: 5242880 # Sets the default buffer limit to 5 MiB
 ```
 
-##### Use $productName$ namespace for service resolution
+##### Use Emissary namespace for service resolution
 
-* `use_ambassador_namespace_for_service_resolution: true` tells $productName$ to assume that unqualified services are in the same namespace as $productName$. The default is `false`.
+* `use_ambassador_namespace_for_service_resolution: true` tells Emissary to assume that unqualified services are in the same namespace as Emissary. The default is `false`.
 
-By default, when $productName$ sees a service name without a namespace, it assumes that the namespace is the same as the resource referring to the service. For example, for this `Mapping`:
+By default, when Emissary sees a service name without a namespace, it assumes that the namespace is the same as the resource referring to the service. For example, for this `Mapping`:
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1
@@ -313,9 +313,9 @@ spec:
   service: upstream
 ```
 
-$productName$ would look for a Service named `upstream` in namespace `foo`.
+Emissary would look for a Service named `upstream` in namespace `foo`.
 
-However, if `use_ambassador_namespace_for_service_resolution` is `true`, this `Mapping` would look for a Service named `foo` in the namespace in which $productName$ is installed instead.
+However, if `use_ambassador_namespace_for_service_resolution` is `true`, this `Mapping` would look for a Service named `foo` in the namespace in which Emissary is installed instead.
 
 ---
 
@@ -325,7 +325,7 @@ However, if `use_ambassador_namespace_for_service_resolution` is `true`, this `M
 
 * `diagnostics` controls access to the diagnostics interface.
 
-By default, $productName$ creates a `Mapping` that allows access to the diagnostic interface at `/ambassador/v0/diag` from anywhere in the cluster. To disable the `Mapping` entirely, set `diagnostics.enabled` to `false`:
+By default, Emissary creates a `Mapping` that allows access to the diagnostic interface at `/ambassador/v0/diag` from anywhere in the cluster. To disable the `Mapping` entirely, set `diagnostics.enabled` to `false`:
 
 
 ```yaml
@@ -333,7 +333,7 @@ diagnostics:
   enabled: false
 ```
 
-With diagnostics disabled, `/ambassador/v0/diag` will respond with 404; however, the service itself is still running, and `/ambassador/v0/diag/` is reachable from inside the $productName$ Pod at `https://localhost:8877`. You can use Kubernetes port forwarding to set up remote access to the diagnostics page temporarily:
+With diagnostics disabled, `/ambassador/v0/diag` will respond with 404; however, the service itself is still running, and `/ambassador/v0/diag/` is reachable from inside the Emissary Pod at `https://localhost:8877`. You can use Kubernetes port forwarding to set up remote access to the diagnostics page temporarily:
 
 ```
 kubectl port-forward -n ambassador deploy/ambassador 8877
@@ -356,9 +356,9 @@ See [Protecting Access to the Diagnostics Interface](../../../howtos/protecting-
 * `enable_ipv4` determines whether IPv4 DNS lookups are enabled. The default is `true`.
 * `enable_ipv6` determines whether IPv6 DNS lookups are enabled. The default is `false`.
 
-If both IPv4 and IPv6 are enabled, $productName$ will prefer IPv6. This can have strange effects if $productName$ receives `AAAA` records from a DNS lookup, but the underlying network of the pod doesn't actually support IPv6 traffic. For this reason, the default is IPv4 only.
+If both IPv4 and IPv6 are enabled, Emissary will prefer IPv6. This can have strange effects if Emissary receives `AAAA` records from a DNS lookup, but the underlying network of the pod doesn't actually support IPv6 traffic. For this reason, the default is IPv4 only.
 
-An [`Mapping`](../../using/mappings) can override both `enable_ipv4` and `enable_ipv6`, but if either is not stated explicitly in a `Mapping`, the values here are used. Most $productName$ installations will probably be able to avoid overriding these settings in Mappings.
+An [`Mapping`](../../using/mappings) can override both `enable_ipv4` and `enable_ipv6`, but if either is not stated explicitly in a `Mapping`, the values here are used. Most Emissary installations will probably be able to avoid overriding these settings in Mappings.
 
 ##### HTTP/1.0 support
 
@@ -398,25 +398,25 @@ ip_allow:
 - remote: 99.99.0.0/16
 ```
 
-The keyword `peer` specifies that the match should happen using the IP address of the other end of the network connection carrying the request: `X-Forwarded-For` and the `PROXY` protocol are both ignored. Here, our example specifies that connections originating from the $productName$ pod itself should always be allowed.
+The keyword `peer` specifies that the match should happen using the IP address of the other end of the network connection carrying the request: `X-Forwarded-For` and the `PROXY` protocol are both ignored. Here, our example specifies that connections originating from the Emissary pod itself should always be allowed.
 
-The keyword `remote` specifies that the match should happen using the IP address of the HTTP client, taking into account `X-Forwarded-For` and the `PROXY` protocol if they are allowed (if they are not allowed, or not present, the peer address will be used instead). This permits matches to behave correctly when, for example, $productName$ is behind a layer 7 load balancer. Here, our example specifies that HTTP clients from the IP address range `99.99.0.0` - `99.99.255.255` will be allowed.
+The keyword `remote` specifies that the match should happen using the IP address of the HTTP client, taking into account `X-Forwarded-For` and the `PROXY` protocol if they are allowed (if they are not allowed, or not present, the peer address will be used instead). This permits matches to behave correctly when, for example, Emissary is behind a layer 7 load balancer. Here, our example specifies that HTTP clients from the IP address range `99.99.0.0` - `99.99.255.255` will be allowed.
 
 You may specify as many ranges for each kind of keyword as desired.
 
 ##### Rejecting Client Requests With Escaped Slashes
 
-* `reject_requests_with_escaped_slashes: true` will tell $productName$ to reject requests containing escaped slashes. The default is `false`.
+* `reject_requests_with_escaped_slashes: true` will tell Emissary to reject requests containing escaped slashes. The default is `false`.
 
-When set to `true`, $productName$ will reject any client requests that contain escaped slashes (`%2F`, `%2f`, `%5C`, or `%5c`) in their URI path by returning HTTP 400. By default, $productName$ will forward these requests unmodified.
+When set to `true`, Emissary will reject any client requests that contain escaped slashes (`%2F`, `%2f`, `%5C`, or `%5c`) in their URI path by returning HTTP 400. By default, Emissary will forward these requests unmodified.
 
 In general, a request with an escaped slash will _not_ match a `Mapping` prefix with an unescaped slash. However, external authentication services and other upstream services may handle escaped slashes differently, which can lead to security issues if paths with escaped slashes are allowed. By setting `reject_requests_with_escaped_slashes: true`, this class of security concern can be largely avoided.
 
 ##### Trust downstream client IP
 
-* `use_remote_address: false` tells $productName$ that it cannot trust the remote address of incoming connections, and must instead rely exclusively on the `X-Forwarded-For` header. The default is `true`.
+* `use_remote_address: false` tells Emissary that it cannot trust the remote address of incoming connections, and must instead rely exclusively on the `X-Forwarded-For` header. The default is `true`.
 
-When `true` (the default), $productName$ will append its own IP address to the `X-Forwarded-For` header so that upstream services of $productName$ can get the full set of IP addresses that have propagated a request.  You may also need to set `externalTrafficPolicy: Local` on your `LoadBalancer` to propagate the original source IP address.
+When `true` (the default), Emissary will append its own IP address to the `X-Forwarded-For` header so that upstream services of Emissary can get the full set of IP addresses that have propagated a request.  You may also need to set `externalTrafficPolicy: Local` on your `LoadBalancer` to propagate the original source IP address.
 
 See the [Envoy documentation on the `X-Forwarded-For header` ](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_conn_man/headers) and the [Kubernetes documentation on preserving the client source IP](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip) for more details.
 
@@ -434,7 +434,7 @@ See the [`Listener` documentation](../listener/#securitymodel) for more details.
 
 * `listener_idle_timeout_ms` sets the idle timeout for incoming connections. The default is no timeout, meaning that incoming connections may remain idle forever.
 
-If set, this specifies the length of time (in milliseconds) that an incoming connection is allowed to be idle before being dropped. This can useful if you have proxies and/or firewalls in front of $productName$ and need to control how $productName$ initiates closing an idle TCP connection.
+If set, this specifies the length of time (in milliseconds) that an incoming connection is allowed to be idle before being dropped. This can useful if you have proxies and/or firewalls in front of Emissary and need to control how Emissary initiates closing an idle TCP connection.
 
 Please see the [Envoy documentation on HTTP protocol options](https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/core/v3/protocol.proto#config-core-v3-httpprotocoloptions) for more information.
 
@@ -442,7 +442,7 @@ Please see the [Envoy documentation on HTTP protocol options](https://www.envoyp
 
 * `keepalive` sets the global TCP keepalive settings.
 
-$productName$ will use these settings for all `AmbasasdorMapping`s unless overridden in a `Mapping`'s configuration. Without `keepalive`, $productName$ follows the operating system defaults.
+Emissary will use these settings for all `AmbasasdorMapping`s unless overridden in a `Mapping`'s configuration. Without `keepalive`, Emissary follows the operating system defaults.
 
 For example, the following configuration:
 
@@ -490,7 +490,7 @@ You can override this setting with [`timeout_ms` on a `Mapping`](../../using/tim
 * `readiness_probe` sets whether `/ambassador/v0/check_ready` is automatically mapped
 * `liveness_probe` sets whether `/ambassador/v0/check_alive` is automatically mapped
 
-By default, $productName$ creates `Mapping`s that support readiness and liveness checks at `/ambassador/v0/check_ready` and `/ambassador/v0/check_alive`. To disable the readiness `Mapping` entirely, set `readiness_probe.enabled` to `false`:
+By default, Emissary creates `Mapping`s that support readiness and liveness checks at `/ambassador/v0/check_ready` and `/ambassador/v0/check_alive`. To disable the readiness `Mapping` entirely, set `readiness_probe.enabled` to `false`:
 
 
 ```yaml
@@ -506,7 +506,7 @@ liveness_probe:
   enabled: false
 ```
 
-A disabled probe endpoint will respond with 404; however, the service is still running, and will be accessible on localhost port 8877 from inside the $productName$ Pod.
+A disabled probe endpoint will respond with 404; however, the service is still running, and will be accessible on localhost port 8877 from inside the Emissary Pod.
 
 You can change these to route requests to some other service. For example, to have the readiness probe map to the `quote` application's health check:
 
@@ -536,7 +536,7 @@ retry_policy:
 
 * `circuit_breakers` sets the global circuit breaking configuration defaults
 
-You can override the circuit breaker settings for individual `Mapping`s. By default, $productName$ does not configure any circuit breakers. For more information, see the [circuit breaking reference](../../using/circuit-breakers).
+You can override the circuit breaker settings for individual `Mapping`s. By default, Emissary does not configure any circuit breakers. For more information, see the [circuit breaking reference](../../using/circuit-breakers).
 
 ##### Default label domain and labels
 

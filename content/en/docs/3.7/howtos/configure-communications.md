@@ -1,25 +1,24 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Configuring Emissary Communications
+---
 
-Configuring $productName$ Communications
-========================================
+For Emissary to do its job of managing network communications for your services, it first needs to know how its own communications should be set up. This is handled by a combination of resources: the `Listener`, the `Host`, and the `TLSContext`.
 
-For $productName$ to do its job of managing network communications for your services, it first needs to know how its own communications should be set up. This is handled by a combination of resources: the `Listener`, the `Host`, and the `TLSContext`.
+- `Listener`: defines where, and how, Emissary should listen for requests from the network.
+- `Host`: defines which hostnames Emissary should care about, and how to handle different kinds of requests for those hosts. `Host`s can be associated with one or more `Listener`s.
+- `TLSContext`: defines whether, and how, Emissary will manage TLS certificates and options. `TLSContext`s can be associated with one or more `Host`s.
 
-- `Listener`: defines where, and how, $productName$ should listen for requests from the network.
-- `Host`: defines which hostnames $productName$ should care about, and how to handle different kinds of requests for those hosts. `Host`s can be associated with one or more `Listener`s.
-- `TLSContext`: defines whether, and how, $productName$ will manage TLS certificates and options. `TLSContext`s can be associated with one or more `Host`s.
-
-Once the basic communications setup is in place, $productName$ `Mapping`s and `TCPMapping`s can be associated with `Host`s to actually do routing.
+Once the basic communications setup is in place, Emissary `Mapping`s and `TCPMapping`s can be associated with `Host`s to actually do routing.
 
 <Alert severity="warning">
   Remember that <code>Listener</code> and <code>Host</code> resources are&nbsp;
-  <b>required</b>&nbsp;for a functioning $productName$ installation that can route traffic!<br/>
+  <b>required</b>&nbsp;for a functioning Emissary installation that can route traffic!<br/>
   <a href="../../topics/running/listener">Learn more about <code>Listener</code></a>.<br/>
   <a href="../../topics/running/host-crd">Learn more about <code>Host</code></a>.
 </Alert>
 
 <Alert severity="warning">
-  Remember than $productName$ does not make sure that a wildcard <code>Host</code> exists! If the
+  Remember than Emissary does not make sure that a wildcard <code>Host</code> exists! If the
   wildcard behavior is needed, a <code>Host</code> with a <code>hostname</code> of <code>"*"</code>
   must be defined by the user.
 </Alert>
@@ -38,7 +37,7 @@ A Note on TLS
 -------------
 
 [TLS] can appear intractable if you haven't set up [certificates] correctly. If you're
-having trouble with TLS, always [check the logs] of your $productName$ Pods and look for
+having trouble with TLS, always [check the logs] of your Emissary Pods and look for
 certificate errors.
 
 [TLS]: ../../topics/running/tls
@@ -51,7 +50,7 @@ Examples / Cookbook
 ### Basic HTTP and HTTPS
 
 A useful configuration is to support either HTTP or HTTPS, in this case on either port 8080 or port 8443. This
-tends to make it as easy as possible to communicate with the services behind the $productName$ instance. It uses
+tends to make it as easy as possible to communicate with the services behind the Emissary instance. It uses
 two `Listener`s and at least one `Host`.
 
 
@@ -172,13 +171,13 @@ spec:
   <a href="../../topics/running/host-crd">Learn more about <code>Host</code></a>
 </Alert>
 
-### TLS using ACME ($AESproductName$ only)
+### TLS using ACME (Emissary only)
 
 This scenario uses ACME to get certificates for `foo.example.com` and `bar.example.com`. HTTPS traffic to either
 host is routed; HTTP traffic to `foo.example.com` will be redirected to HTTPS, but HTTP traffic to `bar.example.com`
 will be rejected outright.
 
-Since this example uses ACME, **it is only supported in $AESproductName$**.
+Since this example uses ACME, **it is only supported in Emissary**.
 
 For demonstration purposes, we show this example listening for HTTPS on port 9999, using `X-Forwarded-Proto`.
 
@@ -240,7 +239,7 @@ This scenario uses TLS without ACME. Each of our two `Host`s uses a distinct TLS
 traffic to either`foo.example.com` or `bar.example.com` is routed, but this time `foo.example.com` will redirect
 HTTP requests, while `bar.example.com` will route them.
 
-Since this example does not use ACME, it is supported in $productName$ as well as $AESproductName$.
+Since this example does not use ACME, it is supported in Emissary as well as Emissary.
 
 For demonstration purposes, we show this example listening for HTTPS on port 4848, using `X-Forwarded-Proto`.
 
@@ -381,10 +380,10 @@ spec:
   <a href="../../topics/running/host-crd">Learn more about <code>Host</code></a>
 </Alert>
 
-### ACME With a TLSContext ($AESproductName$ Only)
+### ACME With a TLSContext (Emissary Only)
 
-In $AESproductName$, you can use a `TLSContext` with ACME as well. This example is the same as "TLS using ACME",
-but we use a `TLSContext` to set `ALPN` information. Again, ACME is only supported in $AESproductName$.
+In Emissary, you can use a `TLSContext` with ACME as well. This example is the same as "TLS using ACME",
+but we use a `TLSContext` to set `ALPN` information. Again, ACME is only supported in Emissary.
 
 ```yaml
 ---
@@ -420,7 +419,7 @@ spec:
 
 ### Using an L7 Load Balancer to Terminate TLS
 
-In this scenario, a layer 7 load balancer ahead of $productName$ will terminate TLS, so $productName$ will always see HTTP with a known good `X-Forwarded-Protocol`. We'll use that to route HTTPS and redirect HTTP.
+In this scenario, a layer 7 load balancer ahead of Emissary will terminate TLS, so Emissary will always see HTTP with a known good `X-Forwarded-Protocol`. We'll use that to route HTTPS and redirect HTTP.
 
 ```yaml
 ---
@@ -450,7 +449,7 @@ spec:
 
 - We set `l7Depth` to 1 to indicate that there's a single trusted L7 load balancer ahead of us.
 - We specifically set this Listener to HTTP-only, but we stick with port 8443 just because we expect people setting up TLS at all to expect to use port 8443. (There's nothing special about the port number, pick whatever you like.)
-- Our `Host` does not specify a `tlsSecret`, so $productName$ will not try to terminate TLS.
+- Our `Host` does not specify a `tlsSecret`, so Emissary will not try to terminate TLS.
 - Since the `Listener` still pays attention to `X-Forwarded-Proto`, both secure and insecure requests
   are possible, and we use the `Host` to route HTTPS and redirect HTTP.
 
@@ -462,12 +461,12 @@ spec:
 
 ### Using a Split L4 Load Balancer to Terminate TLS
 
-Here, we assume that $productName$ is behind a load balancer setup that handles TLS at layer 4:
+Here, we assume that Emissary is behind a load balancer setup that handles TLS at layer 4:
 
-- Incoming cleartext traffic is forwarded to $productName$ on port 8080.
-- Incoming TLS traffic is terminated at the load balancer, then forwarded to $productName$ _as cleartext_ on port 8443.
+- Incoming cleartext traffic is forwarded to Emissary on port 8080.
+- Incoming TLS traffic is terminated at the load balancer, then forwarded to Emissary _as cleartext_ on port 8443.
 - This might involve multiple L4 load balancers, but the actual number doesn't matter.
-- The actual port numbers we use don't matter either, as long as $productName$ and the load balancer(s) agree on which port is for which traffic.
+- The actual port numbers we use don't matter either, as long as Emissary and the load balancer(s) agree on which port is for which traffic.
 
 We're going to route HTTPS for both `foo.example.com` and `bar.example.com`, redirect HTTP for `foo.example.com`, and reject HTTP for `bar.example.com`.
 

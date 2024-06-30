@@ -1,18 +1,18 @@
 ---
     title: Upgrade $productName$ with a separate cluster
-    description: "Instructions for how to upgrade $productName$ to $versionTwoX$. Transfer your current configuration of $AESproductName$ or $OSSproductName$ to $versionTwoX$."
+    description: "Instructions for how to upgrade $productName$ to $versionTwoX$. Transfer your current configuration of Emissary or $OSSproductName$ to $versionTwoX$."
 ---
 import Alert from '@material-ui/lab/Alert';
 
 # Upgrading $productName$ with a separate cluster
 
-You can upgrade from any version of $AESproductName$ or $OSSproductName$ to
+You can upgrade from any version of Emissary or $OSSproductName$ to
 any version of either by installing the new version in a new Kubernetes cluster,
 then copying over configuration as needed. This is the way to be absolutely
 certain that each installation cannot affect the other: it is extremely safe,
 but is also significantly more effort.
 
-For example, to upgrade from some other version of $AESproductName$ or
+For example, to upgrade from some other version of Emissary or
 $OSSproductName$ to $productName$ $versionTwoX$:
 
 1. Install $productName$ $versionTwoX$ in a completely new cluster.

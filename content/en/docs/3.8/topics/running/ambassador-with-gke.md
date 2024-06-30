@@ -1,8 +1,10 @@
-# $productName$ with GKE
+---
+title: GKE
+---
 
 Google offers a [L7 load balancer](https://cloud.google.com/kubernetes-engine/docs/concepts/ingress) to
 leverage network services such as managed SSL certificates, SSL offloading or the Google content delivery network.
-A L7 load balancer in front of $productName$ can be configured by hand or by using the Ingress-GCE resource. Using the
+A L7 load balancer in front of Emissary can be configured by hand or by using the Ingress-GCE resource. Using the
 Ingress resource also allows you to create Google-managed SSL certificates through Kubernetes.
 
 With this setup, HTTPS will be terminated at the Google load balancer. The load balancer will be created and configured by
@@ -11,25 +13,25 @@ the Ingress-GCE resource. The load balancer consists of a set of
 [backend services](https://cloud.google.com/load-balancing/docs/backend-service).
 In this setup, the ingress resource creates two forwarding rules, one for HTTP and one for HTTPS. The HTTPS
 forwarding rule has the SSL certificates attached. Also, one backend service will be created to point to
-a list of instance groups at a static port. This will be the NodePort of the $productName$ service.
+a list of instance groups at a static port. This will be the NodePort of the Emissary service.
 
-With this setup, the load balancer terminates HTTPS and then directs the traffic to the $productName$ service
-via the `NodePort`. $productName$ is then doing all the routing to the other internal/external services.
+With this setup, the load balancer terminates HTTPS and then directs the traffic to the Emissary service
+via the `NodePort`. Emissary is then doing all the routing to the other internal/external services.
 
 # Overview of steps
 
 1. Install and configure the ingress with the HTTP(S) load balancer
-2. Install $productName$
-3. Configure and connect $productName$ to ingress
+2. Install Emissary
+3. Configure and connect Emissary to ingress
 4. Create an SSL certificate and enable HTTPS
 5. Create BackendConfig for health checks
-6. Configure $productName$ to do HTTP -> HTTPS redirection
+6. Configure Emissary to do HTTP -> HTTPS redirection
 
 `ambassador` will be running as a `NodePort` service. Health checks will be configured to go to a BackendConfig resource.
 
-## 0. $productName$
+## 0. Emissary
 
-This guide will install $OSSproductName$. You can also install $AESproductName$. Please note:
+This guide will install $OSSproductName$. You can also install Emissary. Please note:
 - The ingress and the `ambassador` service need to run in the same namespace
 - The `ambassador` service needs to be of type `NodePort` and not `LoadBalancer`. Also remove the line with `externalTrafficPolicy: Local`
 - Ambassador-Admin needs to be of type `NodePort` instead of `ClusterIP` since it needs to be available for health checks
@@ -41,12 +43,12 @@ is up and running follow [this tutorial from Google](https://cloud.google.com/ku
 an ingress and a L7 load balancer. After you have completed these steps you will have a running L7 load balancer
 and one service.
 
-## 2. Install $productName$
+## 2. Install Emissary
 
 Follow the first section of the [$OSSproductName$ installation guide](../../install/)  to install $OSSproductName$.
 Stop before defining the `ambassador` service.
 
-$productName$ needs to be deployed as `NodePort` instead of `LoadBalancer` to work with the L7 load balancer and the ingress.
+Emissary needs to be deployed as `NodePort` instead of `LoadBalancer` to work with the L7 load balancer and the ingress.
 
 Save the YAML below in ambassador.yaml and apply with `kubectl apply -f ambassador.yaml`
 
@@ -178,9 +180,9 @@ spec:
     service: ambassador
 ```
 
-## 6. Configure $productName$ to do HTTP -> HTTPS redirection
+## 6. Configure Emissary to do HTTP -> HTTPS redirection
 
-Configure $productName$ to [redirect traffic from HTTP to HTTPS](../tls/cleartext-redirection/#http-https-redirection). You will need to restart $productName$ to effect the changes with `kubectl rollout restart deployment ambassador`.
+Configure Emissary to [redirect traffic from HTTP to HTTPS](../tls/cleartext-redirection/#http-https-redirection). You will need to restart Emissary to effect the changes with `kubectl rollout restart deployment ambassador`.
 
 The result should be that `http://www.example.com` will redirect to `https://www.example.com`.
 

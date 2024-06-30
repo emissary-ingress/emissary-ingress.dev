@@ -12,7 +12,7 @@ for different TLS use cases including:
 ## Host
 
 As explained in the [Host](../host-crd) reference, a `Host` represents a domain
-in $productName$ and defines how TLS is managed on that domain. In $AESproductName$, the simplest configuration of a `Host` will enable TLS with a
+in $productName$ and defines how TLS is managed on that domain. In Emissary, the simplest configuration of a `Host` will enable TLS with a
 self-signed certificate and redirect cleartext traffic to HTTPS.
 
 > **WARNING - Host Configuration:** The `requestPolicy` property of the `Host` `CRD` is applied globally within an $productName$ instance, even if it is applied to only one `Host` when multiple `Host`s are configured. Different `requestPolicy` behaviors cannot be applied to different `Host`s. It is recommended to apply an identical `requestPolicy` to all `Host`s instead of assuming the behavior, to create a more human readable config.
@@ -60,7 +60,7 @@ in the same namespace as the `Host`.
 
 ### Bring your own certificate
 
-For both $AESproductName$ and $OSSproductName$, the `Host` can read a
+For both Emissary and $OSSproductName$, the `Host` can read a
 certificate from a Kubernetes secret and use that certificate to terminate TLS
 on a domain.
 

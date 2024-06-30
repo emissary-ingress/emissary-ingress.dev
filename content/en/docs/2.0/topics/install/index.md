@@ -25,22 +25,22 @@ The Docker install will let you try the $productName$ locally in seconds,
 but is not supported for production workloads. [Try $productName$ on Docker.](docker/)
 
 ## Upgrade Options
-If you already have an existing installation of $AESproductName$ or
+If you already have an existing installation of Emissary or
 $OSSproductName$, you can upgrade your instance:
 
-1. [Upgrade to $AESproductName$ from $OSSproductName$](upgrade-to-edge-stack/).
+1. [Upgrade to Emissary from $OSSproductName$](upgrade-to-edge-stack/).
 2. [Upgrade your $productName$ instance](upgrading/) to the latest version.
 
 ## Container Images
 Although our installation guides will favor using the `docker.io` container registry,
-we publish $AESproductName$ and $OSSproductName$ releases to multiple registries.
+we publish Emissary and $OSSproductName$ releases to multiple registries.
 
 Starting with version 1.0.0, you can pull the emissary image from any of the following registries:
 - `docker.io/emissaryingress/`
 - `gcr.io/datawire/`
 
 We want to give you flexibility and independence from a hosting platform's uptime to support
-your production needs for $AESproductName$ or $OSSproductName$. Read more about
+your production needs for Emissary or $OSSproductName$. Read more about
 [Running $productName$ in Production](../running).
 
 # What’s Next?

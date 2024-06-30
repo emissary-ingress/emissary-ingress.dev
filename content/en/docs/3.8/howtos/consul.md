@@ -8,7 +8,7 @@ title: Consul integration
 - [Consul integration](#consul-integration)
   - [Architecture overview](#architecture-overview)
   - [Installing Consul](#installing-consul)
-  - [Installing $productName$](#installing-consul)
+  - [Installing Emissary](#installing-consul)
   - [Using Consul for service discovery](#using-consul-for-service-discovery)
   - [Using Consul for authorization and encryption](#using-consul-for-authorization-and-encryption)
     - [Environment variables](#environment-variables)
@@ -17,32 +17,32 @@ title: Consul integration
 </div>
 
 [Consul](https://www.consul.io) is a widely used service mesh.
-$productName$ natively supports service discovery and unauthenticated
+Emissary natively supports service discovery and unauthenticated
 communication to services in Consul.  Additionally, the *Ambassador
-Consul Connector* enables $productName$ to encrypt and authenticate
+Consul Connector* enables Emissary to encrypt and authenticate
 its communication via mTLS with services in Consul that make use of
 [Consul's *Connect* feature](https://www.consul.io/docs/connect).
 
 ## Architecture overview
 
-Using Consul with $productName$ is particularly useful when deploying
-$productName$ in hybrid cloud environments where you deploy
+Using Consul with Emissary is particularly useful when deploying
+Emissary in hybrid cloud environments where you deploy
 applications on VMs and Kubernetes.  In this environment, Consul
-enables $productName$ to securely route over TLS to any application
+enables Emissary to securely route over TLS to any application
 regardless of where it is deployed.
 
 In this architecture, Consul serves as the source of truth for your
 entire data center, tracking available endpoints, service
 configuration, and secrets for TLS encryption.  New applications and
 services automatically register themselves with Consul using the
-Consul agent or API.  When you send a request through $productName$,
-$productName$ sends the request to an endpoint based on the data in
+Consul agent or API.  When you send a request through Emissary,
+Emissary sends the request to an endpoint based on the data in
 Consul.
 
 ![ambassador-consul](../images/consul-ambassador.png)
 
 This guide first instructs you on registering a service with Consul
-and using $productName$ to dynamically route requests to that service
+and using Emissary to dynamically route requests to that service
 based on Consul's service discovery data, and subsequently instructs
 you on using using the Ambassador Consul Connector to use Consul for
 authorizing and encrypting requests.
@@ -120,24 +120,24 @@ and skip to the next section.
    helm install -f consul-values.yaml hashicorp hashicorp/consul
    ```
 
-## Installing $productName$
+## Installing Emissary
 
-If you have not already installed $productName$ in to your cluster,
+If you have not already installed Emissary in to your cluster,
 then go to the [quick start guide](../../tutorials/getting-started)
 before continuing any further in this guide.
 
 ## Using Consul for service discovery
 
-This section of the guide instructs you on configuring $productName$
+This section of the guide instructs you on configuring Emissary
 to look for services registered to Consul, registering a demo
-application with Consul, and configuring $productName$ to route to
+application with Consul, and configuring Emissary to route to
 this application using endpoint data from Consul.
 
 In this tutorial, you deploy the application in Kubernetes.  However,
 this application can be deployed anywhere in your data center, such as
 on a VM.
 
-1. Configure $productName$ to look for services registered to Consul
+1. Configure Emissary to look for services registered to Consul
    by creating the `ConsulResolver`.  Use `kubectl` to apply the
    following manifest:
 
@@ -171,10 +171,10 @@ on a VM.
 
    </Alert>
 
-   This tells $productName$ that Consul is a service discovery endpoint.
+   This tells Emissary that Consul is a service discovery endpoint.
 
    You must set the resolver to your `ConsulResolver` on a
-   per-`Mapping` basis, otherwise for that `Mapping` $productName$
+   per-`Mapping` basis, otherwise for that `Mapping` Emissary
    uses the default resolver.  That is, in order for a `Mapping` to
    make use of a service registered in Consul, you need to add
    `resolver: consul-dc1` to that `Mapping`.
@@ -295,7 +295,7 @@ on a VM.
 
    </Alert>
 
-4. Configure $productName$ to make use of this `quote-consul` service.
+4. Configure Emissary to make use of this `quote-consul` service.
    Use `kubectl` to apply the following manifest:
 
    ```shell
@@ -321,12 +321,12 @@ on a VM.
       `Deployment`.
     - `resolver` must be set to the `ConsulResolver` that you created in
       the previous step.
-    - `load_balancer` must be set to configure $productName$ to route
+    - `load_balancer` must be set to configure Emissary to route
       directly to the Quote application endpoints that
       are retrieved from Consul.
 
 5. Send a request to the `/quote-consul/` API endpoint in order to
-   validate that $productName$ is now making use of that service:
+   validate that Emissary is now making use of that service:
 
    ```console
    $ AMBASSADOR_IP=$(kubectl --namespace $productNamespace$ get services/$productDeploymentName$ -o "go-template={{range .status.loadBalancer.ingress}}{{or .ip .hostname}}{{end}}")
@@ -351,14 +351,14 @@ Consul.
 In this part of the guide, you'll install a different version of the
 demo application that now uses Consul's *Connect* feature to authorize
 its incoming connections using mTLS, and install *Ambassador Consul
-Connector* to enable $productName$ to authenticate to such services.
+Connector* to enable Emissary to authenticate to such services.
 
 The following steps assume you've already set up Consul for service
 discovery, as detailed above.
 
 1. The Ambassador Consul Connector retrieves the TLS certificate
    issued by the Consul CA and stores it in a Kubernetes `Secret` for
-   $productName$ to use.  Deploy the Ambassador Consul Connector with
+   Emissary to use.  Deploy the Ambassador Consul Connector with
    `kubectl`:
 
    ```shell
@@ -370,7 +370,7 @@ discovery, as detailed above.
     - RBAC resources.
     - The Ambassador Consul Connector service.
     - A `TLSContext` named `ambassador-consul` to load the
-      `ambassador-consul-connect` `Secret` into $productName$.
+      `ambassador-consul-connect` `Secret` into Emissary.
 
 2. Deploy a new version of the demo application, and configure it to
    inject the Consul Connect sidecar by setting
@@ -486,7 +486,7 @@ discovery, as detailed above.
    After you have verified that you see the `quote-connect` service in
    your web browser, you may kill the port-forward.
 
-5. Create a `Mapping` to configure $productName$ route to the
+5. Create a `Mapping` to configure Emissary route to the
    `quote-connect` service in Consul.  Use `kubectl` to apply the
    following manifest:
 
@@ -514,11 +514,11 @@ discovery, as detailed above.
       You can view this with `kubectl get svc -A` it should follow the
       format of `{service name}-sidecar-proxy`.
     - `resolver` must be set to the `ConsulResolver` created when
-      configuring $productName$.
+      configuring Emissary.
     - `tls` must be set to the TLSContext storing the Consul mTLS
       certificates, which is `ambassador-consul` in the standard
       `ambassador-consul-connector.yaml`.
-    - `load_balancer` must be set to configure $productName$ to route
+    - `load_balancer` must be set to configure Emissary to route
       directly to the application endpoints that are retrieved from
       Consul.
 
@@ -526,7 +526,7 @@ discovery, as detailed above.
    the `quote-connect` service in Consul.
 
 6. Send a request to the `/quote-connect/` API endpoint in order to
-   validate that $productName$ is now using mTLS to encrypt and
+   validate that Emissary is now using mTLS to encrypt and
    authenticate communication with that service:
 
    ```console
@@ -553,7 +553,7 @@ environment variables.  The defaults are best for most use-cases.
 
 | Environment Variable               | Description                                                                                                                                                                                             | Default                                              |
 |------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| `_AMBASSADOR_ID`                   | Set the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple $productNamePlural$ (Required if `AMBASSADOR_ID` is set in your $productName$ `Deployment`) | `""`                                                 |
+| `_AMBASSADOR_ID`                   | Set the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple $productNamePlural$ (Required if `AMBASSADOR_ID` is set in your Emissary `Deployment`) | `""`                                                 |
 | `_CONSUL_HOST`                     | Set the IP or DNS name of the target Consul HTTP API server                                                                                                                                             | `127.0.0.1`                                          |
 | `_CONSUL_PORT`                     | Set the port number of the target Consul HTTP API server                                                                                                                                                | `8500`                                               |
 | `_AMBASSADOR_TLS_SECRET_NAME`      | Set the name of the Kubernetes `v1.Secret` created by this program that contains the Consul-generated TLS certificate.                                                                                  | `$AMBASSADOR_ID-consul-connect`                      |
@@ -561,6 +561,6 @@ environment variables.  The defaults are best for most use-cases.
 
 ## More information
 
-For more about $productName$'s integration with Consul, read the
+For more about Emissary's integration with Consul, read the
 [service discovery configuration](../../topics/running/resolvers)
 documentation.

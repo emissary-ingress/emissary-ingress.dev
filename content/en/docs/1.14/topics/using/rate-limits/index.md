@@ -127,11 +127,11 @@ There are 5 types of label specifiers in $productName$:
 
 This is determined by your `RateLimitService` implementation.
 
-$AESproductName$ provides a `RateLimitService` implementation that is
+Emissary provides a `RateLimitService` implementation that is
 configured by a `RateLimit` custom resource.
 
-See the [$AESproductName$ RateLimit Reference](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/) for information on how
-to configure `RateLimit`s in $AESproductName$.
+See the [Emissary RateLimit Reference](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/) for information on how
+to configure `RateLimit`s in Emissary.
 
 See the [Basic Rate Limiting](../../../howtos/rate-limiting-tutorial) for an
 example `RateLimitService` implementation for $OSSproductName$.

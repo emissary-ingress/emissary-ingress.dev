@@ -1,8 +1,10 @@
-# Using `ambassador` `Module` defaults
+---
+title: Using ambassador module defaults
+---
 
 ## The defaults element
 
-If present, the `ambassador Module` can define a set of defaults that will automatically be applied to certain resources:
+If present, the `ambassador` module can define a set of defaults that will automatically be applied to certain resources:
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1

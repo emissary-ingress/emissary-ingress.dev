@@ -9,7 +9,7 @@ is necessary to upgrade $productName$.
 
 The steps to upgrade depend on the method that was used to install $productName$, as indicated below.
 
-> **Note:** It is always advised to migrate your install of $OSSproductName$ to the `ambassador` namespace before upgrading to $AESproductName$ with any method.
+> **Note:** It is always advised to migrate your install of $OSSproductName$ to the `ambassador` namespace before upgrading to Emissary with any method.
 
 ## Installed via the Operator?
 

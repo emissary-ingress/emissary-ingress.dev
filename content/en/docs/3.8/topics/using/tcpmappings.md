@@ -1,16 +1,18 @@
-# `TCPMapping` resources
+---
+title: TCPMapping resources
+---
 
-In addition to managing HTTP, gRPC, and WebSockets at layer 7, $productName$ can also manage TCP connections at layer 4. The core abstraction used to support TCP connections is the `TCPMapping`.
+In addition to managing HTTP, gRPC, and WebSockets at layer 7, Emissary can also manage TCP connections at layer 4. The core abstraction used to support TCP connections is the `TCPMapping`.
 
-An $productName$ `TCPMapping` associates TCP connections with upstream _services_.
+An Emissary `TCPMapping` associates TCP connections with upstream _services_.
 Cleartext TCP connections are defined by destination IP address and/or destination TCP port;
 TLS-encrypted TCP connections can also be defined by the hostname presented using SNI.
-A service is exactly the same as in HTTP [`Mappings`](../mappings/) and other $productName$ resources.
+A service is exactly the same as in HTTP [`Mappings`](../mappings/) and other Emissary resources.
 
 ## TCPMapping configuration
 
-Like all native $productName$ resources, `TCPMappings` have an
-`ambassador_id` field to select which $productName$ installations take
+Like all native Emissary resources, `TCPMappings` have an
+`ambassador_id` field to select which Emissary installations take
 notice of it:
 
 | Attribute       | Description                                                                                                   | Type             | Default value                    |
@@ -19,13 +21,13 @@ notice of it:
 
 ### Downstream configuration
 
-The downstream configuration refers to the connection between the end-client and $productName$.
+The downstream configuration refers to the connection between the end-client and Emissary.
 
 | Attribute | Description                                                                                                                                          | Type    | Default value                                                    |
 |:----------|:-----------------------------------------------------------------------------------------------------------------------------------------------------|:--------|:-----------------------------------------------------------------|
-| `port`    | Which TCP port number $productName$ should listen on this `TCPMapping`; may or may not correspond to a [`Listener` resource](../../running/listener) | string  | required; no default                                             |
+| `port`    | Which TCP port number Emissary should listen on this `TCPMapping`; may or may not correspond to a [`Listener` resource](../../running/listener) | string  | required; no default                                             |
 | `host`    | If non-empty, [terminate TLS](#tls-termination) on this port; using this hostglob for SNI-based for routing                                          | string  | optional; if not present, do not terminate TLS on this port      |
-| `address` | Which IP address $productName$ should listen on                                                                                                      | string  | optional; if not present, accept connections on all IP addresses |
+| `address` | Which IP address Emissary should listen on                                                                                                      | string  | optional; if not present, accept connections on all IP addresses |
 | `weight`  | The (integer) percentage of traffic for this resource when [canarying](../canary) between multiple `TCPMappings`                                     | integer | optional; default is to not canary                               |
 
 If the `port` does not pair with an actual existing
@@ -52,15 +54,15 @@ terminated, and the `TCPMapping` will be discarded.
 If the `host` field is non-empty, then the `TCPMapping` will terminate
 TLS when listening for connections from end-clients
 
-To do this, $productName$ needs a TLS certificate and configuration;
+To do this, Emissary needs a TLS certificate and configuration;
 there are two ways that this can be provided:
 
-First, $productName$ checks for any [`Host`
+First, Emissary checks for any [`Host`
 resources](../../running/host-crd) with TLS configured whose
 `Host.spec.hostname` glob-matches the `TCPMapping.spec.host`; if such
 a `Host` exists, then its TLS certificate and configuration is used.
 
-Second, if such a `Host` is not found, then $productName$ checks for
+Second, if such a `Host` is not found, then Emissary checks for
 any [`TLSContext` resources](../../running/tls) who have an item in
 `TLSContext.spec.hosts` that exact-matches the `TCPMapping.spec.host`;
 if such a `TLSContext` exists, then it and its certificate are used.
@@ -76,7 +78,7 @@ It is an error if no such `Host` or `TLSContext` is found, then the
 ### Upstream configuration
 
 The upstream configuration refers to the connection between
-$productName$ and the service that it is a gateway to.
+Emissary and the service that it is a gateway to.
 
 | Attribute          | Description                                                                                                                                                                                          | Type             | Default value                                                                                           |
 |:-------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------|:--------------------------------------------------------------------------------------------------------|
@@ -88,7 +90,7 @@ $productName$ and the service that it is a gateway to.
 | `circuit_breakers` | Circuit breakers, same as for [HTTP `Mappings`](../circuit-breakers)                                                                                                                                 | array of objects | optional; default is set by the [`ambassador` `Module`](../../running/ambassador)                       |
 | `idle_timeout_ms`  | The timeout, in milliseconds, after which the connection will be terminated if no traffic is seen.                                                                                                   | integer          | optional; default is no timeout                                                                         |
 
-If both `enable_ipv4` and `enable_ipv6` are true, $productName$ will prefer IPv6 to IPv4. See the [`ambassador` `Module`](../../running/ambassador) documentation for more information.
+If both `enable_ipv4` and `enable_ipv6` are true, Emissary will prefer IPv6 to IPv4. See the [`ambassador` `Module`](../../running/ambassador) documentation for more information.
 
 The values for the scheme-part of the `service` are a bit of a
 misnomer; despite the `https://` string being recognized, it does not
@@ -102,8 +104,8 @@ because `tls` is set), then a default port number of `443` is used
 (even if the service says `http://`).
 
 The default `resolver` is a KubernetesServiceResolver, which takes a [namespace-qualified DNS name](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#namespaces-of-services).
-Given that `AMBASSADOR_NAMESPACE` is correctly set, $productName$ can map to services in other namespaces:
-- `service: servicename` will route to a service in the same namespace as $productName$, and
+Given that `AMBASSADOR_NAMESPACE` is correctly set, Emissary can map to services in other namespaces:
+- `service: servicename` will route to a service in the same namespace as Emissary, and
 - `service: servicename.namespace` will route to a service in a different namespace.
 
 #### TLS origination
@@ -113,17 +115,17 @@ If the `TCPMapping.spec.service` starts with `https://`, or if the
 when dialing out to the service.
 
 If originating TLS, but `TCPMapping.spec.tls` is not set, then
-$productName$ will use a default TLS client configuration, and will
+Emissary will use a default TLS client configuration, and will
 not provide a client certificate.
 
-If `TCPMapping.spec.tls` is set, then $productName$ looks for a
+If `TCPMapping.spec.tls` is set, then Emissary looks for a
 [`TLSContext` resource](../../running/tls) with that name (the
 `TLSContext` may be found in _any_ namespace).
 
 ### `TCPMapping` and TLS
 
-The `TCPMapping.spec.host` attribute determines whether $productName$ will _terminate_ TLS when a client connects to $productName$.
-The `TCPMapping.spec.service` and `TCPMapping.spec.tls` attributes work together to determine whether $productName$ will _originate_ TLS when connecting to an upstream.
+The `TCPMapping.spec.host` attribute determines whether Emissary will _terminate_ TLS when a client connects to Emissary.
+The `TCPMapping.spec.service` and `TCPMapping.spec.tls` attributes work together to determine whether Emissary will _originate_ TLS when connecting to an upstream.
 The two are _totally_ independent.
 See the sections on [TLS termination](#tls-termination) and [TLS origination](#tls-origination), respectively.
 
@@ -133,8 +135,8 @@ See the sections on [TLS termination](#tls-termination) and [TLS origination](#t
 
 If `host` is not set, then TLS is not terminated.
 If `service` does not start with `https://` and `tls` is empty, then TLS is not originated.
-So, if both of these are true, then$productName$ simply proxies bytes between the client and the upstream; TLS may or may not be involved, $productName$ doesn't care.
-You should specify in `service` which port to dial to; if you don't, $productName$ will use port 80 because it is not originating TLS.
+So, if both of these are true, thenEmissary simply proxies bytes between the client and the upstream; TLS may or may not be involved, Emissary doesn't care.
+You should specify in `service` which port to dial to; if you don't, Emissary will use port 80 because it is not originating TLS.
 
 So, for example,
 
@@ -167,8 +169,8 @@ could proxy a CockroachDB connection.
 
 If `host` is set, then TLS is terminated.
 If `service` does not start with `https://` and `tls` is empty, then TLS is not originated.
-In this case, $productName$ will terminate the TLS connection, require that the host offered with SNI match the `host` attribute, and then make a **cleartext** connection to the upstream host.
-You should specify in `service` which port to dial to; if you don't, $productName$ will use port 80 because it is not originating TLS.
+In this case, Emissary will terminate the TLS connection, require that the host offered with SNI match the `host` attribute, and then make a **cleartext** connection to the upstream host.
+You should specify in `service` which port to dial to; if you don't, Emissary will use port 80 because it is not originating TLS.
 
 This can be useful for doing host-based TLS proxying of arbitrary protocols, allowing the upstream to not have to care about TLS.
 
@@ -213,14 +215,14 @@ Any other SNI host will cause the TLS handshake to fail.
 #### both terminating and originating TLS, with and without a client certificate
 
 If `host` is set, then TLS is terminated.
-In this case, $productName$ will terminate the incoming TLS connection, require that the host offered with SNI match the `host` attribute, and then make a **TLS** connection to the upstream host.
+In this case, Emissary will terminate the incoming TLS connection, require that the host offered with SNI match the `host` attribute, and then make a **TLS** connection to the upstream host.
 
 If `tls` is non-empty, then TLS is originated with a client certificate.
-In this case, $productName$ will use the `TLSContext` referred to by `tls` to determine the certificate offered to the upstream service.
+In this case, Emissary will use the `TLSContext` referred to by `tls` to determine the certificate offered to the upstream service.
 
 If `service` starts with `https://`, then then TLS is originated without a client certificate (unless `tls` is also set)
 
-In either case, you should specify in `service` which port to dial to; if you don't, $productName$ will use port 443 because it is originating TLS.
+In either case, you should specify in `service` which port to dial to; if you don't, Emissary will use port 443 because it is originating TLS.
 
 This is useful for doing host routing while ensuring that data is always encrypted while in-transit.
 
@@ -275,7 +277,7 @@ Any other SNI host will cause the TLS handshake to fail.
 
 #### originating TLS, but not terminating it
 
-Here, $productName$ will accept the connection **without terminating TLS**, then relay traffic over a **TLS** connection upstream. This is probably useful only to accept unencrypted traffic and force it to be encrypted when it leaves $productName$.
+Here, Emissary will accept the connection **without terminating TLS**, then relay traffic over a **TLS** connection upstream. This is probably useful only to accept unencrypted traffic and force it to be encrypted when it leaves Emissary.
 
 Example:
 

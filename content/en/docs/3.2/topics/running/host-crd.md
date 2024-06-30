@@ -214,7 +214,7 @@ Some special cases to be aware of here:
 * **Case matters in the actions:** you must use e.g. `Reject`, not `reject`.
 * The `X-Forwarded-Proto` header is honored when determining whether a request is secure or insecure. For more information, see "Load Balancers, the `Host` Resource, and `X-Forwarded-Proto`" below.
 * ACME challenges with prefix `/.well-known/acme-challenge/` are always forced to be considered insecure, since they are not supposed to arrive over HTTPS.
-* $AESproductName$ provides native handling of ACME challenges. If you are using this support, $AESproductName$ will automatically arrange for insecure ACME challenges to be handled correctly. If you are handling ACME yourself - as you must when running $OSSproductName$ - you will need to supply appropriate `Host` resources and Mappings to correctly direct ACME challenges to your ACME challenge handler.
+* Emissary provides native handling of ACME challenges. If you are using this support, Emissary will automatically arrange for insecure ACME challenges to be handled correctly. If you are handling ACME yourself - as you must when running $OSSproductName$ - you will need to supply appropriate `Host` resources and Mappings to correctly direct ACME challenges to your ACME challenge handler.
 
 ## TLS settings
 

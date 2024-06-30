@@ -1,8 +1,10 @@
-# Prefix regex
+---
+title: Prefix regex
+---
 
 ## Using `prefix` and `prefix_regex`
 
-When the `prefix_regex` attribute is set to `true`, $productName$ configures a [regex route](https://www.envoyproxy.io/docs/envoy/v1.5.0/api-v1/route_config/route#route) instead of a prefix route in Envoy. **This means the entire path must match the regex specified, not only the prefix.**
+When the `prefix_regex` attribute is set to `true`, Emissary configures a [regex route](https://www.envoyproxy.io/docs/envoy/v1.5.0/api-v1/route_config/route#route) instead of a prefix route in Envoy. **This means the entire path must match the regex specified, not only the prefix.**
 
 ## Example with a version in the URL
 

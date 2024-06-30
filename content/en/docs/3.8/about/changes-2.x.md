@@ -204,7 +204,7 @@ the `AMBASSADOR_ENVOY_API_VERSION` environment variable) will be removed.
 
 ### More Performant Reconfiguration by Default
 
-In Emissary 1.X, the environment variable `AMBASSADOR_FAST_RECONFIGURE` could be used to enable a higher performance implementation of the code Emissary uses to validate and generate Envoy configuration. In $productName$ 2.X, this higher-performance mode is always enabled.
+In Emissary 1.X, the environment variable `AMBASSADOR_FAST_RECONFIGURE` could be used to enable a higher performance implementation of the code Emissary uses to validate and generate Envoy configuration. In Emissary 2.X, this higher-performance mode is always enabled.
 
 ### Changes to the `ambassador` `Module`, and the `tls` `Module`
 

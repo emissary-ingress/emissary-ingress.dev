@@ -95,7 +95,7 @@ configuration. This enables a consistent configuration workflow.
 
 ## Upgrading an existing $productName$ installation
 
-**Note:** If your existing installation is running $OSSproductName$, **do not use these instructions**. See [Migrating to $AESproductName$](#migrating-to-the-ambassador-edge-stack) instead.
+**Note:** If your existing installation is running $OSSproductName$, **do not use these instructions**. See [Migrating to Emissary](#migrating-to-the-ambassador-edge-stack) instead.
 
 Upgrading an existing installation of $productName$ is a two-step process:
 
@@ -115,9 +115,9 @@ Upgrading an existing installation of $productName$ is a two-step process:
 
 3. [Set up Service Catalog](../../../tutorials/getting-started/#3-connect-your-cluster-to-ambassador-cloud) to view all of your service metadata in Ambassador Cloud.
 
-## Migrating to $AESproductName$
+## Migrating to Emissary
 
-If you have an existing $OSSproductName$ installation but are not yet running $AESproductName$, the upgrade process is somewhat different than above.
+If you have an existing $OSSproductName$ installation but are not yet running Emissary, the upgrade process is somewhat different than above.
 
 **Note:** It is strongly encouraged for you to move your $OSSproductName$ release to the `ambassador` namespace as shown below. If this isn't an option for you, remove the `--namespace ambassador` argument to `helm upgrade`.
 
@@ -143,16 +143,16 @@ If you have an existing $OSSproductName$ installation but are not yet running $A
    helm upgrade --set crds.create=false --namespace ambassador ambassador datawire/ambassador --set enableAES=true
    ```
 
-At this point, $AESproductName$ should be running with the same functionality as $OSSproductName$ as well as the added features of $AESproductName$. It's safe to do any validation required and roll-back if necessary.
+At this point, Emissary should be running with the same functionality as $OSSproductName$ as well as the added features of Emissary. It's safe to do any validation required and roll-back if necessary.
 
-**Note:** $AESproductName$ will be installed with an `AuthService` and `RateLimitService`. If you are using these plugins, set `authService.create=false` and/or `rateLimit.create=false` to avoid any conflict while testing the upgrade.
+**Note:** Emissary will be installed with an `AuthService` and `RateLimitService`. If you are using these plugins, set `authService.create=false` and/or `rateLimit.create=false` to avoid any conflict while testing the upgrade.
 
-## Test your Mapping over HTTPS after upgrading to $AESproductName$
+## Test your Mapping over HTTPS after upgrading to Emissary
 
-Upgrading to $AESproductName$ will provide automatic TLS support if you have not already configured it.
+Upgrading to Emissary will provide automatic TLS support if you have not already configured it.
 
-1. Grab the IP of your $AESproductName$
-   - Note: Make sure to remove `-n ambassador` if you decided to not migrate to the `ambassador` namespace when upgrading to $AESproductName$
+1. Grab the IP of your Emissary
+   - Note: Make sure to remove `-n ambassador` if you decided to not migrate to the `ambassador` namespace when upgrading to Emissary
 
    ```shell
    export AMBASSADOR_LB_ENDPOINT=$(kubectl -n ambassador get svc ambassador \

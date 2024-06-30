@@ -1,12 +1,14 @@
-# Log service
+---
+title: Log service
+---
 
-By default, $productName$ puts the access logs on stdout; such
+By default, Emissary puts the access logs on stdout; such
 that the can be read using `kubectl logs`.  The format of those logs,
 and the local destination of them, can be configured using the
 [`envoy_log_` settings in the `ambassador
 Module`](../../ambassador).  However, the
-options there only allow for logging local to $productName$'s Pod.  By
-configuring a `LogService`, you can configure $productName$ to
+options there only allow for logging local to Emissary's Pod.  By
+configuring a `LogService`, you can configure Emissary to
 report its access logs to a remote service, in addition to the usual
 `ambassador Module` configured logging.
 
@@ -22,7 +24,7 @@ kind: LogService
 metadata:
   name: example-log-service
 spec:
-  # Common to all $productName$ resources
+  # Common to all Emissary resources
   ambassador_id: []string           # optional; default is ["default"]
 
   # LogService specific
@@ -75,7 +77,7 @@ spec:
 [buffer_flush_interval]: https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/access_loggers/grpc/v3/als.proto.html#extensions-access-loggers-grpc-v3-commongrpcaccesslogconfig
 [buffer_size_bytes]: https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/access_loggers/grpc/v3/als.proto.html#extensions-access-loggers-grpc-v3-commongrpcaccesslogconfig
 
- - `protocol_version` was used in previous versions of $productName$ to control the gRPC service name used to communicate with the `LogService`. $productName$ 3.x is running an updated version of Envoy that has dropped support for the `v2` protocol, so starting in 3.x, if `protocol_version` is not specified, the default  value of `v2` will cause an error to be posted and a static response will be returned. Therefore, you must set it to `protocol_version: v3`. If upgrading from a previous version, you will want  to set it to `v3` and ensure it is working before upgrading to Emissary 3.Y. The default value for `protocol_version` remains `v2` in the `getambassador.io/v3alpha1` CRD specifications to avoid making breaking changes outside of a CRD version change. Future versions of CRD's will deprecate it.
+ - `protocol_version` was used in previous versions of Emissary to control the gRPC service name used to communicate with the `LogService`. Emissary 3.x is running an updated version of Envoy that has dropped support for the `v2` protocol, so starting in 3.x, if `protocol_version` is not specified, the default  value of `v2` will cause an error to be posted and a static response will be returned. Therefore, you must set it to `protocol_version: v3`. If upgrading from a previous version, you will want  to set it to `v3` and ensure it is working before upgrading to Emissary 3.Y. The default value for `protocol_version` remains `v2` in the `getambassador.io/v3alpha1` CRD specifications to avoid making breaking changes outside of a CRD version change. Future versions of CRD's will deprecate it.
 
 ## Example
 
@@ -96,7 +98,7 @@ spec:
 
 
 > **Note:** The following information is only applicable to `AuthServices` using `proto: grpc`
-As of $productName$ version 2.3, the `v2` transport protocol is deprecated and any AuthServices making use
+As of Emissary version 2.3, the `v2` transport protocol is deprecated and any AuthServices making use
 of it should migrate to `v3` before support for `v2` is removed in a future release.
 
 The following imports simply need to be updated to migrate an AuthService

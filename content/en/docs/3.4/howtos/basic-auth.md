@@ -5,7 +5,7 @@ import Alert from '@material-ui/lab/Alert';
 [//]: # (+FIX+ link to "authentication and authorization" concept)
 
 <Alert severity="info">
-  This guide applies to $OSSproductName$, use of this guide with $AESproductName$ is not supported.  $AESproductName$ does <a href="/docs/edge-stack/latest/topics/using/filters/external/">authentication using the Filter resource</a> instead of the AuthService resource as described below.
+  This guide applies to $OSSproductName$, use of this guide with Emissary is not supported.  Emissary does <a href="/docs/edge-stack/latest/topics/using/filters/external/">authentication using the Filter resource</a> instead of the AuthService resource as described below.
 </Alert>
 
 $productName$ can authenticate incoming requests before routing them to a backing

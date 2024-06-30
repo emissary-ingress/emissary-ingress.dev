@@ -2,7 +2,7 @@
 title: Rate Limiting Tutorial
 ---
 
-Emissary can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, $AESproductName$ integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
+Emissary can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, Emissary integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
 
 ## Before you get started
 

@@ -1,11 +1,13 @@
-# TLS termination and enabling HTTPS
+---
+title: TLS Termination and Enabling HTTPS
+---
 
 TLS encryption is one of the basic requirements of having a secure system.
-$AESproductName$ [automatically enables TLS termination/HTTPs
+Emissary [automatically enables TLS termination/HTTPs
 ](../../topics/running/host-crd#tls-settings), making TLS encryption
 easy and centralizing TLS termination for all of your services in Kubernetes.
 
-While this automatic certificate management in $AESproductName$ helps
+While this automatic certificate management in Emissary helps
 simply TLS configuration in your cluster, the Open-Source $OSSproductName$
 still requires you provide your own certificate to enable TLS.
 
@@ -13,7 +15,7 @@ The following will walk you through the process of enabling TLS with a
 self-signed certificate created with the `openssl` utility.
 
 **Note** these instructions also work if you would like to provide your own
-certificate to $AESproductName$.
+certificate to Emissary.
 
 ## Prerequisites
 
@@ -24,9 +26,9 @@ This guide requires you have the following installed:
 [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 - [openssl](https://www.openssl.org/source/)
 
-## Install $productName$
+## Install Emissary
 
-[Install $productName$ in Kubernetes](../../topics/install).
+[Install Emissary in Kubernetes](../../topics/install).
 
 ## Create a listener listening on the correct port and protocol
 We first need to create a listener to tell Emissary which port will be using the HTTPS protocol
@@ -50,7 +52,7 @@ spec:
 
 OpenSSL is a tool that allows us to create self-signed certificates for opening
 a TLS encrypted connection. The `openssl` command below will create a
-create a certificate and private key pair that $productName$ can use for TLS
+create a certificate and private key pair that Emissary can use for TLS
 termination.
 
 - Create a private key and certificate.
@@ -72,7 +74,7 @@ termination.
 
 ## Store the certificate and key in a Kubernetes Secret
 
-$productName$ dynamically loads TLS certificates by reading them from
+Emissary dynamically loads TLS certificates by reading them from
 Kubernetes secrets. Use `kubectl` to create a `tls` secret to hold the pem
 files we created above.
 
@@ -80,14 +82,14 @@ files we created above.
 kubectl create secret tls tls-cert --cert=cert.pem --key=key.pem
 ```
 
-## Tell $productName$ to use this secret for TLS termination
+## Tell Emissary to use this secret for TLS termination
 
 Now that we have stored our certificate and private key in a Kubernetes secret
-named `tls-cert`, we need to tell $productName$ to use this certificate
-for terminating TLS on a domain. A `Host` is used to tell $productName$ which
+named `tls-cert`, we need to tell Emissary to use this certificate
+for terminating TLS on a domain. A `Host` is used to tell Emissary which
 certificate to use for TLS termination on a domain.
 
-Create the following `Host` to have $productName$ use the `Secret` we created
+Create the following `Host` to have Emissary use the `Secret` we created
 above for terminating TLS on all domains.
 
 ```yaml
@@ -104,7 +106,7 @@ spec:
     name: tls-cert
 ```
 
-**Note:** If running multiple instances of $productName$ in one cluster remember to include the `ambassador_id` property in the `spec`, e.g.:
+**Note:** If running multiple instances of Emissary in one cluster remember to include the `ambassador_id` property in the `spec`, e.g.:
 
 ```yaml
 ---
@@ -123,14 +125,14 @@ Apply the `Host` configured above with `kubectl`:
 kubectl apply -f wildcard-host.yaml
 ```
 
-$productName$ is now configured to listen for TLS traffic on port `8443` and
+Emissary is now configured to listen for TLS traffic on port `8443` and
 terminate TLS using the self-signed certificate we created.
 
 ## Send a request Over HTTPS
 
 We can now send encrypted traffic over HTTPS.
 
-First, make sure the $productName$ service is listening on `443` and forwarding
+First, make sure the Emissary service is listening on `443` and forwarding
 to port `8443`. Verify this with `kubectl`:
 
 ```
@@ -153,9 +155,9 @@ spec:
 ```
 
 If the output to the `kubectl` command is not similar to the example above,
-edit the $productName$ service to add the `https` port.
+edit the Emissary service to add the `https` port.
 
-After verifying $productName$ is listening on port 443, send a request
+After verifying Emissary is listening on port 443, send a request
 to your backend service with curl:
 
 ```
@@ -173,20 +175,20 @@ flag in curl to disable hostname validation.
 
 ## Next steps
 
-This guide walked you through how to enable basic TLS termination in $productName$ using a self-signed certificate for simplicity.
+This guide walked you through how to enable basic TLS termination in Emissary using a self-signed certificate for simplicity.
 
 ### Get a valid certificate from a certificate authority
 
-While a self-signed certificate is a simple and quick way to get $productName$ to terminate TLS, it should not be used by production systems. In order to serve HTTPS traffic without being returned a security warning, you will need to get a certificate from an official Certificate Authority like Let's Encrypt.
+While a self-signed certificate is a simple and quick way to get Emissary to terminate TLS, it should not be used by production systems. In order to serve HTTPS traffic without being returned a security warning, you will need to get a certificate from an official Certificate Authority like Let's Encrypt.
 
 Jetstack's `cert-manager` provides a simple
 way to manage certificates from Let's Encrypt. See our documentation for more
-information on how to [use `cert-manager` with $productName$
+information on how to [use `cert-manager` with Emissary
 ](../cert-manager).
 
 ### Enable advanced TLS options
 
-$productName$ exposes configuration for many more advanced options
+Emissary exposes configuration for many more advanced options
 around TLS termination, origination, client certificate validation, and SNI
 support. See the full [TLS reference](../../topics/running/tls) for more
 information.

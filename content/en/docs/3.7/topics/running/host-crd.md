@@ -1,24 +1,24 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Host CRD
+---
 
-# The **Host** CRD
-
-The custom `Host` resource defines how $productName$ will be
+The custom `Host` resource defines how Emissary will be
 visible to the outside world. It collects all the following information in a
 single configuration resource:
 
-* The hostname by which $productName$ will be reachable
-* How $productName$ should handle TLS certificates
-* How $productName$ should handle secure and insecure requests
+* The hostname by which Emissary will be reachable
+* How Emissary should handle TLS certificates
+* How Emissary should handle secure and insecure requests
 * Which `Mappings` should be associated with this `Host`
 
 <Alert severity="warning">
   Remember that <code>Listener</code> resources are&nbsp;<b>required</b>&nbsp;for a functioning
-  $productName$ installation!<br/>
+  Emissary installation!<br/>
   <a href="../../running/listener">Learn more about <code>Listener</code></a>.
 </Alert>
 
 <Alert severity="warning">
-  Remember than $productName$ does not make sure that a wildcard <code>Host</code> exists! If the
+  Remember than Emissary does not make sure that a wildcard <code>Host</code> exists! If the
   wildcard behavior is needed, a <code>Host</code> with a <code>hostname</code> of <code>"*"</code>
   must be defined by the user.
 </Alert>
@@ -34,18 +34,18 @@ spec:
   hostname: host.example.com
 ```
 
-This `Host` tells $productName$ to expect to be reached at `host.example.com`,
+This `Host` tells Emissary to expect to be reached at `host.example.com`,
 with no TLS termination, and only associating with `Mapping`s that also set a
 `hostname` that matches `host.example.com`.
 
 Remember that a <code>Listener</code> will also be required for this example to
 be functional. Many examples of setting up `Host` and `Listener` are available
-in the [Configuring $productName$ Communications](../../../howtos/configure-communications)
+in the [Configuring Emissary Communications](../../../howtos/configure-communications)
 document.
 
 ## Setting the `hostname`
 
-The `hostname` element tells $productName$ which hostnames to expect. `hostname` is a DNS glob,
+The `hostname` element tells Emissary which hostnames to expect. `hostname` is a DNS glob,
 so all of the following are valid:
 
 - `host.example.com`
@@ -174,9 +174,9 @@ spec:                          # and if the Host specifies mappingSelector AND t
   service: http://httpbin.org
 ```
 
-Future versions of $productName$ will support `matchExpressions` as well.
+Future versions of Emissary will support `matchExpressions` as well.
 
-> **Note:** In $productName$ version `3.2`, a bug with how `Hosts` are associated with `Mappings` was fixed. The `mappingSelector` field in `Hosts` was not
+> **Note:** In Emissary version `3.2`, a bug with how `Hosts` are associated with `Mappings` was fixed. The `mappingSelector` field in `Hosts` was not
 properly being enforced in prior versions. If any single label from the selector was matched then the `Host` would be associated with the `Mapping` instead
 of requiring all labels in the selector to be present. Additonally, if the `hostname` of the `Mapping` matched the `hostname` of the `Host` then they would be associated
 regardless of the configuration of `mappingSelector`.
@@ -184,7 +184,7 @@ In version `3.2` this bug was fixed and a `Host` will only be associated with a 
 This brings the `mappingSelector` field in-line with how label selectors are used throughout Kubernetes. To avoid unexpected behavior after the upgrade,
 add all labels that `Hosts` have in their `mappingSelector` to `Mappings` you want to associate with the `Host`. You can opt-out of this fix and return to the old
 `Mapping`/`Host` association behavior by setting the environment variable `DISABLE_STRICT_LABEL_SELECTORS` to `"true"` (default: `"false"`). A future version of
-$productName$ may remove the ability to opt-out of this bugfix.
+Emissary may remove the ability to opt-out of this bugfix.
 
 ## Secure and insecure requests
 
@@ -214,11 +214,11 @@ Some special cases to be aware of here:
 * **Case matters in the actions:** you must use e.g. `Reject`, not `reject`.
 * The `X-Forwarded-Proto` header is honored when determining whether a request is secure or insecure. For more information, see "Load Balancers, the `Host` Resource, and `X-Forwarded-Proto`" below.
 * ACME challenges with prefix `/.well-known/acme-challenge/` are always forced to be considered insecure, since they are not supposed to arrive over HTTPS.
-* $AESproductName$ provides native handling of ACME challenges. If you are using this support, $AESproductName$ will automatically arrange for insecure ACME challenges to be handled correctly. If you are handling ACME yourself - as you must when running $OSSproductName$ - you will need to supply appropriate `Host` resources and Mappings to correctly direct ACME challenges to your ACME challenge handler.
+* Emissary provides native handling of ACME challenges. If you are using this support, Emissary will automatically arrange for insecure ACME challenges to be handled correctly. If you are handling ACME yourself - as you must when running $OSSproductName$ - you will need to supply appropriate `Host` resources and Mappings to correctly direct ACME challenges to your ACME challenge handler.
 
 ## TLS settings
 
-The `Host` is responsible for high-level TLS configuration in $productName$. There are
+The `Host` is responsible for high-level TLS configuration in Emissary. There are
 several settings covering TLS:
 
 ### `tlsSecret` enables TLS termination
@@ -226,7 +226,7 @@ several settings covering TLS:
 `tlsSecret` specifies a Kubernetes `Secret` is **required** for any TLS termination to occur. No matter what other TLS
 configuration is present, TLS termination will not occur if `tlsSecret` is not specified.
 
-The following `Host` will configure $productName$ to read a `Secret` named
+The following `Host` will configure Emissary to read a `Secret` named
 `tls-cert` for a certificate to use when terminating TLS.
 
 ```yaml
@@ -258,21 +258,21 @@ See the [TLS discussion](../tls) for more details.
 
 ## Load balancers, the `Host` resource, and `X-Forwarded-Proto`
 
-In a typical installation, $productName$ runs behind a load balancer. The
-configuration of the load balancer can affect how $productName$ sees requests
-arriving from the outside world, which can in turn can affect whether $productName$
+In a typical installation, Emissary runs behind a load balancer. The
+configuration of the load balancer can affect how Emissary sees requests
+arriving from the outside world, which can in turn can affect whether Emissary
 considers the request secure or insecure. As such:
 
 - **We recommend layer 4 load balancers** unless your workload includes
   long-lived connections with multiple requests arriving over the same
   connection. For example, a workload with many requests carried over a small
   number of long-lived gRPC connections.
-- **$productName$ fully supports TLS termination at the load balancer** with a single exception, listed below.
+- **Emissary fully supports TLS termination at the load balancer** with a single exception, listed below.
 - If you are using a layer 7 load balancer, **it is critical that the system be configured correctly**:
   - The load balancer must correctly handle `X-Forwarded-For` and `X-Forwarded-Proto`.
-  - The `l7Depth` element in the [`Listener` CRD](../../running/listener) must be set to the number of layer 7 load balancers the request passes through to reach $productName$ (in the typical case, where the client speaks to the load balancer, which then speaks to $productName$, you would set `l7Depth` to 1). If `l7Depth` remains at its default of 0, the system might route correctly, but upstream services will see the load balancer's IP address instead of the actual client's IP address.
+  - The `l7Depth` element in the [`Listener` CRD](../../running/listener) must be set to the number of layer 7 load balancers the request passes through to reach Emissary (in the typical case, where the client speaks to the load balancer, which then speaks to Emissary, you would set `l7Depth` to 1). If `l7Depth` remains at its default of 0, the system might route correctly, but upstream services will see the load balancer's IP address instead of the actual client's IP address.
 
-It's important to realize that Envoy manages the `X-Forwarded-Proto` header such that it **always** reflects the most trustworthy information Envoy has about whether the request arrived encrypted or unencrypted. If no `X-Forwarded-Proto` is received from downstream, **or if it is considered untrustworthy**, Envoy will supply an `X-Forwarded-Proto` that reflects the protocol used for the connection to Envoy itself. The `l7Depth` element is also used when determining trust for `X-Forwarded-For`, and it is therefore important to set it correctly. Its default of 0 should always be correct when $productName$ is behind only layer 4 load balancers; it should need to be changed **only** when layer 7 load balancers are involved.
+It's important to realize that Envoy manages the `X-Forwarded-Proto` header such that it **always** reflects the most trustworthy information Envoy has about whether the request arrived encrypted or unencrypted. If no `X-Forwarded-Proto` is received from downstream, **or if it is considered untrustworthy**, Envoy will supply an `X-Forwarded-Proto` that reflects the protocol used for the connection to Envoy itself. The `l7Depth` element is also used when determining trust for `X-Forwarded-For`, and it is therefore important to set it correctly. Its default of 0 should always be correct when Emissary is behind only layer 4 load balancers; it should need to be changed **only** when layer 7 load balancers are involved.
 
 ### CRD specification
 

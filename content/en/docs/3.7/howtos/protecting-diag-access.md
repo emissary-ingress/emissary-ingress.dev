@@ -1,11 +1,13 @@
-# Protecting Access to the Diagnostics Interface
+---
+title: Protecting Access to the Diagnostics Interface
+---
 
-Out of the box, $productName$ enables `Mapping`s to provide access to the diagnostics
+Out of the box, Emissary enables `Mapping`s to provide access to the diagnostics
 interfaces that can help you debug your installation. In a production environment, though,
 public access to these endpoints is not an ideal situation.  To solve this, we will be
 using the Ambassador `Module` to remove the default mappings, after which we'll create a
 new, host-based `mapping` to expose the diagnostics interface more securely.  The
-Ambassador `Module` applies system-wide configuration settings for $productName$ to follow.
+Ambassador `Module` applies system-wide configuration settings for Emissary to follow.
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1

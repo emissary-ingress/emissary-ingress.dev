@@ -17,18 +17,18 @@ them in a round-robin fashion.  This is useful for canarying an
 distinct `AuthServices`.  In order to combine multiple external
 services (either having multiple services apply to the same request,
 or selecting between different services for the different requests),
-instead of using an `AuthService`, use an [$AESproductName$ `External`
+instead of using an `AuthService`, use an [Emissary `External`
 `Filter`](/docs/edge-stack/latest/topics/using/filters/).
 
 <Alert severity="info">
 
-Because of the limitations described above, **$AESproductName$ does
+Because of the limitations described above, **Emissary does
 not support `AuthService` resources, and you should instead use an
 [`External`
 `Filter`](/docs/edge-stack/latest/topics/using/filters/external),**
 which is mostly a drop-in replacement for an `AuthService`.  The
-`External` `Filter` relies on the $AESproductName$ `AuthService`.
-Make sure the $AESproductName$ `AuthService` is deployed before
+`External` `Filter` relies on the Emissary `AuthService`.
+Make sure the Emissary `AuthService` is deployed before
 configuring `External` `Filters`.
 
 </Alert>

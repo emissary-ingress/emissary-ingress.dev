@@ -10,4 +10,4 @@ simple_list: true
 weight: -370 # Weight for doc version vX.Y should be -XY0
 ---
 
-These docs cover everything from setting up and running Emissary-ingress to its operation and usage.
+These docs cover everything from setting up and running Emissary to its operation and usage.

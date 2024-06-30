@@ -1,34 +1,34 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Authentication service
+---
 
-# Authentication service
-
-$productName$ provides a highly flexible mechanism for authentication,
+Emissary provides a highly flexible mechanism for authentication,
 via the `AuthService` resource.  An `AuthService` configures
-$productName$ to use an external service to check authentication and
+Emissary to use an external service to check authentication and
 authorization for incoming requests.  Each incoming request is
 authenticated before routing to its destination.
 
 All requests are validated by the `AuthService` (unless the `Mapping`
 applied to the request sets `bypass_auth`).  It is not possible to
 combine multiple `AuthServices`.  While it is possible to create
-multiple `AuthService` resources, $productName$ load-balances between
+multiple `AuthService` resources, Emissary load-balances between
 them in a round-robin fashion.  This is useful for canarying an
 `AuthService` change, but is not useful for deploying multiple
 distinct `AuthServices`.  In order to combine multiple external
 services (either having multiple services apply to the same request,
 or selecting between different services for the different requests),
-instead of using an `AuthService`, use an [$AESproductName$ `External`
+instead of using an `AuthService`, use an [Emissary `External`
 `Filter`](/docs/edge-stack/latest/topics/using/filters/).
 
 <Alert severity="info">
 
-Because of the limitations described above, **$AESproductName$ does
+Because of the limitations described above, **Emissary does
 not support `AuthService` resources, and you should instead use an
 [`External`
 `Filter`](/docs/edge-stack/latest/topics/using/filters/external),**
 which is mostly a drop-in replacement for an `AuthService`.  The
-`External` `Filter` relies on the $AESproductName$ `AuthService`.
-Make sure the $AESproductName$ `AuthService` is deployed before
+`External` `Filter` relies on the Emissary `AuthService`.
+Make sure the Emissary `AuthService` is deployed before
 configuring `External` `Filters`.
 
 </Alert>
@@ -95,7 +95,7 @@ ignored if `proto` is `http`.
 
 | Attribute          | Default value | Description                                                                                                                                                                                                                                                                                                                                                                               |
 | ------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `protocol_version` | `v3`          | Allowed values are `v3` and `v2`(defualt). `protocol_version` was used in previous versions of $productName$ to control the protocol used by the gRPC service. $productName$ 3.x is running an updated version of Envoy that has dropped support for the `v2` protocol, so starting in 3.x, if `protocol_version` is not specified, the default  value of `v2` will cause an error to be posted and a static response will be returned. Therefore, you must set it to `protocol_version: v3`. If upgrading from a previous version, you will want  to set it to `v3` and ensure it is working before upgrading to Emissary 3.Y. The default value for `protocol_version` remains `v2` in the `getambassador.io/v3alpha1` CRD specifications to avoid making breaking changes outside of a CRD version change. Future versions of CRD's will deprecate it. |
+| `protocol_version` | `v3`          | Allowed values are `v3` and `v2`(defualt). `protocol_version` was used in previous versions of Emissary to control the protocol used by the gRPC service. Emissary 3.x is running an updated version of Envoy that has dropped support for the `v2` protocol, so starting in 3.x, if `protocol_version` is not specified, the default  value of `v2` will cause an error to be posted and a static response will be returned. Therefore, you must set it to `protocol_version: v3`. If upgrading from a previous version, you will want  to set it to `v3` and ensure it is working before upgrading to Emissary 3.Y. The default value for `protocol_version` remains `v2` in the `getambassador.io/v3alpha1` CRD specifications to avoid making breaking changes outside of a CRD version change. Future versions of CRD's will deprecate it. |
 
 The following fields are only used if `proto` is set to `http`.  They
 are ignored if `proto` is `grpc`.
@@ -120,7 +120,7 @@ being used.
 ## Configuring public `Mappings`
 
 An `AuthService` can be disabled for a `Mapping` by setting
-`bypass_auth` to `true`.  This will tell $productName$ to allow all
+`bypass_auth` to `true`.  This will tell Emissary to allow all
 requests for that `Mapping` through without interacting with the
 external auth service.
 
@@ -130,7 +130,7 @@ external auth service.
 
 
 > **Note:** The following information is only applicable to `AuthServices` using `proto: grpc`
-As of $productName$ version 2.3, the `v2` transport protocol is deprecated and any AuthServices making use
+As of Emissary version 2.3, the `v2` transport protocol is deprecated and any AuthServices making use
 of it should migrate to `v3` before support for `v2` is removed in a future release.
 
 The following imports simply need to be updated to migrate an AuthService

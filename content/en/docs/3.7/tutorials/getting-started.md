@@ -1,12 +1,12 @@
 ---
-title: "Getting Started with $productName$"
-description: "Learn how to install $productName$ with either Helm or kubectl to get started routing traffic from the edge of your Kubernetes cluster to your services..."
+title: "Getting Started with Emissary"
+description: "Learn how to install Emissary with either Helm or kubectl to get started routing traffic from the edge of your Kubernetes cluster to your services..."
 ---
 
 import Alert from '@material-ui/lab/Alert';
 import GettingStartedEmissary21Tabs from './gs-tabs'
 
-# $productName$ quick start
+# Emissary quick start
 
 <div class="docs-article-toc">
 <h3>Contents</h3>
@@ -20,7 +20,7 @@ import GettingStartedEmissary21Tabs from './gs-tabs'
 
 ## 1. Installation
 
-We'll start by installing $productName$ into your cluster.
+We'll start by installing Emissary into your cluster.
 
 **We recommend using Helm** but there are other options below to choose from.
 
@@ -28,7 +28,7 @@ We'll start by installing $productName$ into your cluster.
 
 ### Connecting your installation to Ambassador Cloud
 
-Now is a great moment to connect your new installation to Ambassador Cloud in order to fully leverage the power of $productName$ and the Developer Control Plane (DCP).
+Now is a great moment to connect your new installation to Ambassador Cloud in order to fully leverage the power of Emissary and the Developer Control Plane (DCP).
 
 1. Log in to [Ambassador Cloud](https://app.getambassador.io/cloud/services/) with GitHub, GitLab or Google and select your team account.
 
@@ -40,11 +40,11 @@ Now is a great moment to connect your new installation to Ambassador Cloud in or
 
 5. When the token installation completes, your services will be listed in the DCP.
 
-<Alert severity="success"><b>Success!</b> At this point, you have installed $productName$. Now let's get some traffic flowing to your services.</Alert>
+<Alert severity="success"><b>Success!</b> At this point, you have installed Emissary. Now let's get some traffic flowing to your services.</Alert>
 
 ## 2. Routing traffic from the edge
 
-$productName$ uses Kubernetes Custom Resource Definitions (CRDs) to declaratively define its desired state. The workflow you are going to build uses a simple demo app, a **`Listener` CRD**, and a **`Mapping` CRD**. The `Listener` CRD tells $productName$ what port to listen on, and the `Mapping` CRD tells $productName$ how to route incoming requests by host and URL path from the edge of your cluster to Kubernetes services.
+Emissary uses Kubernetes Custom Resource Definitions (CRDs) to declaratively define its desired state. The workflow you are going to build uses a simple demo app, a **`Listener` CRD**, and a **`Mapping` CRD**. The `Listener` CRD tells Emissary what port to listen on, and the `Mapping` CRD tells Emissary how to route incoming requests by host and URL path from the edge of your cluster to Kubernetes services.
 
 1. Start by creating a `Listener` resource for HTTP on port 8080:
 
@@ -81,7 +81,7 @@ $productName$ uses Kubernetes Custom Resource Definitions (CRDs) to declarativel
 
   <Alert severity="info">The Service and Deployment are created in your default namespace. You can use <code>kubectl get services,deployments quote</code> to see their status.</Alert>
 
-3. Generate the YAML for a `Mapping` to tell $productName$ to route all traffic inbound to the `/backend/` path to the `quote` Service.
+3. Generate the YAML for a `Mapping` to tell Emissary to route all traffic inbound to the `/backend/` path to the `quote` Service.
 
   In this step, we'll be using the Mapping Editor, which you can find in the service details view of your [Ambassador Cloud connected installation](#connecting-your-installation-to-ambassador-cloud).
   Open your browser to https://app.getambassador.io/cloud/services/quote/details and click on **New Mapping**.
@@ -112,14 +112,14 @@ $productName$ uses Kubernetes Custom Resource Definitions (CRDs) to declarativel
   EOF
   ```
 
-4. Store the $productName$ load balancer IP address to a local environment variable. You will use this variable to test access to your service.
+4. Store the Emissary load balancer IP address to a local environment variable. You will use this variable to test access to your service.
 
   ```
   export LB_ENDPOINT=$(kubectl -n $productNamespace$ get svc  $productDeploymentName$ \
     -o "go-template={{range .status.loadBalancer.ingress}}{{or .ip .hostname}}{{end}}")
   ```
 
-5. Test the configuration by accessing the service through the $productName$ load balancer:
+5. Test the configuration by accessing the service through the Emissary load balancer:
 
   ```
   $ curl -i http://$LB_ENDPOINT/backend/
@@ -138,19 +138,19 @@ $productName$ uses Kubernetes Custom Resource Definitions (CRDs) to declarativel
     }
   ```
 
-<Alert severity="success"><b>Victory!</b> You have created your first $productName$ <code>Listener</code> and <code>Mapping</code>, routing a request from your cluster's edge to a service!</Alert>
+<Alert severity="success"><b>Victory!</b> You have created your first Emissary <code>Listener</code> and <code>Mapping</code>, routing a request from your cluster's edge to a service!</Alert>
 
 ## <img class="os-logo" src="/images/logo.png"/> What's next?
 
-Explore some of the popular tutorials on $productName$:
+Explore some of the popular tutorials on Emissary:
 
-* [Configuring $productName$ communications](../../howtos/configure-communications): configure how $productName$ handles communication with clients
+* [Configuring Emissary communications](../../howtos/configure-communications): configure how Emissary handles communication with clients
 * [Intro to `Mappings`](../../topics/using/intro-mappings/): declaratively routes traffic from
 the edge of your cluster to a Kubernetes service
 * [`Listener` resource](../../topics/running/listener/): configure ports, protocols, and security options for your ingress.
 * [`Host` resource](../../topics/running/host-crd/): configure a hostname and TLS options for your ingress.
 
-$productName$ has a comprehensive range of [features](/features/) to
+Emissary has a comprehensive range of [features](/features/) to
 support the requirements of any edge microservice.
 
-To learn more about how $productName$ works, read the [$productName$ Story](../../about/why-ambassador).
+To learn more about how Emissary works, read the [Emissary Story](../../about/why-ambassador).

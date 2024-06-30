@@ -1,9 +1,9 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Upgrade $productName$ 3.4.Z (Helm)
+---
+title: 3.4 to latest 3.x
+---
 
 <Alert severity="info">
-  This guide covers migrating from $productName$ 3.4.Z to $productName$ $version$. If
+  This guide covers migrating from Emissary 3.4.Z to Emissary $version$. If
   this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
   matrix</a>.
 </Alert>
@@ -14,16 +14,16 @@ import Alert from '@material-ui/lab/Alert';
   upgrade instructions</a>.
 </Alert>
 
-Since $productName$'s configuration is entirely stored in Kubernetes resources, upgrading between minor
+Since Emissary's configuration is entirely stored in Kubernetes resources, upgrading between minor
 versions is straightforward.
 
 ### Resources to check before migrating to $version$.
 
 <Alert severity="warning">
-  As of $productName$ 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read below before upgrading.
+  As of Emissary 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read below before upgrading.
 </Alert>
 
-$productName$ 3.4 has been upgraded from Envoy 1.23 to Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/3.4/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
+Emissary 3.4 has been upgraded from Envoy 1.23 to Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/3.4/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
 
 ## Migration Steps
 
@@ -32,10 +32,10 @@ Migration is a two-step process:
 1. **Install new CRDs.**
 
    After reviewing the changes in 3.x and confirming that you are ready to upgrade, the process is the same as upgrading minor versions
-   in previous version of $productName$ and does not require the complex migration steps that the migration from 1.x tto 2.x required.
+   in previous version of Emissary and does not require the complex migration steps that the migration from 1.x tto 2.x required.
 
-   Before installing $productName$ $version$ itself, you need to update the CRDs in
-   your cluster. This is mandatory during any upgrade of $productName$.
+   Before installing Emissary $version$ itself, you need to update the CRDs in
+   your cluster. This is mandatory during any upgrade of Emissary.
 
    ```bash
    kubectl apply -f https://app.getambassador.io/yaml/emissary/$version$/emissary-crds.yaml
@@ -43,9 +43,9 @@ Migration is a two-step process:
    ```
 
    <Alert severity="info">
-     $productName$ $version$ includes a Deployment in the `emissary-system` namespace
+     Emissary $version$ includes a Deployment in the `emissary-system` namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
-     that supports converting $productName$ CRDs between <code>getambassador.io/v2</code>
+     that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at
      all times.
    </Alert>
@@ -57,13 +57,13 @@ Migration is a two-step process:
    </Alert>
 
    <Alert severity="warning">
-    There is a known issue with the <code>emissary-apiext</code> service that impacts all $productName$ 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running $productName$/$AESproductName$ 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
+    There is a known issue with the <code>emissary-apiext</code> service that impacts all Emissary 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running Emissary/Emissary 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
     This will create a new certificate with a one year expiration. We will issue a software patch to address this issue well before the one year expiration. Note that certificate renewal will not cause any downtime.
    </Alert>
 
-2. **Install $productName$ $version$.**
+2. **Install Emissary $version$.**
 
-   After installing the new CRDs, use Helm to install $productName$ $version$. Start by
+   After installing the new CRDs, use Helm to install Emissary $version$. Start by
    making sure that your `datawire` Helm repo is set correctly:
 
    ```bash
@@ -72,7 +72,7 @@ Migration is a two-step process:
    helm repo update
    ```
 
-   Then, update your $productName$ installation in the `$productNamespace$` namespace.
+   Then, update your Emissary installation in the `$productNamespace$` namespace.
    If necessary for your installation (e.g. if you were running with
    `AMBASSADOR_SINGLE_NAMESPACE` set), you can choose a different namespace.
 
@@ -83,5 +83,5 @@ Migration is a two-step process:
    ```
 
    <Alert severity="warning">
-    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/$ossChartVersion$"><code>$productHelmName$</code> Helm chart</a> for $productName$ 3.Y.
+    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/$ossChartVersion$"><code>$productHelmName$</code> Helm chart</a> for Emissary 3.Y.
    </Alert>

@@ -1,11 +1,11 @@
 ---
-title: "HTTP/3 with Amazon Elastic Kubernetes Service (EKS) | $productName$"
+title: HTTP/3 with Amazon Elastic Kubernetes Service (EKS)
 description: "How to configure HTTP/3 support for Amazon Elastic Kubernetes Service (EKS). This guide shows how to setup the LoadBalancer service for EKS to support both TCP and UDP communications."
 ---
 
 # Amazon Elastic Kubernetes Service HTTP/3 configuration
 
-This guide shows how to setup HTTP/3 support for Amazon Elastic Kubernetes Service (EKS) The instructions provided in this page are a continuation of the [HTTP/3 in $productName$](../../topics/running/http3) documentation.
+This guide shows how to setup HTTP/3 support for Amazon Elastic Kubernetes Service (EKS) The instructions provided in this page are a continuation of the [HTTP/3 in Emissary](../../topics/running/http3) documentation.
 
 ## Create a network load balancer (NLB)
 
@@ -20,9 +20,9 @@ This guide shows how to setup HTTP/3 support for Amazon Elastic Kubernetes Servi
      --subnets ${SUBNET_IDS}
    ```
 
-## Create a NodePort service 
+## Create a NodePort service
 
-Now create a `NodePort` service for $productName$ installation with two entries. Use `port: 443` to include support for both TCP and UDP traffic.
+Now create a `NodePort` service for Emissary installation with two entries. Use `port: 443` to include support for both TCP and UDP traffic.
    ```yaml
    # Selectors and labels removed for clarity.
    apiVersion: v1
@@ -160,7 +160,7 @@ Enter the following command to get the DNS name for your load balancers and crea
 
 ## Create Listener resources 
 
-Now you need to create the `Listener` resources for $productName$. The first `Listener` in the example below handles traffic for HTTP/1.1 and HTTP/2, while the second `Listener` handles all HTTP/3 traffic.
+Now you need to create the `Listener` resources for Emissary. The first `Listener` in the example below handles traffic for HTTP/1.1 and HTTP/2, while the second `Listener` handles all HTTP/3 traffic.
 
    ```yaml
    kubectl apply -f - <<EOF
@@ -225,7 +225,7 @@ Create a `Host` resource for your domain name.
 
 ## Apply the quote service and a Mapping to test the HTTP/3 configuration.
 
-Finally, apply the quote service to a $productName$ `Mapping`.
+Finally, apply the quote service to a Emissary `Mapping`.
 
    ```shell
    kubectl apply -f https://app.getambassador.io/yaml/v2-docs/$version$/quickstart/qotm.yaml

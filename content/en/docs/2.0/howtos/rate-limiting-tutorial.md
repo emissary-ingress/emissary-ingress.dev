@@ -3,9 +3,9 @@ import Alert from '@material-ui/lab/Alert';
 # Basic rate limiting
 
 <Alert severity="info">This guide applies to $OSSproductName$. It will not work correctly
-on $AESproductName$.</Alert>
+on Emissary.</Alert>
 
-$productName$ can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure $productName$ to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, $AESproductName$ integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
+$productName$ can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure $productName$ to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, Emissary integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
 
 ## Before you get started
 

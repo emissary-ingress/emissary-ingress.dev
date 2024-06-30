@@ -1,8 +1,8 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Active Health Checking
+---
 
-# Active Health Checking
-
-$productName$ provides support for active health checking of upstreams via the `Mapping` resource. Active health checking will configure Envoy to make requests to the upstream at a configurable interval. If the upstream does not respond with an expected status code then the upstream will be marked as unhealthy and Envoy will no longer route requests to that upstream until they respond successfully to the health check.
+Emissary provides support for active health checking of upstreams via the `Mapping` resource. Active health checking will configure Envoy to make requests to the upstream at a configurable interval. If the upstream does not respond with an expected status code then the upstream will be marked as unhealthy and Envoy will no longer route requests to that upstream until they respond successfully to the health check.
 
 This feature can only be used with the [endpoint resolver](../../topics/running/resolvers#the-kubernetes-endpoint-resolver). This is necessary because the endpoint resolver allows Envoy to be aware of each individual pod in a deployment as opposed to the [kubernetes service resolver](../../topics/running/resolvers#the-kubernetes-service-resolver) where Envoy is only aware of the upstream as a single endpoint. When envoy is aware of the multiple pods in a deployment then it will allow the active health checks to mark an individual pod as unhealthy while the remaining pods are able to serve requests.
 
