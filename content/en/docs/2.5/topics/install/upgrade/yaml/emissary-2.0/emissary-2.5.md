@@ -1,9 +1,9 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Upgrade $productName$ 2.0.5 to $productName$ $version$ (YAML)
+---
+title: 2.0 to latest 2.x
+---
 
 <Alert severity="info">
-  This guide covers migrating from $productName$ 2.0.5 to $productName$ $version$. If
+  This guide covers migrating from Emissary 2.0.5 to Emissary $version$. If
   this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
   matrix</a>.
 </Alert>
@@ -14,15 +14,15 @@ import Alert from '@material-ui/lab/Alert';
   upgrade instructions</a>.
 </Alert>
 
-Since $productName$'s configuration is entirely stored in Kubernetes resources, upgrading between minor
+Since Emissary's configuration is entirely stored in Kubernetes resources, upgrading between minor
 versions is straightforward.
 
 Migration is a two-step process:
 
 1. **Install new CRDs.**
 
-   Before installing $productName$ $version$ itself, you need to update the CRDs in
-   your cluster. This is mandatory during any upgrade of $productName$.
+   Before installing Emissary $version$ itself, you need to update the CRDs in
+   your cluster. This is mandatory during any upgrade of Emissary.
 
    ```
    kubectl apply -f https://app.getambassador.io/yaml/emissary/$version$/emissary-crds.yaml
@@ -30,9 +30,9 @@ Migration is a two-step process:
    ```
 
    <Alert severity="info">
-     $productName$ $version$ includes a Deployment in the `emissary-system` namespace
+     Emissary $version$ includes a Deployment in the `emissary-system` namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
-     that supports converting $productName$ CRDs between <code>getambassador.io/v2</code>
+     that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at
      all times.
    </Alert>
@@ -44,17 +44,17 @@ Migration is a two-step process:
    </Alert>
 
    <Alert severity="warning">
-    There is a known issue with the <code>emissary-apiext</code> service that impacts all $productName$ 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running $productName$/$AESproductName$ 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
+    There is a known issue with the <code>emissary-apiext</code> service that impacts all Emissary 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running Emissary/Ambassador Edge Stack 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
     This will create a new certificate with a one year expiration. We will issue a software patch to address this issue well before the one year expiration. Note that certificate renewal will not cause any downtime.
    </Alert>
 
-2. **Install $productName$ $version$.**
+2. **Install Emissary $version$.**
 
-   After installing the new CRDs, upgrade $productName$ $version$.
+   After installing the new CRDs, upgrade Emissary $version$.
 
    <Alert severity="info">
      Our <a href="https://app.getambassador.io/yaml/emissary/$version$/emissary-emissaryns.yaml"><code>emissary-emissaryns.yaml</code></a> file
-     uses the `emissary` namespace, since this is the default for $productName$.
+     uses the `emissary` namespace, since this is the default for Emissary.
      We also publish <a href="https://app.getambassador.io/yaml/emissary/$version$/emissary-defaultns.yaml"><code>emissary-defaultns.yaml</code></a> for the
      `default` namespace. For any other namespace, you should download one of these files and edit the namespaces manually.
    </Alert>

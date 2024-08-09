@@ -1,8 +1,8 @@
-# Gateway API
+---
+title: Gateway API
+---
 
-## Using the Gateway API
-
-$productName$ now supports a limited subset of the new `v1alpha1` [Gateway API](https://gateway-api.sigs.k8s.io/).
+Emissary now supports a limited subset of the new `v1alpha1` [Gateway API](https://gateway-api.sigs.k8s.io/).
 Note that the Gateway API is not supported when `AMBASSADOR_LEGACY_MODE` is set.
 
 Support is currently limited to the following fields, however this will expand in future releases:

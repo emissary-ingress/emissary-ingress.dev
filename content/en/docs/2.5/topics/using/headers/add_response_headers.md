@@ -1,6 +1,8 @@
-# Add response headers
+---
+title: Add response headers
+---
 
-$productName$ can add a dictionary of HTTP headers that can be added to each response that is returned to the client.
+Emissary can add a dictionary of HTTP headers that can be added to each response that is returned to the client.
 
 ## The `add_response_headers` attribute
 

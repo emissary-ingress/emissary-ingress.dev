@@ -1,21 +1,21 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Basic Rate Limiting
+---
 
-# Basic rate limiting
+<Alert severity="info">This guide applies to Emissary. It will not work correctly
+on Ambassador Edge Stack.</Alert>
 
-<Alert severity="info">This guide applies to $OSSproductName$. It will not work correctly
-on $AESproductName$.</Alert>
-
-$productName$ can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure $productName$ to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, $AESproductName$ integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
+Emissary can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, Ambassador Edge Stack integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
 
 ## Before you get started
 
-This tutorial assumes you have already followed the $productName$ [Installation](../../topics/install/) and [Quickstart Tutorial](../../tutorials/quickstart-demo) guides. If you haven't done that already, you should do so now.
+This tutorial assumes you have already followed the Emissary [Installation](../../topics/install/) and [Quickstart Tutorial](../../tutorials/quickstart-demo) guides. If you haven't done that already, you should do so now.
 
-Once completed, you'll have a Kubernetes cluster running $productName$ and the Quote service. Let's walk through adding rate limiting to this setup.
+Once completed, you'll have a Kubernetes cluster running Emissary and the Quote service. Let's walk through adding rate limiting to this setup.
 
 ## 1. Deploy the rate limit service
 
-$productName$ delegates the actual rate limit logic to a third party service. We've written a [simple rate limit service](https://github.com/emissary-ingress/emissary/tree/v2.1.0/docker/test-ratelimit) that:
+Emissary delegates the actual rate limit logic to a third party service. We've written a [simple rate limit service](https://github.com/emissary-ingress/emissary/tree/v2.1.0/docker/test-ratelimit) that:
 
 - listens for requests on port 5000;
 - handles gRPC `shouldRateLimit` requests;
@@ -75,17 +75,17 @@ spec:
             memory: 100Mi
 ```
 
-This configuration tells $productName$ about the rate limit service, notably that it is serving requests at `example-rate-limit:5000`. $productName$ will see the `RateLimitService` and reconfigure itself within a few
+This configuration tells Emissary about the rate limit service, notably that it is serving requests at `example-rate-limit:5000`. Emissary will see the `RateLimitService` and reconfigure itself within a few
 seconds, allowing incoming requests to be rate-limited.
 
 Note that you can configure the `RateLimitService` to use a specific label `domain`.
 If `domain` is not specified (which is the situation here), the default is `ambassador`.
 
-<Alert severity="info">If $productName$ cannot contact the rate limit service, it will allow the request to be processed as if there were no rate limit service configuration.</Alert>
+<Alert severity="info">If Emissary cannot contact the rate limit service, it will allow the request to be processed as if there were no rate limit service configuration.</Alert>
 
-## 2. Configure $productName$ Mappings
+## 2. Configure Emissary Mappings
 
-$productName$ only validates requests on `Mapping`s which set labels to use for rate limiting,
+Emissary only validates requests on `Mapping`s which set labels to use for rate limiting,
 so you'll need to apply `labels` to your `Mapping`s to enable rate limiting. For more information
 on the labelling process, see the [Rate Limits configuration documentation](../../topics/using/rate-limits/).
 
@@ -95,7 +95,7 @@ on the labelling process, see the [Rate Limits configuration documentation](../.
   <code>apiVersion</code>!
 </Alert>
 
-<Alert severity="info">If $productName$ cannot contact the rate limit service, it will allow the request to be processed as if there were no rate limit service configuration.</Alert>
+<Alert severity="info">If Emissary cannot contact the rate limit service, it will allow the request to be processed as if there were no rate limit service configuration.</Alert>
 
 Replace the label that is applied to the `service-backend` with:
 
@@ -130,7 +130,7 @@ spec:
               header_name: "x-ambassador-test-allow"
 ```
 
-<!-- If multiple `labels` are supplied for a single `Mapping`, $productName$ would also perform multiple requests to `example-rate-limit:5000` if we had defined multiple `rate_limits` rules on the mapping. -->
+<!-- If multiple `labels` are supplied for a single `Mapping`, Emissary would also perform multiple requests to `example-rate-limit:5000` if we had defined multiple `rate_limits` rules on the mapping. -->
 
 Note that the `key` could be anything you like, but our example rate limiting service expects it to
 match the name of the header. Also note that since our `RateLimitService` expects to use labels in the

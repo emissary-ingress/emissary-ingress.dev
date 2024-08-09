@@ -1,20 +1,20 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Distributed tracing with Zipkin
+---
 
-# Distributed tracing with Zipkin
-
-In this tutorial, we'll configure $productName$ to initiate a trace on some sample requests, and use Zipkin to visualize them.
+In this tutorial, we'll configure Emissary to initiate a trace on some sample requests, and use Zipkin to visualize them.
 
 ## Before you get started
 
-This tutorial assumes you have already followed $productName$ [Getting Started](../../tutorials/getting-started) guide. If you haven't done that already, you should do that now.
+This tutorial assumes you have already followed Emissary [Getting Started](../../tutorials/getting-started) guide. If you haven't done that already, you should do that now.
 
-After completing the Getting Started guide you will have a Kubernetes cluster running $productName$ and the Quote service. Let's walk through adding tracing to this setup.
+After completing the Getting Started guide you will have a Kubernetes cluster running Emissary and the Quote service. Let's walk through adding tracing to this setup.
 
 ## 1. Deploy Zipkin
 
-In this tutorial, you will use a simple deployment of the open-source [Zipkin](https://github.com/openzipkin/zipkin/wiki) distributed tracing system to store and visualize $productName$-generated traces. The trace data will be stored in memory within the Zipkin container, and you will be able to explore the traces via the Zipkin web UI.
+In this tutorial, you will use a simple deployment of the open-source [Zipkin](https://github.com/openzipkin/zipkin/wiki) distributed tracing system to store and visualize Emissary-generated traces. The trace data will be stored in memory within the Zipkin container, and you will be able to explore the traces via the Zipkin web UI.
 
-First, add the following YAML to a file named `zipkin.yaml`. This configuration will create a Zipkin Deployment that uses the [openzipkin/zipkin](https://hub.docker.com/r/openzipkin/zipkin/) container image and also an associated Service. We will also include a `TracingService` that configures $productName$ to use the Zipkin service (running on the default port of 9411) to provide tracing support.
+First, add the following YAML to a file named `zipkin.yaml`. This configuration will create a Zipkin Deployment that uses the [openzipkin/zipkin](https://hub.docker.com/r/openzipkin/zipkin/) container image and also an associated Service. We will also include a `TracingService` that configures Emissary to use the Zipkin service (running on the default port of 9411) to provide tracing support.
 
 ```yaml
 ---
@@ -70,18 +70,18 @@ Next, deploy this configuration into your cluster:
 $ kubectl apply -f zipkin.yaml
 ```
 
-As a final step we want to restart $productName$ as this is necessary to add the tracing header. This command will restart all the Pods (assuming $productName$ is installed in the <code>ambassador</code> namespace):
+As a final step we want to restart Emissary as this is necessary to add the tracing header. This command will restart all the Pods (assuming Emissary is installed in the <code>ambassador</code> namespace):
 
 ```
 $ kubectl -n ambassador rollout restart deploy
 ```
 <Alert severity="warning">
-  Restarting $productName$ is required after deploying a Tracing Service for changes to take effect.
+  Restarting Emissary is required after deploying a Tracing Service for changes to take effect.
 </Alert>
 
 ## 2. Generate some requests
 
-Use `curl` to generate a few requests to an existing $productName$ `Mapping`. You may need to perform many requests since only a subset of random requests are sampled and instrumented with traces.
+Use `curl` to generate a few requests to an existing Emissary `Mapping`. You may need to perform many requests since only a subset of random requests are sampled and instrumented with traces.
 
 ```
 $ curl -L $AMBASSADOR_IP/backend/

@@ -1,36 +1,33 @@
 ---
-    description: In this guide, we'll walk through the process of deploying $productName$ in Kubernetes for ingress routing.
+title: YAML
+description: In this guide, we'll walk through the process of deploying Emissary in Kubernetes for ingress routing.
 ---
-
-import Alert from '@material-ui/lab/Alert';
-
-# Install manually
 
 <Alert severity="warning">
 
-  To migrate from $productName$ 1.X to $productName$ 2.X, see the
-  [$productName$ migration matrix](../migration-matrix/).  This guide
+  To migrate from Emissary 1.X to Emissary 2.X, see the
+  [Emissary migration matrix](../migration-matrix/).  This guide
   **will not work** for that, due to changes to the configuration
-  resources used for $productName$ 2.X.
+  resources used for Emissary 2.X.
 
 </Alert>
 
-In this guide, we'll walk you through installing $productName$ in your Kubernetes cluster.
+In this guide, we'll walk you through installing Emissary in your Kubernetes cluster.
 
 The manual install process does not allow for as much control over configuration
-as the [Helm install method](../helm), so if you need more control over your $productName$
+as the [Helm install method](../helm), so if you need more control over your Emissary
 installation, it is recommended that you use helm.
 
 ## Before you begin
 
-$productName$ is designed to run in Kubernetes for production. The most essential requirements are:
+Emissary is designed to run in Kubernetes for production. The most essential requirements are:
 
 * Kubernetes 1.11 or later
 * The `kubectl` command-line tool
 
 ## Install with YAML
 
-$productName$ is typically deployed to Kubernetes from the command line. If you don't have Kubernetes, you should use our [Docker](../docker) image to deploy $productName$ locally.
+Emissary is typically deployed to Kubernetes from the command line. If you don't have Kubernetes, you should use our [Docker](../docker) image to deploy Emissary locally.
 
 1. In your terminal, run the following command:
 
@@ -42,9 +39,9 @@ $productName$ is typically deployed to Kubernetes from the command line. If you 
     ```
 
    <Alert severity="info">
-     $productName$ $version$ includes a Deployment in the $productNamespace$ namespace
+     Emissary $version$ includes a Deployment in the $productNamespace$ namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
-     that supports converting $productName$ CRDs between <code>getambassador.io/v2</code>
+     that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at
      all times.
    </Alert>
@@ -56,7 +53,7 @@ $productName$ is typically deployed to Kubernetes from the command line. If you 
    </Alert>
 
    <Alert severity="warning">
-    There is a known issue with the <code>emissary-apiext</code> service that impacts all $productName$ 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running $productName$/$AESproductName$ 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
+    There is a known issue with the <code>emissary-apiext</code> service that impacts all Emissary 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running Emissary/Ambassador Edge Stack 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
     This will create a new certificate with a one year expiration. We will issue a software patch to address this issue well before the one year expiration. Note that certificate renewal will not cause any downtime.
    </Alert>
 
@@ -70,18 +67,18 @@ $productName$ is typically deployed to Kubernetes from the command line. If you 
 
 3. Next Steps
 
-   $productName$ shold now be successfully installed and running, but in order to get started deploying Services and test routing to them you need to configure a few more resources.
+   Emissary shold now be successfully installed and running, but in order to get started deploying Services and test routing to them you need to configure a few more resources.
 
-   - [The `Listener` Resource](../../running/listener/) is required to configure which ports the $productName$ pods listen on so that they can begin responding to requests.
+   - [The `Listener` Resource](../../running/listener/) is required to configure which ports the Emissary pods listen on so that they can begin responding to requests.
    - [The `Mapping` Resouce](../../using/intro-mappings/) is used to configure routing requests to services in your cluster.
    - [The `Host` Resource](../../running/host-crd/) configures TLS termination for enablin HTTPS communication.
-   - Explore how $productName$ [configures communication with clients](../../../howtos/configure-communications)
+   - Explore how Emissary [configures communication with clients](../../../howtos/configure-communications)
 
   <Alert severity="info">
-     We strongly recommend following along with our <a href="../../../tutorials/getting-started">Quickstart Guide</a> to get started by creating a <code>Listener</code>, deploying a simple service to test with, and setting up a <code>Mapping</code> to route requests from $productName$ to the demo service.
+     We strongly recommend following along with our <a href="../../../tutorials/getting-started">Quickstart Guide</a> to get started by creating a <code>Listener</code>, deploying a simple service to test with, and setting up a <code>Mapping</code> to route requests from Emissary to the demo service.
   </Alert>
 
 ## Upgrading an existing installation
 
 See the [migration matrix](../migration-matrix) for instructions about upgrading
-$productName$.
+Emissary.

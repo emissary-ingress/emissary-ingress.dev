@@ -3,8 +3,6 @@ title: "Running"
 description: "This section of the documentation provides instructions on running Emissary in a production environment"
 ---
 
-# Running Emissary in production
-
 This section of the documentation is designed for operators and site reliability engineers who are managing the deployment of Emissary. Learn more below:
 
 * *Global Configuration:* The [Ambassador module](ambassador) is used to set system-wide configuration.

@@ -1,6 +1,8 @@
-# Redirects
+---
+title: Redirects
+---
 
-$productName$ can perform 3xx redirects on `Mapping`s to a different host, with various options to redirect the path and to return a different 3xx response code instead of the default 301.
+Emissary can perform 3xx redirects on `Mapping`s to a different host, with various options to redirect the path and to return a different 3xx response code instead of the default 301.
 
 ## Schema
 
@@ -34,7 +36,7 @@ spec:
 
 Using this `Mapping`, a request to `http://$AMBASSADOR_URL/redirect/` will be redirected to `http://httpbin.org/redirect/`.
 
-> As always with $productName$, the trailing `/` on any URL with a
+> As always with Emissary, the trailing `/` on any URL with a
 `Mapping` is required!
 
 ### Path redirect
@@ -80,7 +82,7 @@ Now, a request to `http://$AMBASSADOR_URL/redirect/path/` will  be redirected to
 ### Regex redirect
 
 `regex_redirect` matches a regular expression to replace instead of a fixed prefix.
-[See more information about using regex with $productName$](../rewrites/#regex_rewrite).
+[See more information about using regex with Emissary](../rewrites/#regex_rewrite).
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1
@@ -100,7 +102,7 @@ A request to `http://$AMBASSADOR_URL/foo/12345/list` will be redirected to
 
 ### Redirect response code
 
-To change the HTTP response code return by $productName$, set `redirect_reponse_code`. If this is not set, 301 is returned by default. Valid values include 301, 302, 303, 307, and 308.  This
+To change the HTTP response code return by Emissary, set `redirect_reponse_code`. If this is not set, 301 is returned by default. Valid values include 301, 302, 303, 307, and 308.  This
 can be used with any type of redirect.
 
 ```yaml
@@ -139,4 +141,4 @@ spec:
     use_remote_address: false
 ```
 
-Note: Setting `x_forwarded_proto_redirect: true` will impact all your $productName$ mappings. Every HTTP request to $productName$ will only be allowed to pass if it has an `X-FORWARDED-PROTO: https` header.
+Note: Setting `x_forwarded_proto_redirect: true` will impact all your Emissary mappings. Every HTTP request to Emissary will only be allowed to pass if it has an `X-FORWARDED-PROTO: https` header.

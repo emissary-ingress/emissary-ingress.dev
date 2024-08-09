@@ -1,20 +1,20 @@
 # Running and deployment
 
-This section is intended for operators running $productName$, and covers various aspects of deploying and configuring the $productName$ in production.
+This section is intended for operators running Emissary, and covers various aspects of deploying and configuring the Emissary in production.
 
-## $productName$ and Kubernetes
+## Emissary and Kubernetes
 
-$productName$ relies on Kubernetes for reliability, availability, and scalability. This means that features such as Kubernetes readiness and liveness probes, rolling updates, and the Horizontal Pod Autoscaling should be utilized to manage $productName$.
+Emissary relies on Kubernetes for reliability, availability, and scalability. This means that features such as Kubernetes readiness and liveness probes, rolling updates, and the Horizontal Pod Autoscaling should be utilized to manage Emissary.
 
 ## Default configuration
 
-The default configuration of $productName$ includes default [resource limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container), as well as [readiness and liveness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/). These values should be adjusted for your specific environment.
+The default configuration of Emissary includes default [resource limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-requests-and-limits-of-pod-and-container), as well as [readiness and liveness probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/). These values should be adjusted for your specific environment.
 
 ## Running as non-root
 
-Starting with $productName$ 0.35, we support running $productName$ as non-root. This is the recommended configuration, and will be the default configuration in future releases. We recommend you configure $productName$ to run as non-root as follows:
+Starting with Emissary 0.35, we support running Emissary as non-root. This is the recommended configuration, and will be the default configuration in future releases. We recommend you configure Emissary to run as non-root as follows:
 
-* Have Kubernetes run $productName$ as non-root. This may happen by default (e.g., OpenShift) or you can set a `securityContext` in your Deployment as shown below in this abbreviated example:
+* Have Kubernetes run Emissary as non-root. This may happen by default (e.g., OpenShift) or you can set a `securityContext` in your Deployment as shown below in this abbreviated example:
 
 ```yaml
 ---
@@ -41,15 +41,15 @@ spec:
      serviceAccountName: ambassador
 ```
 
-* Set the `service_port` element in the `ambassador Module` to 8080 (cleartext) or 8443 (TLS). This is the port that $productName$ will use to listen to incoming traffic. Note that any port number above 1024 will work; $productName$ will use 8080/8443 as its defaults in the future.
+* Set the `service_port` element in the `ambassador Module` to 8080 (cleartext) or 8443 (TLS). This is the port that Emissary will use to listen to incoming traffic. Note that any port number above 1024 will work; Emissary will use 8080/8443 as its defaults in the future.
 
-* Make sure that incoming traffic to $productName$ is configured to route to the `service_port`. If you're using the default $productName$ configuration, this means configuring the `targetPort` to point to the `service_port` above.
+* Make sure that incoming traffic to Emissary is configured to route to the `service_port`. If you're using the default Emissary configuration, this means configuring the `targetPort` to point to the `service_port` above.
 
 * If you are using `redirect_cleartext_from`, change the value of this field to point to your cleartext port (e.g., 8080) and set `service_port` to be your TLS port (e.g., 8443).
 
 ## Changing the configuration directory
 
-While running, $productName$ needs to use a directory within its container for generated configuration data. Normally this is `/ambassador`, but in some situations - especially if running as non-root - it may be necessary to change to a different directory. To do so, set the environment variable `AMBASSADOR_CONFIG_BASE_DIR` to the full pathname of the directory to use, as shown below in this abbreviated example:
+While running, Emissary needs to use a directory within its container for generated configuration data. Normally this is `/ambassador`, but in some situations - especially if running as non-root - it may be necessary to change to a different directory. To do so, set the environment variable `AMBASSADOR_CONFIG_BASE_DIR` to the full pathname of the directory to use, as shown below in this abbreviated example:
 
 ```yaml
 env:
@@ -57,19 +57,19 @@ env:
   value: /tmp/ambassador-config
 ```
 
-With `AMBASSADOR_CONFIG_BASE_DIR` set as above, $productName$ will create and use the directory `/tmp/ambassador-config` for its generated data. (Note that, while the directory will be created if it does not exist, attempts to turn an existing file into a directory will fail.)
+With `AMBASSADOR_CONFIG_BASE_DIR` set as above, Emissary will create and use the directory `/tmp/ambassador-config` for its generated data. (Note that, while the directory will be created if it does not exist, attempts to turn an existing file into a directory will fail.)
 
 ## Running as DaemonSet
 
-$productName$ can be deployed as a DaemonSet to have one pod per node in a Kubernetes cluster. This setup is especially helpful when you have a Kubernetes cluster running on a private cloud.
+Emissary can be deployed as a DaemonSet to have one pod per node in a Kubernetes cluster. This setup is especially helpful when you have a Kubernetes cluster running on a private cloud.
 
-* In an ideal example scenario, you are running containers on Kubernetes alongside with your non-containerized applications running exposed via VIP using BIG-IP or similar products. In such cases, east-west traffic is routed based on iRules to certain a set of application pools consisting of application or web servers. In this setup, alongside traditional application servers, two or more $productName$ pods can also be part of the application pools. In case of failure there is at least one $productName$ pod available to BIG-IP that can take care of routing traffic to the Kubernetes cluster.
+* In an ideal example scenario, you are running containers on Kubernetes alongside with your non-containerized applications running exposed via VIP using BIG-IP or similar products. In such cases, east-west traffic is routed based on iRules to certain a set of application pools consisting of application or web servers. In this setup, alongside traditional application servers, two or more Emissary pods can also be part of the application pools. In case of failure there is at least one Emissary pod available to BIG-IP that can take care of routing traffic to the Kubernetes cluster.
 
 * In manifest files `kind: Deployment` needs to be updated to `kind: DaemonSet`  and  `replicas` should be removed in `spec` section.
 
 ## Namespaces
 
-$productName$ supports multiple namespaces within Kubernetes. To make this work correctly, you need to set the `AMBASSADOR_NAMESPACE` environment variable in $productName$'s container. By far the easiest way to do this is using Kubernetes' downward API (this is included in the YAML files from `getambassador.io`):
+Emissary supports multiple namespaces within Kubernetes. To make this work correctly, you need to set the `AMBASSADOR_NAMESPACE` environment variable in Emissary's container. By far the easiest way to do this is using Kubernetes' downward API (this is included in the YAML files from `getambassador.io`):
 
 ```yaml
 env:
@@ -79,9 +79,9 @@ env:
       fieldPath: metadata.namespace
 ```
 
-Given that `AMBASSADOR_NAMESPACE` is set, $productName$ [`Mappings`](../../using/mappings) can operate within the same namespace, or across namespaces. **Note well** that `Mappings` will have to explicitly include the namespace with the service to cross namespaces; see the [`Mapping`](../../using/mappings) documentation for more information.
+Given that `AMBASSADOR_NAMESPACE` is set, Emissary [`Mappings`](../../using/mappings) can operate within the same namespace, or across namespaces. **Note well** that `Mappings` will have to explicitly include the namespace with the service to cross namespaces; see the [`Mapping`](../../using/mappings) documentation for more information.
 
-If you want $productName$ to only work within a single namespace, set `AMBASSADOR_SINGLE_NAMESPACE` as an environment variable.
+If you want Emissary to only work within a single namespace, set `AMBASSADOR_SINGLE_NAMESPACE` as an environment variable.
 
 ```yaml
 env:
@@ -93,7 +93,7 @@ env:
   value: "true"
 ```
 
-With $productName$, if you set `AMBASSADOR_NAMESPACE` or `AMBASSADOR_SINGLE_NAMESPACE`, set it in the deployment container.
+With Emissary, if you set `AMBASSADOR_NAMESPACE` or `AMBASSADOR_SINGLE_NAMESPACE`, set it in the deployment container.
 
 If you want to set a certificate for your `TLScontext` from another namespace, you can use the following:
 
@@ -112,7 +112,7 @@ env:
 
 ## `AMBASSADOR_ID`
 
-$productName$ supports running multiple $productNamePlural$ in the same cluster, without restricting a given $productName$ to a single namespace. This is done with the `AMBASSADOR_ID` setting. In the `ambassador Module`, set the `ambassador_id`, e.g.,
+Emissary supports running multiple $productNamePlural$ in the same cluster, without restricting a given Emissary to a single namespace. This is done with the `AMBASSADOR_ID` setting. In the `ambassador Module`, set the `ambassador_id`, e.g.,
 
 ```yaml
 ---
@@ -126,7 +126,7 @@ spec:
     ...
 ```
 
-Then, assign each $productName$ pod a unique `AMBASSADOR_ID` with the environment variable as part of your deployment:
+Then, assign each Emissary pod a unique `AMBASSADOR_ID` with the environment variable as part of your deployment:
 
 ```yaml
 env:
@@ -134,9 +134,9 @@ env:
   value: ambassador-1
 ```
 
-With $productName$, if you set `AMBASSADOR_ID`, you will need to set it in the deployment container.
+With Emissary, if you set `AMBASSADOR_ID`, you will need to set it in the deployment container.
 
-$productName$ will then only use YAML objects that include an appropriate `ambassador_id` attribute. For example, if $productName$ is given the ID `ambassador-1` as above, only the first two YAML objects below will be used:
+Emissary will then only use YAML objects that include an appropriate `ambassador_id` attribute. For example, if Emissary is given the ID `ambassador-1` as above, only the first two YAML objects below will be used:
 
 ```yaml
 ---
@@ -176,15 +176,15 @@ spec:
   service: demo4
 ```
 
-`ambassador_id` is always a list, and may (as shown in `mapping-used-2` above) include multiple IDs to allow a given object in the configuration for multiple $productName$ instances. In this case, `mapping-used-2` will be included in the configuration for `ambassador-1` and also for `ambassador-2`.
+`ambassador_id` is always a list, and may (as shown in `mapping-used-2` above) include multiple IDs to allow a given object in the configuration for multiple Emissary instances. In this case, `mapping-used-2` will be included in the configuration for `ambassador-1` and also for `ambassador-2`.
 
-**Note well that _any_ $productName$ configuration resource can have an `ambassador_id` included** so, for example, it is _fully supported_ to use `ambassador_id` to qualify the `ambassador Module`, `TLSContext`, and `AuthService` objects. You will need to set `ambassador_id` in all resources you want to use for $productName$.
+**Note well that _any_ Emissary configuration resource can have an `ambassador_id` included** so, for example, it is _fully supported_ to use `ambassador_id` to qualify the `ambassador Module`, `TLSContext`, and `AuthService` objects. You will need to set `ambassador_id` in all resources you want to use for Emissary.
 
-If no `AMBASSADOR_ID` is assigned to an $productName$, it will use the ID `default`. If no `ambassador_id` is present in a YAML object, it will also use the ID `default`.
+If no `AMBASSADOR_ID` is assigned to an Emissary, it will use the ID `default`. If no `ambassador_id` is present in a YAML object, it will also use the ID `default`.
 
 ## `AMBASSADOR_ENVOY_BASE_ID`
 
-$productName$ supports running side-by-side with other envoy-based projects in a single pod. An example of this is running with an `istio` sidecar. This is done with the `AMBASSADOR_ENVOY_BASE_ID` environment variable as part of your deployment:
+Emissary supports running side-by-side with other envoy-based projects in a single pod. An example of this is running with an `istio` sidecar. This is done with the `AMBASSADOR_ENVOY_BASE_ID` environment variable as part of your deployment:
 
 ```yaml
 env:
@@ -196,55 +196,55 @@ If no `AMBASSADOR_ENVOY_BASE_ID` is provided then it will use the ID `0`. For mo
 
 ## `AMBASSADOR_VERIFY_SSL_FALSE`
 
-By default, $productName$ will verify the TLS certificates provided by the Kubernetes API. In some situations, the cluster may be deployed with self-signed certificates. In this case, set `AMBASSADOR_VERIFY_SSL_FALSE` to `true` to disable verifying the TLS certificates.
+By default, Emissary will verify the TLS certificates provided by the Kubernetes API. In some situations, the cluster may be deployed with self-signed certificates. In this case, set `AMBASSADOR_VERIFY_SSL_FALSE` to `true` to disable verifying the TLS certificates.
 
 ## `AMBASSADOR_UPDATE_MAPPING_STATUS`
 
-If `AMBASSADOR_UPDATE_MAPPING_STATUS` is set to the string `true`, $productName$ will update the `status` of every `Mapping` CRD that it accepts for its configuration. This has no effect on the proper functioning of $productName$ itself, and can be a performance burden on installations with many `Mapping`s. It has no effect for `Mapping`s stored as annotations.
+If `AMBASSADOR_UPDATE_MAPPING_STATUS` is set to the string `true`, Emissary will update the `status` of every `Mapping` CRD that it accepts for its configuration. This has no effect on the proper functioning of Emissary itself, and can be a performance burden on installations with many `Mapping`s. It has no effect for `Mapping`s stored as annotations.
 
 The default is `false`. We recommend leaving `AMBASSADOR_UPDATE_MAPPING_STATUS` turned off unless required for external systems.
 
 ## `AMBASSADOR_LEGACY_MODE`
 
-Setting `AMBASSADOR_LEGACY_MODE` to `true` will result in $productName$ disabling certain features
+Setting `AMBASSADOR_LEGACY_MODE` to `true` will result in Emissary disabling certain features
 and reverting to older codepaths which may be better preserve certain older behaviors. Legacy mode
 currently has the following effects:
 
-- $productName$ will switch back to the $productName$ 1.6 input-resource validator (which can significantly
-increase configuration latency for $productName$ installations with many resources).
-- $productName$ will use the shell boot sequence that was the default up through 1.9.1, rather than the Golang boot sequence that became the default in 1.10.0.
+- Emissary will switch back to the Emissary 1.6 input-resource validator (which can significantly
+increase configuration latency for Emissary installations with many resources).
+- Emissary will use the shell boot sequence that was the default up through 1.9.1, rather than the Golang boot sequence that became the default in 1.10.0.
 - `AMBASSADOR_FAST_RECONFIGURE` (see below) is not supported in legacy mode.
 
 ## `AMBASSADOR_FAST_RECONFIGURE`
 
-Setting `AMBASSADOR_FAST_RECONFIGURE` to "true" enables incremental reconfiguration. When enabled, $productName$ will track deltas from one configuration to the next and recalculate only what is necessary to follow the change. When disabled (the default), $productName$ will recompute the entire configuration at every change.
+Setting `AMBASSADOR_FAST_RECONFIGURE` to "true" enables incremental reconfiguration. When enabled, Emissary will track deltas from one configuration to the next and recalculate only what is necessary to follow the change. When disabled (the default), Emissary will recompute the entire configuration at every change.
 
 **`AMBASSADOR_FAST_RECONFIGURE` is not supported when `AMBASSADOR_LEGACY_MODE` is active.**
 
 ## `AMBASSADOR_ENVOY_API_VERSION`
 
-By default, $productName$ will configure Envoy using the Envoy V3 API. Setting `AMBASSADOR_ENVOY_API_VERSION` to `V2` tells Ambassador to use the Envoy V2 API instead. Since the Envoy V2 API is deprecated in the upstream Envoy project, we strongly recommend using V3 and, as always, providing feedback and bug reports in the $productName$ GitHub repo!
+By default, Emissary will configure Envoy using the Envoy V3 API. Setting `AMBASSADOR_ENVOY_API_VERSION` to `V2` tells Ambassador to use the Envoy V2 API instead. Since the Envoy V2 API is deprecated in the upstream Envoy project, we strongly recommend using V3 and, as always, providing feedback and bug reports in the Emissary GitHub repo!
 
 Support for the Envoy V2 API and the `AMBASSADOR_ENVOY_API_VERSION` environment variable will
-be removed in $productName$ 2.2.0.
+be removed in Emissary 2.2.0.
 
 ## Configuration from the filesystem
 
-If desired, $productName$ can be configured from YAML files in the directory `$AMBASSADOR_CONFIG_BASE_DIR/ambassador-config` (by default, `/ambassador/ambassador-config`, which is empty in the images built by Datawire). You could volume mount an external configuration directory here, for example, or use a custom Dockerfile to build configuration directly into a Docker image.
+If desired, Emissary can be configured from YAML files in the directory `$AMBASSADOR_CONFIG_BASE_DIR/ambassador-config` (by default, `/ambassador/ambassador-config`, which is empty in the images built by Datawire). You could volume mount an external configuration directory here, for example, or use a custom Dockerfile to build configuration directly into a Docker image.
 
-Note well that while $productName$ will read its initial configuration from this directory, configuration loaded from Kubernetes annotations will _replace_ this initial configuration. If this is not what you want, you will need to set the environment variable `AMBASSADOR_NO_KUBEWATCH` so that $productName$ will not try to update its configuration from Kubernetes resources.
+Note well that while Emissary will read its initial configuration from this directory, configuration loaded from Kubernetes annotations will _replace_ this initial configuration. If this is not what you want, you will need to set the environment variable `AMBASSADOR_NO_KUBEWATCH` so that Emissary will not try to update its configuration from Kubernetes resources.
 
-Also note that the YAML files in the configuration directory must contain the $productName$ resources, not Kubernetes resources with annotations.
+Also note that the YAML files in the configuration directory must contain the Emissary resources, not Kubernetes resources with annotations.
 
 ## Log levels and debugging
 
-The $OSSproductName$ and $AESproductName$ support more verbose debugging levels. If using $OSSproductName$, the [diagnostics](../diagnostics) service has a button to enable debug logging. Be aware that if you're running $productName$ on multiple pods, the debug log levels are not enabled for all pods -- they are configured on a per-pod basis.
+The Emissary and Ambassador Edge Stack support more verbose debugging levels. If using Emissary, the [diagnostics](../diagnostics) service has a button to enable debug logging. Be aware that if you're running Emissary on multiple pods, the debug log levels are not enabled for all pods -- they are configured on a per-pod basis.
 
-If using $AESproductName$, you can adjust the log level by setting the `AES_LOG_LEVEL` environment variable; from least verbose to most verbose, the valid values are `error`, `warn`/`warning`, `info`, `debug`, and `trace`; the default is `info`.
+If using Ambassador Edge Stack, you can adjust the log level by setting the `AES_LOG_LEVEL` environment variable; from least verbose to most verbose, the valid values are `error`, `warn`/`warning`, `info`, `debug`, and `trace`; the default is `info`.
 
 ## Log format
 
-By default, $productName$ writes its own logs in a plain text format. To produce logs as JSON instead, set the `AMBASSADOR_JSON_LOGGING` environment variable:
+By default, Emissary writes its own logs in a plain text format. To produce logs as JSON instead, set the `AMBASSADOR_JSON_LOGGING` environment variable:
 
 ```yaml
 env:
@@ -254,17 +254,17 @@ env:
 
 ## Port assignments
 
-$productName$ uses some TCP ports in the range 8000-8499 internally, as well as port 8877. Third-party software integrating with $productName$ should not use ports in this range on the $productName$ pod.
+Emissary uses some TCP ports in the range 8000-8499 internally, as well as port 8877. Third-party software integrating with Emissary should not use ports in this range on the Emissary pod.
 
-## $productName$ update checks (Scout)
+## Emissary update checks (Scout)
 
-$productName$ integrates Scout, a service that periodically checks with Datawire servers to advise of available updates. Scout also sends anonymized usage data and the $productName$ version. This information is important to us as we prioritize test coverage, bug fixes, and feature development. Note that $productName$ will run regardless of the status of Scout (i.e., our uptime has zero impact on your uptime.)
+Emissary integrates Scout, a service that periodically checks with Datawire servers to advise of available updates. Scout also sends anonymized usage data and the Emissary version. This information is important to us as we prioritize test coverage, bug fixes, and feature development. Note that Emissary will run regardless of the status of Scout (i.e., our uptime has zero impact on your uptime.)
 
-We do not recommend you disable Scout, since we use this mechanism to notify users of new releases (including critical fixes and security issues). This check can be disabled by setting the environment variable `SCOUT_DISABLE` to `1` in your $productName$ deployment.
+We do not recommend you disable Scout, since we use this mechanism to notify users of new releases (including critical fixes and security issues). This check can be disabled by setting the environment variable `SCOUT_DISABLE` to `1` in your Emissary deployment.
 
-Each $productName$ installation generates a unique cluster ID based on the UID of its Kubernetes namespace and its $productName$ ID: the resulting cluster ID is a UUID which cannot be used to reveal the namespace name nor $productName$ ID itself. $productName$ needs RBAC permission to get namespaces for this purpose, as shown in the default YAML files provided by Datawire; if not granted this permission it will generate a UUID based only on the $productName$ ID. To disable cluster ID generation entirely, set the environment variable `AMBASSADOR_CLUSTER_ID` to a UUID that will be used for the cluster ID.
+Each Emissary installation generates a unique cluster ID based on the UID of its Kubernetes namespace and its Emissary ID: the resulting cluster ID is a UUID which cannot be used to reveal the namespace name nor Emissary ID itself. Emissary needs RBAC permission to get namespaces for this purpose, as shown in the default YAML files provided by Datawire; if not granted this permission it will generate a UUID based only on the Emissary ID. To disable cluster ID generation entirely, set the environment variable `AMBASSADOR_CLUSTER_ID` to a UUID that will be used for the cluster ID.
 
-Unless disabled, $productName$ will also report the following anonymized information back to Datawire:
+Unless disabled, Emissary will also report the following anonymized information back to Datawire:
 
 | Attribute                 | Type  | Description               |
 | :------------------------ | :---- | :------------------------ |
@@ -280,17 +280,17 @@ Unless disabled, $productName$ will also report the following anonymized informa
 | `custom_ambassador_id` | bool | has the `ambassador_id` been changed from 'default'? |
 | `custom_listener_port` | bool | has the listener port been changed from 80/443? |
 | `diagnostics` | bool | is the diagnostics service enabled? |
-| `endpoint_grpc_count` | int | count of endpoints to which $productName$ will originate GRPC |
-| `endpoint_http_count` | int | count of endpoints to which $productName$ will originate HTTP or HTTPS |
+| `endpoint_grpc_count` | int | count of endpoints to which Emissary will originate GRPC |
+| `endpoint_http_count` | int | count of endpoints to which Emissary will originate HTTP or HTTPS |
 | `endpoint_routing` | bool | is endpoint routing enabled? |
 | `endpoint_routing_envoy_rh_count` | int | count of endpoints being routed using Envoy `ring_hash` |
 | `endpoint_routing_envoy_maglev_count` | int | count of endpoints being routed using Envoy `maglev` |
 | `endpoint_routing_envoy_lr_count` | int | count of endpoints being routed using Envoy `least_request` |
 | `endpoint_routing_envoy_rr_count` | int | count of endpoints being routed using Envoy `round_robin` |
 | `endpoint_routing_kube_count` | int | count of endpoints being routed using Kubernetes |
-| `endpoint_tls_count` | int | count of endpoints to which $productName$ will originate TLS |
+| `endpoint_tls_count` | int | count of endpoints to which Emissary will originate TLS |
 | `extauth` | bool | is extauth enabled? |
-| `extauth_allow_body` | bool | will $productName$ send the body to extauth? |
+| `extauth_allow_body` | bool | will Emissary send the body to extauth? |
 | `extauth_host_count` | int | count of extauth hosts in use |
 | `extauth_proto` | str | extauth protocol in use ('http', 'grpc', or `null` if not active) |
 | `group_canary_count` | int | count of Mapping groups that include more than one Mapping |
@@ -313,7 +313,7 @@ Unless disabled, $productName$ will also report the following anonymized informa
 | `k8s_ingress_count` | int | count of Ingress resources in use |
 | `listener_count` | int | count of active listeners (1 unless `redirect_cleartext_from` or TCP Mappings are in use) |
 | `liveness_probe` | bool | are liveness probes enabled? |
-| `managed_by` | string | tool that manages the $productName$ deployment, if any (e.g. helm, edgectl, etc.) |
+| `managed_by` | string | tool that manages the Emissary deployment, if any (e.g. helm, edgectl, etc.) |
 | `mapping_count` | int | count of Mapping resources in use  |
 | `ratelimit` | bool | is rate limiting in use? |
 | `ratelimit_custom_domain` | bool | has the rate limiting domain been changed from 'ambassador'? |
@@ -336,10 +336,10 @@ Unless disabled, $productName$ will also report the following anonymized informa
 | `tracing` | bool | is tracing in use? |
 | `tracing_driver` | str | tracing driver in use ('zipkin', 'lightstep', 'datadog', or `null` if not active) |
 | `use_proxy_proto` | bool | is the `PROXY` protocol in use? |
-| `use_remote_address` | bool | is $productName$ honoring remote addresses? |
-| `x_forwarded_proto_redirect` | bool | is $productName$ redirecting based on `X-Forwarded-Proto`? |
+| `use_remote_address` | bool | is Emissary honoring remote addresses? |
+| `x_forwarded_proto_redirect` | bool | is Emissary redirecting based on `X-Forwarded-Proto`? |
 | `xff_num_trusted_hops` | int | what is the count of trusted hops for `X-Forwarded-For`? |
 
-The `request_*` counts are always incremental: they contain only information about the last `request_elapsed` seconds. Additionally, they only provide a lower bound -- notably, if an $productName$ pod crashes or exits, no effort is made to ship out a final update, so it's very easy for counts to never be reported.
+The `request_*` counts are always incremental: they contain only information about the last `request_elapsed` seconds. Additionally, they only provide a lower bound -- notably, if an Emissary pod crashes or exits, no effort is made to ship out a final update, so it's very easy for counts to never be reported.
 
 To completely disable feature reporting, set the environment variable `AMBASSADOR_DISABLE_FEATURES` to any non-empty value.

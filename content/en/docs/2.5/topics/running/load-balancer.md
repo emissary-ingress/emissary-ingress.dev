@@ -1,6 +1,8 @@
-# Load balancing
+---
+title: Load balancing
+---
 
-Load balancing configuration can be set for all $productName$ mappings in the [`ambassador` `Module`](../ambassador), or set per [`Mapping`](../../using/mappings). If nothing is set, simple round robin balancing is used via Kubernetes services.
+Load balancing configuration can be set for all Emissary mappings in the [`ambassador` `Module`](../ambassador), or set per [`Mapping`](../../using/mappings). If nothing is set, simple round robin balancing is used via Kubernetes services.
 
 To use advanced load balancing, you must first configure a [resolver](../resolvers) that supports advanced load balancing (e.g., the Kubernetes Endpoint Resolver or Consul Resolver). Once a resolver is configured, you can use the `load_balancer` attribute. The following fields are supported:
 
@@ -19,7 +21,7 @@ Supported load balancer policies:
 For more information on the different policies and the implications, see [load balancing strategies in Kubernetes](https://blog.getambassador.io/load-balancing-strategies-in-kubernetes-l4-round-robin-l7-round-robin-ring-hash-and-more-6a5b81595d6c).
 
 ## Round robin
-When `policy` is set to `round_robin`, $productName$ discovers healthy endpoints for the given mapping, and load balances the incoming L7 requests with round robin scheduling. To specify this:
+When `policy` is set to `round_robin`, Emissary discovers healthy endpoints for the given mapping, and load balances the incoming L7 requests with round robin scheduling. To specify this:
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1
@@ -54,7 +56,7 @@ Note that load balancing may not appear to be "even" due to Envoy's threading mo
 
 ## Least request
 
-When `policy` is set to `least_request`, $productName$ discovers healthy endpoints for the given mapping, and load balances the incoming L7 requests to the endpoint with the fewest active requests. To specify this:
+When `policy` is set to `least_request`, Emissary discovers healthy endpoints for the given mapping, and load balances the incoming L7 requests to the endpoint with the fewest active requests. To specify this:
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1
@@ -87,13 +89,13 @@ spec:
 
 ## Sticky sessions / session affinity
 
-Configuring sticky sessions makes $productName$ route requests to a specific pod providing your service in a given session. One pod serves all requests from a given session, eliminating the need for session data to be transferred between pods. $productName$ lets you configure session affinity based on the following parameters in an incoming request:
+Configuring sticky sessions makes Emissary route requests to a specific pod providing your service in a given session. One pod serves all requests from a given session, eliminating the need for session data to be transferred between pods. Emissary lets you configure session affinity based on the following parameters in an incoming request:
 
 - Cookie
 - Header
 - Source IP
 
-**NOTE:** $productName$ supports sticky sessions using two load balancing policies, `ring_hash` and `maglev`.
+**NOTE:** Emissary supports sticky sessions using two load balancing policies, `ring_hash` and `maglev`.
 
 ### Cookie
 
@@ -106,7 +108,7 @@ load_balancer:
     path: <name of the path for the cookie>
 ```
 
-If the cookie you wish to set affinity on is already present in incoming requests, then you only need the `cookie.name` field. However, if you want $productName$ to generate and set a cookie in response to the first request, then you need to specify a value for the `cookie.ttl` field which generates a cookie with the given expiration time.
+If the cookie you wish to set affinity on is already present in incoming requests, then you only need the `cookie.name` field. However, if you want Emissary to generate and set a cookie in response to the first request, then you need to specify a value for the `cookie.ttl` field which generates a cookie with the given expiration time.
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1
@@ -133,7 +135,7 @@ load_balancer:
   header: <header name>
 ```
 
-$productName$ allows header based session affinity if the given header is present on incoming requests.
+Emissary allows header based session affinity if the given header is present on incoming requests.
 
 Example:
 
@@ -160,7 +162,7 @@ load_balancer:
   source_ip: <boolean>
 ```
 
-$productName$ allows session affinity based on the source IP of incoming requests.
+Emissary allows session affinity based on the source IP of incoming requests.
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1

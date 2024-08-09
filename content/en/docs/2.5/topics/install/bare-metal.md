@@ -1,12 +1,12 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: Bare metal
+---
 
-# Install with bare metal
+In cloud environments, provisioning a readily available network load balancer with Emissary is the best option for handling ingress into your Kubernetes cluster. When running Kubernetes on a bare metal setup, where network load balancers are not available by default, we need to consider different options for exposing Emissary.
 
-In cloud environments, provisioning a readily available network load balancer with $productName$ is the best option for handling ingress into your Kubernetes cluster. When running Kubernetes on a bare metal setup, where network load balancers are not available by default, we need to consider different options for exposing $productName$.
+## Exposing Emissary via NodePort
 
-## Exposing $productName$ via NodePort
-
-The simplest way to expose an application in Kubernetes is via a `NodePort` service. In this configuration, we create the $productName$ service] and identify `type: NodePort` instead of `LoadBalancer`. Kubernetes will then create a service and assign that service a port to be exposed externally and direct traffic to $productName$ via the defined `port`.
+The simplest way to expose an application in Kubernetes is via a `NodePort` service. In this configuration, we create the Emissary service] and identify `type: NodePort` instead of `LoadBalancer`. Kubernetes will then create a service and assign that service a port to be exposed externally and direct traffic to Emissary via the defined `port`.
 
 ```yaml
 ---
@@ -26,15 +26,15 @@ spec:
     service: ambassador
 ```
 
-Using a `NodePort` leaves $productName$ isolated from the host network, allowing the Kubernetes service to handle routing to $productName$ pods. You can drop-in this YAML to replace the `LoadBalancer` service in the [YAML installation guide](../yaml-install) and use `http://<External-Node-IP>:<NodePort>/` as the host for requests.
+Using a `NodePort` leaves Emissary isolated from the host network, allowing the Kubernetes service to handle routing to Emissary pods. You can drop-in this YAML to replace the `LoadBalancer` service in the [YAML installation guide](../yaml-install) and use `http://<External-Node-IP>:<NodePort>/` as the host for requests.
 
-## Exposing $productName$ via host network
+## Exposing Emissary via host network
 
-When running $productName$ on a bare metal install of Kubernetes, you have the option to configure $productName$ pods to use the network of the host they are running on. This method allows you to bind $productName$ directly to port 80 or 443 so you won't need to identify the port in requests.
+When running Emissary on a bare metal install of Kubernetes, you have the option to configure Emissary pods to use the network of the host they are running on. This method allows you to bind Emissary directly to port 80 or 443 so you won't need to identify the port in requests.
 
 i.e `http://<External-Node-IP>:<NodePort>/` becomes `http://<External-Node-IP>/`
 
-This can be configured by setting `hostNetwork: true` in the $productName$ deployment. `dnsPolicy: ClusterFirstWithHostNet` will also need to set to tell $productName$ to use *KubeDNS* when attempting to resolve mappings.
+This can be configured by setting `hostNetwork: true` in the Emissary deployment. `dnsPolicy: ClusterFirstWithHostNet` will also need to set to tell Emissary to use *KubeDNS* when attempting to resolve mappings.
 
 ```diff
 ---
@@ -88,6 +88,6 @@ spec:
       restartPolicy: Always
 ```
 
-This configuration does not require a defined $productName$ service, so you can remove that service if you have defined one.
+This configuration does not require a defined Emissary service, so you can remove that service if you have defined one.
 
-**Note:** Before configuring $productName$ with this method, consider some of the functionality that is lost by bypassing the Kubernetes service including only having one $productName$ able to bind to port 8080 or 8443 per node and losing any load balancing that is typically performed by Kubernetes services.
+**Note:** Before configuring Emissary with this method, consider some of the functionality that is lost by bypassing the Kubernetes service including only having one Emissary able to bind to port 8080 or 8443 per node and losing any load balancing that is typically performed by Kubernetes services.

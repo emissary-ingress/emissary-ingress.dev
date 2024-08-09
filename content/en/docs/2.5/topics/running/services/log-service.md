@@ -1,12 +1,14 @@
-# Log service
+---
+title: Log Service
+---
 
-By default, $productName$ puts the access logs on stdout; such
+By default, Emissary puts the access logs on stdout; such
 that the can be read using `kubectl logs`.  The format of those logs,
 and the local destination of them, can be configured using the
 [`envoy_log_` settings in the `ambassador
 Module`](../../ambassador).  However, the
-options there only allow for logging local to $productName$'s Pod.  By
-configuring a `LogService`, you can configure $productName$ to
+options there only allow for logging local to Emissary's Pod.  By
+configuring a `LogService`, you can configure Emissary to
 report its access logs to a remote service, in addition to the usual
 `ambassador Module` configured logging.
 
@@ -22,7 +24,7 @@ kind: LogService
 metadata:
   name: example-log-service
 spec:
-  # Common to all $productName$ resources
+  # Common to all Emissary resources
   ambassador_id: []string           # optional; default is ["default"]
 
   # LogService specific
@@ -97,7 +99,7 @@ spec:
 
 
 > **Note:** The following information is only applicable to `AuthServices` using `proto: grpc`
-As of $productName$ version 2.3, the `v2` transport protocol is deprecated and any AuthServices making use
+As of Emissary version 2.3, the `v2` transport protocol is deprecated and any AuthServices making use
 of it should migrate to `v3` before support for `v2` is removed in a future release.
 
 The following imports simply need to be updated to migrate an AuthService

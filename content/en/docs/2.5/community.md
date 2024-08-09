@@ -1,4 +1,7 @@
-# Community
+---
+title: Community
+weight: 50
+---
 
 ## Contributor's guide
 Please review our [contributor's guide](https://github.com/emissary-ingress/emissary/blob/master/DEVELOPING.md)

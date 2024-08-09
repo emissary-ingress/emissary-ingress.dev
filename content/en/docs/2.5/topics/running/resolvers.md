@@ -1,10 +1,12 @@
-# Service discovery and resolvers
+---
+title: Service discovery and resolvers
+---
 
-Service discovery is how cloud applications and their microservices are located on the network. In a cloud environment, services are ephemeral, existing only as long as they are needed and in use, so a real-time service discovery mechanism is required. $productName$ uses information from service discovery to determine where to route incoming requests.
+Service discovery is how cloud applications and their microservices are located on the network. In a cloud environment, services are ephemeral, existing only as long as they are needed and in use, so a real-time service discovery mechanism is required. Emissary uses information from service discovery to determine where to route incoming requests.
 
-## $productName$ support for service discovery
+## Emissary support for service discovery
 
-$productName$ supports different mechanisms for service discovery. These mechanisms are:
+Emissary supports different mechanisms for service discovery. These mechanisms are:
 
 * Kubernetes service-level discovery (default).
 * Kubernetes endpoint-level discovery.
@@ -12,23 +14,23 @@ $productName$ supports different mechanisms for service discovery. These mechani
 
 ### Kubernetes service-level discovery
 
-By default, $productName$ uses Kubernetes DNS and service-level discovery. In a `Mapping` resource, specifying `service: foo` will prompt $productName$ to look up the DNS address of the `foo` Kubernetes service. Traffic will be routed to the `foo` service. Kubernetes will then load balance that traffic between multiple pods. For more details on Kubernetes networking and how this works, see our blog post on [Session affinity, load balancing controls, gRPC-Web, and $productName$](https://blog.getambassador.io/session-affinity-load-balancing-controls-grpc-web-and-ambassador-0-52-2b916b396d0c).
+By default, Emissary uses Kubernetes DNS and service-level discovery. In a `Mapping` resource, specifying `service: foo` will prompt Emissary to look up the DNS address of the `foo` Kubernetes service. Traffic will be routed to the `foo` service. Kubernetes will then load balance that traffic between multiple pods. For more details on Kubernetes networking and how this works, see our blog post on [Session affinity, load balancing controls, gRPC-Web, and Emissary](https://blog.getambassador.io/session-affinity-load-balancing-controls-grpc-web-and-ambassador-0-52-2b916b396d0c).
 
 ### Kubernetes endpoint-level discovery
 
-$productName$ can also watch Kubernetes endpoints. This bypasses the Kubernetes service routing layer and enables the use of advanced load balancing controls such as session affinity and maglev. For more details, see the [load balancing reference](../load-balancer).
+Emissary can also watch Kubernetes endpoints. This bypasses the Kubernetes service routing layer and enables the use of advanced load balancing controls such as session affinity and maglev. For more details, see the [load balancing reference](../load-balancer).
 
 ### Consul endpoint-level discovery
 
-$productName$ natively integrates with [Consul](https://www.consul.io) for endpoint-level service discovery. In this mode, $productName$ obtains endpoint information from Consul. One of the primary use cases for this architecture is in hybrid cloud environments that run a mixture of Kubernetes services as well as VMs, as Consul can serve as the single global registry for all services.
+Emissary natively integrates with [Consul](https://www.consul.io) for endpoint-level service discovery. In this mode, Emissary obtains endpoint information from Consul. One of the primary use cases for this architecture is in hybrid cloud environments that run a mixture of Kubernetes services as well as VMs, as Consul can serve as the single global registry for all services.
 
 ## The Resolver resource
 
-The `Resolver` resource is used to configure the discovery service strategy for $productName$.
+The `Resolver` resource is used to configure the discovery service strategy for Emissary.
 
 ### The Kubernetes service resolver
 
-The Kubernetes Service Resolver configures $productName$ to use Kubernetes services. If no resolver is specified, this behavior is the default. When this resolver is used, the `service.namespace` value from a `Mapping` is handed to the Kubernetes cluster's DNS resolver to determine where requests are sent.
+The Kubernetes Service Resolver configures Emissary to use Kubernetes services. If no resolver is specified, this behavior is the default. When this resolver is used, the `service.namespace` value from a `Mapping` is handed to the Kubernetes cluster's DNS resolver to determine where requests are sent.
 
 ```yaml
 ---
@@ -40,7 +42,7 @@ metadata:
 
 ### The Kubernetes endpoint resolver
 
-The Kubernetes Endpoint Resolver configures $productName$ to resolve Kubernetes endpoints. This enables the use of more a [advanced load balancing configuration](../load-balancer). When this resolver is used, the endpoints for the `service` defined in a `Mapping` are resolved and used to determine where requests are sent.
+The Kubernetes Endpoint Resolver configures Emissary to resolve Kubernetes endpoints. This enables the use of more a [advanced load balancing configuration](../load-balancer). When this resolver is used, the endpoints for the `service` defined in a `Mapping` are resolved and used to determine where requests are sent.
 
 ```yaml
 ---
@@ -52,7 +54,7 @@ metadata:
 
 ### The Consul resolver
 
-The Consul Resolver configures $productName$ to use Consul for service discovery. When this resolver is used, the `service` defined in a `Mapping` is passed to Consul, along with the datacenter specified, to determine where requests are sent.
+The Consul Resolver configures Emissary to use Consul for service discovery. When this resolver is used, the `service` defined in a `Mapping` is passed to Consul, along with the datacenter specified, to determine where requests are sent.
 
 ```yaml
 ---
@@ -125,4 +127,4 @@ spec:
     policy: round_robin
 ```
 
-The YAML configuration above will configure $productName$ to use Kubernetes Service Discovery to route to the Consul Service Discovery to route to the `bar` service on requests with `prefix: /bar/`.
+The YAML configuration above will configure Emissary to use Kubernetes Service Discovery to route to the Consul Service Discovery to route to the `bar` service on requests with `prefix: /bar/`.

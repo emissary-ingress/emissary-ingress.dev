@@ -1,6 +1,8 @@
-# $productName$ Environment variables
+---
+title: Environment Variables
+---
 
-Use the following variables for the environment of your $productName$ container:
+Use the following variables for the environment of your Emissary container:
 
 | Variable                                                                                                   | Default value                                       | Value type |
 |----------------------------------------------------------------------------------------------------------- |-----------------------------------------------------|-------------------------------------------------------------------------------|
@@ -52,7 +54,7 @@ Use the following variables for the environment of your $productName$ container:
 
 ### `AMBASSADOR_ID`
 
-$productName$ supports running multiple installs in the same cluster without restricting a given instance of $productName$ to a single namespace.
+Emissary supports running multiple installs in the same cluster without restricting a given instance of Emissary to a single namespace.
 The resources that are visible to an installation can be limited with the `AMBASSADOR_ID` environment variable.
 
 [More information](../../running/running#ambassador_id)
@@ -86,16 +88,16 @@ Set it to 0 to disable.
 
 ### `AMBASSADOR_CLUSTER_ID`
 
-Each $productName$ installation generates a unique cluster ID based on the UID of its Kubernetes namespace and its $productName$ ID: the resulting cluster ID is a UUID which cannot be used
-to reveal the namespace name nor $productName$ ID itself. $productName$ needs RBAC permission to get namespaces for this purpose, as shown in the default YAML files provided by Datawire;
-if not granted this permission it will generate a UUID based only on the $productName$ ID. To disable cluster ID generation entirely, set the environment variable
+Each Emissary installation generates a unique cluster ID based on the UID of its Kubernetes namespace and its Emissary ID: the resulting cluster ID is a UUID which cannot be used
+to reveal the namespace name nor Emissary ID itself. Emissary needs RBAC permission to get namespaces for this purpose, as shown in the default YAML files provided by Datawire;
+if not granted this permission it will generate a UUID based only on the Emissary ID. To disable cluster ID generation entirely, set the environment variable
 `AMBASSADOR_CLUSTER_ID` to a UUID that will be used for the cluster ID.
 
 [More information](../../running/running#emissary-ingress-update-checks-scout)
 
 ### `AMBASSADOR_CONFIG_BASE_DIR`
 
-Controls where $productName$ will store snapshots. By default, the latest configuration will be in `/ambassador/snapshots`. If you have overridden it, $productName$ saves configurations in `$AMBASSADOR_CONFIG_BASE_DIR/snapshots`.
+Controls where Emissary will store snapshots. By default, the latest configuration will be in `/ambassador/snapshots`. If you have overridden it, Emissary saves configurations in `$AMBASSADOR_CONFIG_BASE_DIR/snapshots`.
 
 [More information](../../running/debugging#examine-pod-and-container-contents)
 
@@ -107,18 +109,18 @@ To completely disable feature reporting, set the environment variable `AMBASSADO
 
 ### `AMBASSADOR_DRAIN_TIME`
 
-At each reconfiguration, $productName$ keeps around the old version of it's envoy config for the duration of the configured drain time.
-The `AMBASSADOR_DRAIN_TIME` variable controls how much of a grace period $productName$ provides active clients when reconfiguration happens.
-Its unit is seconds and it defaults to 600 (10 minutes). This can impact memory usage because $productName$ needs to keep around old versions of its configuration
+At each reconfiguration, Emissary keeps around the old version of it's envoy config for the duration of the configured drain time.
+The `AMBASSADOR_DRAIN_TIME` variable controls how much of a grace period Emissary provides active clients when reconfiguration happens.
+Its unit is seconds and it defaults to 600 (10 minutes). This can impact memory usage because Emissary needs to keep around old versions of its configuration
 for the duration of the drain time.
 
 [More information](../../running/scaling#ambassador_drain_time)
 
 ### `AMBASSADOR_ENVOY_API_VERSION`
 
-By default, $productName$ will configure Envoy using the [V3 Envoy API](https://www.envoyproxy.io/docs/envoy/latest/api-v3/api).
-In $productName$ 2.0, you may switch back to Envoy V2 by setting the `AMBASSADOR_ENVOY_API_VERSION` environment variable to "V2".
-Using the V2 API is not recommended since $productName$ 3.0 removes support for the V2 API.
+By default, Emissary will configure Envoy using the [V3 Envoy API](https://www.envoyproxy.io/docs/envoy/latest/api-v3/api).
+In Emissary 2.0, you may switch back to Envoy V2 by setting the `AMBASSADOR_ENVOY_API_VERSION` environment variable to "V2".
+Using the V2 API is not recommended since Emissary 3.0 removes support for the V2 API.
 
 ### `AMBASSADOR_GRPC_METRICS_SINK`
 
@@ -128,7 +130,7 @@ Agent which has no negative effect on general routing or Edgissary uptime.
 
 ### `AMBASSADOR_ISTIO_SECRET_DIR`
 
-$productName$ will read the mTLS certificates from `/etc/istio-certs` unless configured to use a different directory with the `AMBASSADOR_ISTIO_SECRET_DIR`
+Emissary will read the mTLS certificates from `/etc/istio-certs` unless configured to use a different directory with the `AMBASSADOR_ISTIO_SECRET_DIR`
 environment variable and create a secret in that location named `istio-certs`.
 
 [More information](../../../howtos/istio#configure-an-mtls-tlscontext)
@@ -142,8 +144,8 @@ Some (but few) logs from `gunicorn` and the Kubernetes `client-go` package will 
 
 ### `AMBASSADOR_LABEL_SELECTOR`
 
-Restricts $productName$'s configuration to only the labelled resources. For example, you could apply a `version-two: true` label
-to all resources that should be visible to $productName$, then set `AMBASSADOR_LABEL_SELECTOR=version-two=true` in its Deployment.
+Restricts Emissary's configuration to only the labelled resources. For example, you could apply a `version-two: true` label
+to all resources that should be visible to Emissary, then set `AMBASSADOR_LABEL_SELECTOR=version-two=true` in its Deployment.
 Resources without the specified label will be ignored.
 
 ### `AMBASSADOR_NAMESPACE`
@@ -159,58 +161,58 @@ in seconds and must be > 0.
 
 ### `AMBASSADOR_SINGLE_NAMESPACE`
 
-When set, configures $productName$ to only work within a single namespace.
+When set, configures Emissary to only work within a single namespace.
 
 [More information](../../running/running#namespaces)
 
 ### `AMBASSADOR_SNAPSHOT_COUNT`
 
-The number of snapshots that $productName$ should save.
+The number of snapshots that Emissary should save.
 
 ### `AMBASSADOR_VERIFY_SSL_FALSE`
 
-By default, $productName$ will verify the TLS certificates provided by the Kubernetes API. In some situations, the cluster may be
+By default, Emissary will verify the TLS certificates provided by the Kubernetes API. In some situations, the cluster may be
 deployed with self-signed certificates. In this case, set `AMBASSADOR_VERIFY_SSL_FALSE` to `true` to disable verifying the TLS certificates.
 
 [More information](../../running/running#ambassador_verify_ssl_false)
 
 ### `DD_ENTITY_ID`
 
-$productName$ supports setting the `dd.internal.entity_id` statitics tag using the `DD_ENTITY_ID` environment variable. If this value
+Emissary supports setting the `dd.internal.entity_id` statitics tag using the `DD_ENTITY_ID` environment variable. If this value
 is set, statistics will be tagged with the value of the environment variable. Otherwise, this statistics tag will be omitted (the default).
 
 [More information](../../running/statistics/envoy-statsd#using-datadog-dogstatsd-as-the-statsd-sink)
 
 ### `DOGSTATSD`
 
-If you are a user of the [Datadog](https://docs.datadoghq.com/) monitoring system, pulling in the Envoy statistics from $productName$ is very easy.
-Because the DogStatsD protocol is slightly different than the normal StatsD protocol, in addition to setting $productName$'s
+If you are a user of the [Datadog](https://docs.datadoghq.com/) monitoring system, pulling in the Envoy statistics from Emissary is very easy.
+Because the DogStatsD protocol is slightly different than the normal StatsD protocol, in addition to setting Emissary's
 `STATSD_ENABLED=true` environment variable, you also need to set the`DOGSTATSD=true` environment variable.
 
 [More information](../../running/statistics/envoy-statsd#using-datadog-dogstatsd-as-the-statsd-sink)
 
 ### `SCOUT_DISABLE`
 
-$productName$ integrates Scout, a service that periodically checks with Datawire servers to advise of available updates. Scout also sends anonymized usage
-data and the $productName$ version. This information is important to us as we prioritize test coverage, bug fixes, and feature development. Note that the $productName$ will
+Emissary integrates Scout, a service that periodically checks with Datawire servers to advise of available updates. Scout also sends anonymized usage
+data and the Emissary version. This information is important to us as we prioritize test coverage, bug fixes, and feature development. Note that the Emissary will
 run regardless of the status of Scout.
 
 We do not recommend you disable Scout, since we use this mechanism to notify users of new releases (including critical fixes and security issues). This check can be disabled by setting
-the environment variable `SCOUT_DISABLE` to `1` in your $productName$ deployment.
+the environment variable `SCOUT_DISABLE` to `1` in your Emissary deployment.
 
 [More information](../../running/running#emissary-ingress-update-checks-scout)
 
 ### `STATSD_ENABLED`
 
-If enabled, then $productName$ has Envoy expose metrics information via the ubiquitous and well-tested [StatsD](https://github.com/etsy/statsd)
-protocol.  To enable this, you will simply need to set the environment variable `STATSD_ENABLED=true` in $productName$'s deployment YAML
+If enabled, then Emissary has Envoy expose metrics information via the ubiquitous and well-tested [StatsD](https://github.com/etsy/statsd)
+protocol.  To enable this, you will simply need to set the environment variable `STATSD_ENABLED=true` in Emissary's deployment YAML
 
 [More information](../../running/statistics/envoy-statsd#envoy-statistics-with-statsd)
 
 ### `STATSD_HOST`
 
-When this variable is set, $productName$ by default sends statistics to a Kubernetes service named `statsd-sink` on UDP port 8125 (the usual
-port of the StatsD protocol).  You may instead tell $productName$ to send the statistics to a different StatsD server by setting the
+When this variable is set, Emissary by default sends statistics to a Kubernetes service named `statsd-sink` on UDP port 8125 (the usual
+port of the StatsD protocol).  You may instead tell Emissary to send the statistics to a different StatsD server by setting the
 `STATSD_HOST` environment variable.  This can be useful if you have an existing StatsD sink available in your cluster.
 
 [More information](../../running/statistics/envoy-statsd#envoy-statistics-with-statsd)
@@ -229,7 +231,7 @@ How often, in seconds, to submit statsd reports (if `STATSD_ENABLED`)
 
 ### `_AMBASSADOR_ID`
 
-Used with the Ambassador Consul connector. Sets the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple $productNamePlural$ (Required if `AMBASSADOR_ID` is set in your $productName$ `Deployment`
+Used with the Ambassador Consul connector. Sets the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple $productNamePlural$ (Required if `AMBASSADOR_ID` is set in your Emissary `Deployment`
 
 [More information](../../../howtos/consul#environment-variables)
 
@@ -283,8 +285,8 @@ Enables support for knative
 
 ### `AMBASSADOR_UPDATE_MAPPING_STATUS`
 
-If `AMBASSADOR_UPDATE_MAPPING_STATUS` is set to the string `true`, $productName$ will update the `status` of every `Mapping`
-CRD that it accepts for its configuration. This has no effect on the proper functioning of $productName$ itself, and can be a
+If `AMBASSADOR_UPDATE_MAPPING_STATUS` is set to the string `true`, Emissary will update the `status` of every `Mapping`
+CRD that it accepts for its configuration. This has no effect on the proper functioning of Emissary itself, and can be a
 performance burden on installations with many `Mapping`s. It has no effect for `Mapping`s stored as annotations.
 
 The default is `false`. We recommend leaving `AMBASSADOR_UPDATE_MAPPING_STATUS` turned off unless required for external systems.
@@ -298,7 +300,7 @@ This controls the number of worker threads used to serve requests and can be use
 
 ## Port assignments
 
-$productName$ uses the following ports to listen for HTTP/HTTPS traffic automatically via TCP:
+Emissary uses the following ports to listen for HTTP/HTTPS traffic automatically via TCP:
 
 | Port | Process  | Function                                                |
 |------|----------|---------------------------------------------------------|
@@ -306,7 +308,7 @@ $productName$ uses the following ports to listen for HTTP/HTTPS traffic automati
 | 8002 | watt     | Internal watt snapshot access; not exposed outside pod  |
 | 8003 | ambex    | Internal ambex snapshot access; not exposed outside pod |
 | 8004 | diagd    | Internal `diagd` access; not exposed outside pod        |
-| 8005 | snapshot | Exposes a scrubbed $productName$ snapshot outside of the pod |
+| 8005 | snapshot | Exposes a scrubbed Emissary snapshot outside of the pod |
 | 8080 | envoy    | Default HTTP service port                               |
 | 8443 | envoy    | Default HTTPS service port                              |
 | 8877 | diagd    | Direct access to diagnostics UI; provided by `busyambassador entrypoint` |

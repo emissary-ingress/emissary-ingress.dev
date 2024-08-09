@@ -1,10 +1,12 @@
-# Query parameter-based routing
+---
+title: Query parameter-based routing
+---
 
-$productName$ can route to target services based on HTTP query parameters with the `query_parameters` and `regex_query_parameters` specifications. Multiple mappings with different annotations can be applied to construct more complex routing rules.
+Emissary can route to target services based on HTTP query parameters with the `query_parameters` and `regex_query_parameters` specifications. Multiple mappings with different annotations can be applied to construct more complex routing rules.
 
 ## The `query_parameters` annotation
 
-The `query_parameters` attribute is a dictionary of `query_parameter`: `value` pairs. $productName$ will only allow requests that match the specified `query_parameter`: `value` pairs to reach the target service.
+The `query_parameters` attribute is a dictionary of `query_parameter`: `value` pairs. Emissary will only allow requests that match the specified `query_parameter`: `value` pairs to reach the target service.
 
 You can also set the `value` of a query parameter to `true` to test for the existence of a query parameter.
 

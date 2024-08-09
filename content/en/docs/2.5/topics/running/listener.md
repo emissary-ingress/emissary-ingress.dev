@@ -1,9 +1,11 @@
-# The `Listener` CRD
+---
+title: Listener CRD
+---
 
-The `Listener` CRD defines where, and how, $productName$ should listen for requests from the network, and which `Host` definitions should be used to process those requests. For further examples of how to use `Listener`, see [Configuring $productName$ Communications](../../../howtos/configure-communications).
+The `Listener` CRD defines where, and how, Emissary should listen for requests from the network, and which `Host` definitions should be used to process those requests. For further examples of how to use `Listener`, see [Configuring Emissary Communications](../../../howtos/configure-communications).
 
-**Note that `Listener`s are never created by $productName$, and must be defined by the user.** If you do not
-define any `Listener`s, $productName$ will not listen anywhere for connections, and therefore won't do
+**Note that `Listener`s are never created by Emissary, and must be defined by the user.** If you do not
+define any `Listener`s, Emissary will not listen anywhere for connections, and therefore won't do
 anything useful. It will log a `WARNING` to this effect.
 
 ```yaml
@@ -26,17 +28,17 @@ spec:
 
 | Element | Type | Definition |
 | :------ | :--- | :--------- |
-| `port` | `int32` | The network port on which $productName$ should listen. *Required.* |
+| `port` | `int32` | The network port on which Emissary should listen. *Required.* |
 | `protocol` | `enum`; see below | A high-level protocol type, like "HTTPS". *Exactly one of `protocol` and `protocolStack` must be supplied.* |
 | `protocolStack` | array of `enum`; see below | A sequence of low-level protocols to layer together. *Exactly one of `protocol` and `protocolStack` must be supplied.* |
-| `securityModel` | `enum`; see below | How does $productName$ decide whether requests here are secure? *Required.* |
+| `securityModel` | `enum`; see below | How does Emissary decide whether requests here are secure? *Required.* |
 | `statsPrefix` | `string`; see below | Under what name do statistics for this `Listener` appear? *Optional; default depends on protocol.* |
-| `l7Depth` | `int32` | How many layer 7 load balancers are between the edge of the network and $productName$? *Optional; default is 0.*|
+| `l7Depth` | `int32` | How many layer 7 load balancers are between the edge of the network and Emissary? *Optional; default is 0.*|
 | `hostBinding` | `struct`, see below | Mechanism for determining which `Host`s will be associated with this `Listener`. *Required* |
 
 ### `protocol` and `protocolStack`
 
-`protocol` is the **recommended** way to tell $productName$ that a `Listener` expects connections using a well-known protocol. When using `protocol`, `protocolStack` may not also be supplied.
+`protocol` is the **recommended** way to tell Emissary that a `Listener` expects connections using a well-known protocol. When using `protocol`, `protocolStack` may not also be supplied.
 
 Valid `protocol` values are:
 
@@ -60,44 +62,44 @@ Valid `protocol` values are:
 | `INSECURE` | Requests are always insecure. You might set this for an HTTP-only `Listener`, or a `Listener` for clients that are expected to be hostile. |
 
 The `X-Forwarded-Proto` header mentioned above is meant to reflect the protocol the _original client_
-used to contact $productName$. When no layer 7 proxies are in use, Envoy will make certain that the
+used to contact Emissary. When no layer 7 proxies are in use, Envoy will make certain that the
 `X-Forwarded-Proto` header matches the wire protocol of the connection the client made to Envoy,
-which allows $productName$ to trust `X-Forwarded-Proto` for routing decisions such as deciding to
-redirect requests made using HTTP over to HTTPS for greater security. When using $productName$ as an
+which allows Emissary to trust `X-Forwarded-Proto` for routing decisions such as deciding to
+redirect requests made using HTTP over to HTTPS for greater security. When using Emissary as an
 edge proxy or a typical API gateway, this is a desirable configuration; setting `securityModel` to
 `XFP` makes this easy.
 
 When layer proxies _are_ in use, the `XFP` setting is often still desirable; however, you will also
 need to set `l7Depth` to allow it to function. See below.
 
-`SECURE` and `INSECURE` are helpful for cases where something downstream of $productName$ should be
-allowing only one kind of request to reach $productName$.  For example, a `Listener` behind a load
+`SECURE` and `INSECURE` are helpful for cases where something downstream of Emissary should be
+allowing only one kind of request to reach Emissary.  For example, a `Listener` behind a load
 balancer that terminates TLS and checks client certificates might use
 `SecurityModel: SECURE`, then use `Host`s to reject insecure requests if one somehow
 arrives.
 
 ### `l7Depth`
 
-When layer 7 (L7) proxies are in use, the connection to $productName$ comes from the L7 proxy itself
+When layer 7 (L7) proxies are in use, the connection to Emissary comes from the L7 proxy itself
 rather than from the client. Examining the protocol and IP address of that connection is useless, and
-instead you need to configure the L7 proxy to pass extra information about the client to $productName$
+instead you need to configure the L7 proxy to pass extra information about the client to Emissary
 using the `X-Forwarded-Proto` and `X-Forwarded-For` headers.
 
-However, if $productName$ always trusted `X-Forwarded-Proto` and `X-Forwarded-For`, any client could
-use them to lie about itself to $productName$. As a security mechanism, therefore, you must _also_
-set `l7Depth` in the `Listener` to the number of trusted L7 proxies in front of $productName$. If
+However, if Emissary always trusted `X-Forwarded-Proto` and `X-Forwarded-For`, any client could
+use them to lie about itself to Emissary. As a security mechanism, therefore, you must _also_
+set `l7Depth` in the `Listener` to the number of trusted L7 proxies in front of Emissary. If
 `l7Depth` is not set in the `Listener`, the `xff_num_trusted_hops` value from the `ambassador` `Module`
 will be used. If neither is set, the default `l7Depth` is 0.
 
 When `l7Depth` is 0, any incoming `X-Forwarded-Proto` is stripped: Envoy always provides an
 `X-Forwarded-Proto` matching the wire protocol of the incoming connection, so that `X-Forwarded-Proto`
 can be trusted. When `l7Depth` is non-zero, `X-Forwarded-Proto` is accepted from the L7 proxy, and
-trusted. The actual wire protocol in use from the L7 proxy to $productName$ is ignored.
+trusted. The actual wire protocol in use from the L7 proxy to Emissary is ignored.
 
-`l7Depth` also affects $productName$'s view of the client's source IP address, which is used as the
+`l7Depth` also affects Emissary's view of the client's source IP address, which is used as the
 `remote_address` field when rate limiting, and for the `X-Envoy-External-Address` header:
 
-- When `l7Depth` is 0, $productName$ uses the IP address of the incoming connection.
+- When `l7Depth` is 0, Emissary uses the IP address of the incoming connection.
 - When `l7Depth` is some value N that is non-zero, the behavior is determined by the value of
   `use_remote_address` in the `ambassador` `Module`:
 
@@ -126,7 +128,7 @@ trusted. The actual wire protocol in use from the L7 proxy to $productName$ is i
 
 ### `statsPrefix`
 
-$productName$ produces detailed [statistics](../statistics) which can be monitored in a variety of ways. Statistics have hierarchical names, and the `Listener` will cause a set of statistics to be logged under the name specified by `statsPrefix`.
+Emissary produces detailed [statistics](../statistics) which can be monitored in a variety of ways. Statistics have hierarchical names, and the `Listener` will cause a set of statistics to be logged under the name specified by `statsPrefix`.
 
 The default `statsPrefix` depends on the protocol for this `Listener`:
 
@@ -215,4 +217,4 @@ The possible stack elements are:
 
 ## Examples
 
-For further examples of how to use `Listener`, see [Configuring $productName$ to Communicate](../../../howtos/configure-communications).
+For further examples of how to use `Listener`, see [Configuring Emissary to Communicate](../../../howtos/configure-communications).

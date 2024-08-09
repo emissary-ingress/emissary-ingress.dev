@@ -1,8 +1,7 @@
 ---
-description: "$productName$ uses the Mapping resource to map a resource, like a URL prefix, to a Kubernetes service or web service."
+title: Mapping resource
+description: "Emissary uses the Mapping resource to map a resource, like a URL prefix, to a Kubernetes service or web service."
 ---
-
-import Alert from '@material-ui/lab/Alert';
 
 # Get traffic from the edge
 
@@ -19,13 +18,13 @@ import Alert from '@material-ui/lab/Alert';
 
 </div>
 
-The core $productName$ resource used to manage cluster ingress is the `Mapping` resource.
+The core Emissary resource used to manage cluster ingress is the `Mapping` resource.
 
 **A `Mapping` resource routes a URL path (or prefix) to a service (either a Kubernetes service or other web service).**
 
 <Alert severity="warning">
   Remember that <code>Listener</code> and <code>Host</code> resources are&nbsp;
-  <b>required</b>&nbsp;for a functioning $productName$ installation that can route traffic!<br/>
+  <b>required</b>&nbsp;for a functioning Emissary installation that can route traffic!<br/>
   <a href="../../topics/running/listener">Learn more about <code>Listener</code></a>.<br/>
   <a href="../../topics/running/host-crd">Learn more about <code>Host</code></a>.
 </Alert>
@@ -49,8 +48,8 @@ spec:
 | Name | Type | Description |
 | :--- | :--- | :--- |
 | `metadata.name` | String | Identifies the Mapping. |
-| `spec.prefix` | String | The URL prefix identifying your resource. [See below](#resources) on how $productName$ handles resources. |
-| `spec.service` | String | The service handling the resource.  If a Kubernetes service, it must include the namespace (in the format `service.namespace`) if the service is in a different namespace than $productName$. [See below](#services) on service name formatting.|
+| `spec.prefix` | String | The URL prefix identifying your resource. [See below](#resources) on how Emissary handles resources. |
+| `spec.service` | String | The service handling the resource.  If a Kubernetes service, it must include the namespace (in the format `service.namespace`) if the service is in a different namespace than Emissary. [See below](#services) on service name formatting.|
 
 Here's another example using a web service that maps requests to `/httpbin/` to `http://httpbin.org` (again, **this is not a
 complete example on its own; see below**):
@@ -72,7 +71,7 @@ spec:
 For demonstration purposes, here's a possible way of combining a `Listener`, a `Host`, and both `Mapping`s above that is complete and functional:
 
 - it will accept HTTP or HTTPS on port 8443;
-- $productName$ is terminating TLS;
+- Emissary is terminating TLS;
 - HTTPS to `foo.example.com` will be routed as above;
 - HTTP to `foo.example.com` will be redirected to HTTPS;
 - HTTP or HTTPS to other hostnames will be rejected; and
@@ -149,7 +148,7 @@ Note the addition of `label`s and `selector`s to explicitly specify which resour
 
 ## Applying a Mapping resource
 
-A Mapping resource can be managed using the same workflow as any other Kubernetes resources (like a Service or Deployment). For example, if the above Mapping is saved into a file called `httpbin-mapping.yaml`, the following command will apply the configuration directly to $productName$:
+A Mapping resource can be managed using the same workflow as any other Kubernetes resources (like a Service or Deployment). For example, if the above Mapping is saved into a file called `httpbin-mapping.yaml`, the following command will apply the configuration directly to Emissary:
 
 ```
 kubectl apply -f httpbin-mapping.yaml
@@ -159,13 +158,13 @@ kubectl apply -f httpbin-mapping.yaml
 
 ## Resources
 
-To $productName$, a resource is a group of one or more URLs that all share a common prefix in the URL path. For example, these URLs all share the `/resource1/` path prefix, so `/resource1/` can be considered a single resource:
+To Emissary, a resource is a group of one or more URLs that all share a common prefix in the URL path. For example, these URLs all share the `/resource1/` path prefix, so `/resource1/` can be considered a single resource:
 
 * `https://ambassador.example.com/resource1/foo`
 * `https://ambassador.example.com/resource1/bar`
 * `https://ambassador.example.com/resource1/baz/zing`
 
-On the other hand, these URLs share only the prefix `/` -- you _could_ tell $productName$ to treat them as a single resource, but it's probably not terribly useful.
+On the other hand, these URLs share only the prefix `/` -- you _could_ tell Emissary to treat them as a single resource, but it's probably not terribly useful.
 
 * `https://ambassador.example.com/resource1/foo`
 * `https://ambassador.example.com/resource2/bar`
@@ -173,7 +172,7 @@ On the other hand, these URLs share only the prefix `/` -- you _could_ tell $pro
 
 Note that the length of the prefix doesn't matter; a prefix like `/v1/this/is/my/very/long/resource/name/` is valid.
 
-Also note that $productName$ does not actually require the prefix to start and end with `/` -- however, in practice, it's a good idea. Specifying a prefix of `/man` would match all of the following, which probably is not what was intended:
+Also note that Emissary does not actually require the prefix to start and end with `/` -- however, in practice, it's a good idea. Specifying a prefix of `/man` would match all of the following, which probably is not what was intended:
 
 * `https://ambassador.example.com/man/foo`
 * `https://ambassador.example.com/mankind`
@@ -181,11 +180,11 @@ Also note that $productName$ does not actually require the prefix to start and e
 
 ## Services
 
-$productName$ routes traffic to a service. A service is defined as `[scheme://]service[.namespace][:port]`.  Everything except for the service is optional.
+Emissary routes traffic to a service. A service is defined as `[scheme://]service[.namespace][:port]`.  Everything except for the service is optional.
 
 - `scheme` can be either `http` or `https`; if not present, the default is `http`.
 - `service` is the name of a service (typically the service name in Kubernetes or Consul); it is not allowed to contain the `.` character.
-- `namespace` is the namespace in which the service is running. Starting with $productName$ 1.0.0, if not supplied, it defaults to the namespace in which the Mapping resource is defined. The default behavior can be configured using the [Module resource](../../topics/running/ambassador). When using a Consul resolver, `namespace` is not allowed.
+- `namespace` is the namespace in which the service is running. Starting with Emissary 1.0.0, if not supplied, it defaults to the namespace in which the Mapping resource is defined. The default behavior can be configured using the [Module resource](../../topics/running/ambassador). When using a Consul resolver, `namespace` is not allowed.
 - `port` is the port to which a request should be sent. If not specified, it defaults to `80` when the scheme is `http` or `443` when the scheme is `https`. Note that the [resolver](../../topics/running/resolvers) may return a port in which case the `port` setting is ignored.
 
 <Alert severity="info">While using <code>service.namespace.svc.cluster.local</code> may work for Kubernetes resolvers, the preferred syntax is <code>service.namespace</code>.</Alert>
@@ -220,19 +219,19 @@ spec:
 
 ## Best Practices
 
-$productName$'s configuration is assembled from multiple YAML blocks which are managed by independent application teams. This implies that certain best practices should be followed.
+Emissary's configuration is assembled from multiple YAML blocks which are managed by independent application teams. This implies that certain best practices should be followed.
 
-#### $productName$'s configuration should be under version control.
+#### Emissary's configuration should be under version control.
 
-While you can always read back the $productName$'s configuration from Kubernetes or its diagnostic service, the $productName$ will not do versioning for you.
+While you can always read back the Emissary's configuration from Kubernetes or its diagnostic service, the Emissary will not do versioning for you.
 
-#### $productName$ tries to not start with a broken configuration, but it's not perfect.
+#### Emissary tries to not start with a broken configuration, but it's not perfect.
 
-Gross errors will result in the $productName$ refusing to start, in which case `kubectl logs` will be helpful. However, it's always possible to map a resource to the wrong service, or use the wrong `rewrite` rules. $productName$ can't detect that on its own, although its [diagnostic service](../../topics/running/diagnostics/) can help you figure it out.
+Gross errors will result in the Emissary refusing to start, in which case `kubectl logs` will be helpful. However, it's always possible to map a resource to the wrong service, or use the wrong `rewrite` rules. Emissary can't detect that on its own, although its [diagnostic service](../../topics/running/diagnostics/) can help you figure it out.
 
 #### Be careful of mapping collisions.
 
-If two different developers try to map `/myservice/` to something, this can lead to unexpected behavior. $productName$'s [canary deployment](../../topics/using/canary/) logic means that it's more likely that traffic will be split between them than that it will throw an error -- again, the diagnostic service can help you here.
+If two different developers try to map `/myservice/` to something, this can lead to unexpected behavior. Emissary's [canary deployment](../../topics/using/canary/) logic means that it's more likely that traffic will be split between them than that it will throw an error -- again, the diagnostic service can help you here.
 
 #### Unless specified, mapping attributes cannot be applied to any other resource type.
 

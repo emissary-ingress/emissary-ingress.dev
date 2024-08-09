@@ -1,4 +1,6 @@
-# Explore distributed tracing and Kubernetes monitoring
+---
+title: Distributed Tracing
+---
 
 The Kubernetes monitoring and distributed tracing landscape is hard to grasp. Although this conceptual approach to [observability is nothing new](https://blog.getambassador.io/distributed-tracing-with-java-microdonuts-kubernetes-and-the-ambassador-api-gateway-ace15b62a89e) — companies like New Relic revolutionized single-application performance monitoring (APM) over a decade ago — it took a few years and the [Dapper publication](https://research.google/pubs/pub36356/) for this idea to migrate to distributed applications. The importance of this technology is only increasing, as more and more of us are building [“deep systems”](https://lightstep.com/deep-systems/).
 

@@ -1,6 +1,8 @@
-# Method-based routing
+---
+title: Method-based routing
+---
 
-$productName$ supports routing based on the HTTP method and regular expression.
+Emissary supports routing based on the HTTP method and regular expression.
 
 ## Using `method`
 

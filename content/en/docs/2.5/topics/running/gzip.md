@@ -1,6 +1,8 @@
-# Gzip compression
+---
+title: Gzip compression
+---
 
-Gzip enables $productName$ to compress upstream data upon client request. Compression is useful in situations where large payloads need to be transmitted without compromising the response time. Compression can also save on bandwidth costs at the expense of increased computing costs.
+Gzip enables Emissary to compress upstream data upon client request. Compression is useful in situations where large payloads need to be transmitted without compromising the response time. Compression can also save on bandwidth costs at the expense of increased computing costs.
 
 ## How does it work?
 

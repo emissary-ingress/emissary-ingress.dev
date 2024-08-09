@@ -1,16 +1,18 @@
-# $productName$ with AWS
+---
+title: AWS
+---
 
-$productName$ is a platform agnostic Kubernetes API gateway. It will run in any distribution of Kubernetes whether it is managed by a cloud provider or on homegrown bare-metal servers.
+Emissary is a platform agnostic Kubernetes API gateway. It will run in any distribution of Kubernetes whether it is managed by a cloud provider or on homegrown bare-metal servers.
 
-This document serves as a reference for different configuration options available when running Kubernetes in AWS. See [Installing $productName$](../../install) for the various installation methods available.
+This document serves as a reference for different configuration options available when running Kubernetes in AWS. See [Installing Emissary](../../install) for the various installation methods available.
 
 ## Recommended configuration
 
-There are lot of configuration options available to you when running $productName$ in AWS. While you should read this entire document to understand what is best for you, the following is the recommended configuration when running $productName$ in AWS:
+There are lot of configuration options available to you when running Emissary in AWS. While you should read this entire document to understand what is best for you, the following is the recommended configuration when running Emissary in AWS:
 
-It is recommended to terminate TLS at $productName$ so you can take advantage of all the TLS configuration options available in $productName$ including setting the allowed TLS versions, setting `alpn_protocol` options, enforcing HTTP -> HTTPS redirection, and [automatic certificate management](../host-crd) in the $productName$.
+It is recommended to terminate TLS at Emissary so you can take advantage of all the TLS configuration options available in Emissary including setting the allowed TLS versions, setting `alpn_protocol` options, enforcing HTTP -> HTTPS redirection, and [automatic certificate management](../host-crd) in the Emissary.
 
-When terminating TLS at $productName$, you should deploy a L4 [Network Load Balancer (NLB)](#network-load-balancer-nlb) with the proxy protocol enabled to get the best performance out of your load balancer while still preserving the client IP address.
+When terminating TLS at Emissary, you should deploy a L4 [Network Load Balancer (NLB)](#network-load-balancer-nlb) with the proxy protocol enabled to get the best performance out of your load balancer while still preserving the client IP address.
 
 The following `Service` should be configured to deploy an NLB with cross zone load balancing enabled (see [NLB notes](#network-load-balancer-nlb) for caveat on the cross-zone-load-balancing annotation). You will need to configure the proxy protocol in the NLB manually in the AWS Console.
 
@@ -36,7 +38,7 @@ spec:
     service: ambassador
 ```
 
-   After deploying the `Service` above and manually enabling the proxy protocol you will need to deploy the following [Ambassador `Module`](../ambassador) to tell $productName$ to use the proxy protocol and then restart $productName$ for the configuration to take effect.
+   After deploying the `Service` above and manually enabling the proxy protocol you will need to deploy the following [Ambassador `Module`](../ambassador) to tell Emissary to use the proxy protocol and then restart Emissary for the configuration to take effect.
 
    ```yaml
    apiVersion: getambassador.io/v3alpha1
@@ -49,7 +51,7 @@ spec:
        use_proxy_proto: true
    ```
 
-   $productName$ will now expect traffic from the load balancer to be wrapped with the proxy protocol so it can read the client IP address.
+   Emissary will now expect traffic from the load balancer to be wrapped with the proxy protocol so it can read the client IP address.
 
 ## AWS load balancer notes
 
@@ -94,9 +96,9 @@ The NLB is a second generation AWS Elastic Load Balancer. It can be ensure by a 
 * Can perform TLS termination
 
 **Notes:**
-- The NLB is the most efficient load balancer capable of handling millions of requests per second. It is recommended for streaming connections since it will maintain the connection stream between the client and $productName$.
+- The NLB is the most efficient load balancer capable of handling millions of requests per second. It is recommended for streaming connections since it will maintain the connection stream between the client and Emissary.
 - Most of the [load balancer annotations](#load-balancer-annotations) are respected by the NLB. You will need to manually configure the proxy protocol and take an extra step to enable cross zone load balancing.
-- Since it operates at L4 and cannot modify the request, you will need to tell $productName$ if it is terminating TLS or not (see [TLS termination](#tls-termination) notes below).
+- Since it operates at L4 and cannot modify the request, you will need to tell Emissary if it is terminating TLS or not (see [TLS termination](#tls-termination) notes below).
 
 ### Application Load Balancer (ALB)
 
@@ -112,20 +114,20 @@ The ALB is a second generation AWS Elastic Load Balancer. It cannot be ensured b
 
 **Notes:**
 
-- The ALB can perform routing based on the path, headers, host, etc.. Since $productName$ performs this kind of routing in your cluster, unless you are using the same load balancer to route to services outside of Kubernetes, the overhead of provisioning an ALB is often not worth the benefits.
-- If you would like to use an ALB, you will need to expose $productName$ with a `type: NodePort` service and manually configure the ALB to forward to the correct ports.
+- The ALB can perform routing based on the path, headers, host, etc.. Since Emissary performs this kind of routing in your cluster, unless you are using the same load balancer to route to services outside of Kubernetes, the overhead of provisioning an ALB is often not worth the benefits.
+- If you would like to use an ALB, you will need to expose Emissary with a `type: NodePort` service and manually configure the ALB to forward to the correct ports.
 - None of the [load balancer annotations](#load-balancer-annotations) are respected by the ALB. You will need to manually configure all options.
 - The ALB will properly set the `X-Forward-Proto` header if terminating TLS. See (see [TLS termination](#tls-termination) notes below).
 
 ## Load balancer annotations
 
-Kubernetes on AWS exposes a mechanism to request certain load balancer configurations by annotating the `type: LoadBalancer` `Service`. The most complete set and explanations of these annotations can be found in this [Kubernetes document](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer). This document will go over the subset that is most relevant when deploying $productName$.
+Kubernetes on AWS exposes a mechanism to request certain load balancer configurations by annotating the `type: LoadBalancer` `Service`. The most complete set and explanations of these annotations can be found in this [Kubernetes document](https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer). This document will go over the subset that is most relevant when deploying Emissary.
 
 - `service.beta.kubernetes.io/aws-load-balancer-ssl-cert`:
 
     Configures the load balancer to use a valid certificate ARN to terminate TLS at the Load Balancer.
 
-    Traffic from the client into the load balancer is encrypted but, since TLS is being terminated at the load balancer, traffic from the load balancer to $productName$ will be cleartext. You will need to configure $productName$ differently depending on whether the load balancer is running in L4 or L7 (see [TLS termination](#tls-termination) notes below).
+    Traffic from the client into the load balancer is encrypted but, since TLS is being terminated at the load balancer, traffic from the load balancer to Emissary will be cleartext. You will need to configure Emissary differently depending on whether the load balancer is running in L4 or L7 (see [TLS termination](#tls-termination) notes below).
 
 - `service.beta.kubernetes.io/aws-load-balancer-ssl-ports`:
 
@@ -153,25 +155,25 @@ Kubernetes on AWS exposes a mechanism to request certain load balancer configura
 
     The proxy protocol can be used to preserve the client IP address.
 
-    If setting this value, you need to make sure $productName$ is configured to use the proxy protocol (see [preserving the client IP address](#preserving-the-client-ip-address) below).
+    If setting this value, you need to make sure Emissary is configured to use the proxy protocol (see [preserving the client IP address](#preserving-the-client-ip-address) below).
 
     **Note:** This annotation will not be recognized if `aws-load-balancer-type: "nlb"` is configured. Proxy protocol must be manually enabled for NLBs.
 
 ## TLS termination
 
-TLS termination is an important part of any modern web app. $productName$ exposes a lot of TLS termination configuration options that make it a powerful tool for managing encryption between your clients and microservices. Refer to the [TLS Termination](../tls) documentation for more information on how to configure TLS termination at $productName$.
+TLS termination is an important part of any modern web app. Emissary exposes a lot of TLS termination configuration options that make it a powerful tool for managing encryption between your clients and microservices. Refer to the [TLS Termination](../tls) documentation for more information on how to configure TLS termination at Emissary.
 
 With AWS, the AWS Certificate Manager (ACM) makes it easy to configure TLS termination at an AWS load balancer using the annotations explained above.
 
-This means that, when running $productName$ in AWS, you have the choice between terminating TLS at the load balancer using a certificate from the ACM or at $productName$ using a certificate stored as a `Secret` in your cluster.
+This means that, when running Emissary in AWS, you have the choice between terminating TLS at the load balancer using a certificate from the ACM or at Emissary using a certificate stored as a `Secret` in your cluster.
 
-The following documentation will cover the different options available to you and how to configure $productName$ and the load balancer to get the most of each.
+The following documentation will cover the different options available to you and how to configure Emissary and the load balancer to get the most of each.
 
-### TLS termination at $productName$
+### TLS termination at Emissary
 
-Terminating TLS at $productName$ will guarantee you to be able to use all of the TLS termination options that $productName$ exposes including enforcing the minimum TLS version, setting the `alpn_protocols`, and redirecting cleartext to HTTPS.
+Terminating TLS at Emissary will guarantee you to be able to use all of the TLS termination options that Emissary exposes including enforcing the minimum TLS version, setting the `alpn_protocols`, and redirecting cleartext to HTTPS.
 
-If terminating TLS at $productName$, you can provision any AWS load balancer that you want with the following (default) port assignments:
+If terminating TLS at Emissary, you can provision any AWS load balancer that you want with the following (default) port assignments:
 
 ```yaml
 spec:
@@ -184,13 +186,13 @@ spec:
     targetPort: 8443
 ```
 
-While terminating TLS at $productName$ makes it easier to expose more advanced TLS configuration options, it does have the drawback of not being able to use the ACM to manage certificates. You will have to manage your TLS certificates yourself or use the [automatic certificate management](../host-crd) available in $productName$ to have $productName$ do it for you.
+While terminating TLS at Emissary makes it easier to expose more advanced TLS configuration options, it does have the drawback of not being able to use the ACM to manage certificates. You will have to manage your TLS certificates yourself or use the [automatic certificate management](../host-crd) available in Emissary to have Emissary do it for you.
 
 ### TLS termination at the load balancer
 
-If you choose to terminate TLS at your Amazon load balancer you will be able to use the ACM to manage TLS certificates. This option does add some complexity to your $productName$ configuration, depending on which load balancer you are using.
+If you choose to terminate TLS at your Amazon load balancer you will be able to use the ACM to manage TLS certificates. This option does add some complexity to your Emissary configuration, depending on which load balancer you are using.
 
-Terminating TLS at the load balancer means that $productName$ will be receiving all traffic as un-encrypted cleartext traffic. Since $productName$ expects to be serving both encrypted and cleartext traffic by default, you will need to make the following configuration changes to $productName$ to support this:
+Terminating TLS at the load balancer means that Emissary will be receiving all traffic as un-encrypted cleartext traffic. Since Emissary expects to be serving both encrypted and cleartext traffic by default, you will need to make the following configuration changes to Emissary to support this:
 
 #### L4 load balancer (default ELB or NLB)
 
@@ -218,11 +220,11 @@ Terminating TLS at the load balancer means that $productName$ will be receiving 
        service: ambassador
    ```
 
-   Note that the `spec.ports` has been changed so both the HTTP and HTTPS ports forward to the cleartext port 8080 on $productName$.
+   Note that the `spec.ports` has been changed so both the HTTP and HTTPS ports forward to the cleartext port 8080 on Emissary.
 
 * **`Host`:**
 
-   The `Host` configures how $productName$ handles encrypted and cleartext traffic. The following `Host` configuration will tell $productName$ to `Route` cleartext traffic that comes in from the load balancer:
+   The `Host` configures how Emissary handles encrypted and cleartext traffic. The following `Host` configuration will tell Emissary to `Route` cleartext traffic that comes in from the load balancer:
 
    ```yaml
    apiVersion: getambassador.io/v3alpha1
@@ -243,7 +245,7 @@ Terminating TLS at the load balancer means that $productName$ will be receiving 
 
 **Important:**
 
-Because L4 load balancers do not set `X-Forwarded` headers, $productName$ will not be able to distinguish between traffic that came in to the load balancer as encrypted or cleartext. Because of this, **HTTP -> HTTPS redirection is not possible when terminating TLS at a L4 load balancer**.
+Because L4 load balancers do not set `X-Forwarded` headers, Emissary will not be able to distinguish between traffic that came in to the load balancer as encrypted or cleartext. Because of this, **HTTP -> HTTPS redirection is not possible when terminating TLS at a L4 load balancer**.
 
 #### L7 load balancer (ELB or ALB)
 
@@ -273,11 +275,11 @@ Because L4 load balancers do not set `X-Forwarded` headers, $productName$ will n
        service: ambassador
    ```
 
-   Note that the `spec.ports` has been changed so both the HTTP and HTTPS ports forward to the cleartext port 8080 on $productName$.
+   Note that the `spec.ports` has been changed so both the HTTP and HTTPS ports forward to the cleartext port 8080 on Emissary.
 
 * **`Host`:**
 
-   The `Host` configures how $productName$ handles encrypted and cleartext traffic. The following `Host` configuration will tell $productName$ to `Redirect` cleartext traffic that comes in from the load balancer:
+   The `Host` configures how Emissary handles encrypted and cleartext traffic. The following `Host` configuration will tell Emissary to `Redirect` cleartext traffic that comes in from the load balancer:
 
    ```yaml
    apiVersion: getambassador.io/v3alpha1
@@ -298,7 +300,7 @@ Because L4 load balancers do not set `X-Forwarded` headers, $productName$ will n
 
 * **Module:**
 
-   Since a L7 load balancer will be able to append to `X-Forwarded` headers, we need to configure $productName$ to trust the value of these headers. The following `Module` will configure $productName$ to trust a single L7 proxy in front of $productName$:
+   Since a L7 load balancer will be able to append to `X-Forwarded` headers, we need to configure Emissary to trust the value of these headers. The following `Module` will configure Emissary to trust a single L7 proxy in front of Emissary:
 
    ```yaml
    apiVersion: getambassador.io/v3alpha1
@@ -314,11 +316,11 @@ Because L4 load balancers do not set `X-Forwarded` headers, $productName$ will n
 
 **Note:**
 
-$productName$ uses the value of `X-Forwarded-Proto` to know if the request originated as encrypted or cleartext. Unlike L4 load balancers, L7 load balancers will set this header so HTTP -> HTTPS redirection is possible when terminating TLS at a L7 load balancer.
+Emissary uses the value of `X-Forwarded-Proto` to know if the request originated as encrypted or cleartext. Unlike L4 load balancers, L7 load balancers will set this header so HTTP -> HTTPS redirection is possible when terminating TLS at a L7 load balancer.
 
 ## Preserving the client IP address
 
-Many applications will want to know the IP address of the connecting client. In Kubernetes, this IP address is often obscured by the IP address of the `Node` that is forwarding the request to $productName$ so extra configuration must be done if you need to preserve the client IP address.
+Many applications will want to know the IP address of the connecting client. In Kubernetes, this IP address is often obscured by the IP address of the `Node` that is forwarding the request to Emissary so extra configuration must be done if you need to preserve the client IP address.
 
 In AWS, there are two options for preserving the client IP address.
 
@@ -326,7 +328,7 @@ In AWS, there are two options for preserving the client IP address.
 
    A L7 load balancer will populate the `X-Forwarded-For` header with the IP address of the downstream connecting client. If your clients are connecting directly to the load balancer, this will be the IP address of your client.
 
-   When using L7 load balancers, you must configure $productName$ to trust the value of `X-Forwarded-For` and not append its own IP address to it by setting `xff_num_trusted_hops` and `use_remote_address: false` in the [Ambassador `Module`](../ambassador):
+   When using L7 load balancers, you must configure Emissary to trust the value of `X-Forwarded-For` and not append its own IP address to it by setting `xff_num_trusted_hops` and `use_remote_address: false` in the [Ambassador `Module`](../ambassador):
 
    ```yaml
    apiVersion: getambassador.io/v3alpha1
@@ -340,7 +342,7 @@ In AWS, there are two options for preserving the client IP address.
        use_remote_address: false
    ```
 
-   After configuring the above `Module`, you will need to restart $productName$ for the changes to take effect.
+   After configuring the above `Module`, you will need to restart Emissary for the changes to take effect.
 
 2. Use the proxy protocol
 
@@ -348,7 +350,7 @@ In AWS, there are two options for preserving the client IP address.
 
    In AWS, you can configure ELBs to use the proxy protocol by setting the `service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"` annotation on the service. You must manually configure this on ALBs and NLBs.
 
-   After configuring the load balancer to use the proxy protocol, you need to tell $productName$ to expect it on the request.
+   After configuring the load balancer to use the proxy protocol, you need to tell Emissary to expect it on the request.
 
    ```yaml
    apiVersion: getambassador.io/v3alpha1
@@ -361,4 +363,4 @@ In AWS, there are two options for preserving the client IP address.
        use_proxy_proto: true
    ```
 
-   After configuring the above `Module`, you will need to restart $productName$ for the changes to take effect.
+   After configuring the above `Module`, you will need to restart Emissary for the changes to take effect.

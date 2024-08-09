@@ -1,11 +1,11 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Custom error responses
+---
+title: Custom error responses
+---
 
 Custom error responses set overrides for HTTP response statuses generated either
-by $productName$ or upstream services.
+by Emissary or upstream services.
 
-They can be configured either on the $productName$
+They can be configured either on the Emissary
 [`Module`](../ambassador)
 or on an [`Mapping`](../../using/intro-mappings/), the schema is identical. See
 below for more information on [rule precedence](#rule-precedence).
@@ -22,8 +22,8 @@ below for more information on [rule precedence](#rule-precedence).
     serialized as JSON and used as the new response body.
   + `text_format_source`: Describes a file to be used as the
     response. If used, `filename` must be set and the file must exist
-    on the $productName$ pod.
-    * `filename`: A file path on the $productName$ pod that will be used
+    on the Emissary pod.
+    * `filename`: A file path on the Emissary pod that will be used
       as the new response body.
 
 Only one of `text_format`, `json_format`, or `text_format_source` may be provided.
@@ -52,7 +52,7 @@ for a request that resulted in a response code of 401.
   only be as part of an <a href="https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage#config-access-log-format-strings">
   AccessLog substitution</a>, for example <code>%RESPONSE_CODE%</code> or
   <code>%PROTOCOL%</code>. If a <code>%</code> is neither part of a valid
-  substitution nor an escape, $productName$ will ignore the custom error response.
+  substitution nor an escape, Emissary will ignore the custom error response.
 </Alert>
 
 ## Simple response bodies
@@ -83,10 +83,10 @@ spec:
 
 For more complex response bodies a file can be returned as the response.
 This could be used for a customer friendly HTML document for example.  Use
-`text_format_source` with a `filename` set as a path on the $productName$ pod.
+`text_format_source` with a `filename` set as a path on the Emissary pod.
 `content_type` should be used set the specific file type, such as `text/html`.
 
-First configure the $productName$ module:
+First configure the Emissary module:
 
 ```yaml
 apiVersion: getambassador.io/v3alpha1
@@ -122,7 +122,7 @@ data:
     </html>
 ```
 
-Finally, mount the configmap to the $productName$ pod:
+Finally, mount the configmap to the Emissary pod:
 
 > **NOTE:** The following YAML is in [patch format](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/)
 and does not represent the entire deployment spec.

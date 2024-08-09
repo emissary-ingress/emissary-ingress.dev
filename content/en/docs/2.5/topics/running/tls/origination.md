@@ -1,12 +1,12 @@
-import Alert from '@material-ui/lab/Alert';
+---
+title: TLS Origination
+---
 
-# TLS origination
-
-Sometimes you may want traffic from $productName$ to your services to be encrypted. For the cases where terminating TLS at the ingress is not enough, $productName$ can be configured to originate TLS connections to your upstream services.
+Sometimes you may want traffic from Emissary to your services to be encrypted. For the cases where terminating TLS at the ingress is not enough, Emissary can be configured to originate TLS connections to your upstream services.
 
 ## Basic configuration
 
-Telling $productName$ to talk to your services over HTTPS is easily configured in the `Mapping` definition by setting `https://` in the `service` field.
+Telling Emissary to talk to your services over HTTPS is easily configured in the `Mapping` definition by setting `https://` in the `service` field.
 
 ```yaml
 ---
@@ -23,7 +23,7 @@ spec:
 ## Advanced configuration using a `TLSContext`
 
 If your upstream services require more than basic HTTPS support (for example, providing a client certificate or
-setting the minimum TLS version support) you must create a `TLSContext` for $productName$ to use when
+setting the minimum TLS version support) you must create a `TLSContext` for Emissary to use when
 originating TLS. For example:
 
 ```yaml
@@ -42,12 +42,12 @@ spec:
 
   The Kubernetes Secret named by `secret` must contain a valid TLS certificate. If the
   environment variable `AMBASSADOR_FORCE_SECRET_VALIDATION` is set and the Secret contains
-  an invalid certificate, $productName$ will reject the `TLSContext` and prevent its use;
+  an invalid certificate, Emissary will reject the `TLSContext` and prevent its use;
   see [**Certificates and Secrets**](../#certificates-and-secrets) in the TLS overview.
 
 </Alert>
 
-Configure $productName$ to use this `TLSContext` for connections to upstream services by setting the `tls` attribute of a `Mapping`:
+Configure Emissary to use this `TLSContext` for connections to upstream services by setting the `tls` attribute of a `Mapping`:
 
 ```yaml
 ---
@@ -62,13 +62,13 @@ spec:
   tls: tls-context
 ```
 
-The `example-service` service must now support TLS v1.3 for $productName$ to connect.
+The `example-service` service must now support TLS v1.3 for Emissary to connect.
 
 <Alert severity="warning">
 
   The Kubernetes Secret named by `secret` must contain a valid TLS certificate. If the
   environment variable `AMBASSADOR_FORCE_SECRET_VALIDATION` is set and the Secret contains
-  an invalid certificate, $productName$ will reject the `TLSContext` and prevent its use;
+  an invalid certificate, Emissary will reject the `TLSContext` and prevent its use;
   see [**Certificates and Secrets**](../#certificates-and-secrets) in the TLS overview.
 
 </Alert>

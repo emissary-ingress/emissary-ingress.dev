@@ -3,11 +3,6 @@ title: "Getting Started with Emissary"
 description: "Learn how to install Emissary with either Helm or kubectl to get started routing traffic from the edge of your Kubernetes cluster to your services..."
 ---
 
-import Alert from '@material-ui/lab/Alert';
-import GettingStartedEmissary21Tabs from './gs-tabs'
-
-# Emissary quick start
-
 <div class="docs-article-toc">
 <h3>Contents</h3>
 

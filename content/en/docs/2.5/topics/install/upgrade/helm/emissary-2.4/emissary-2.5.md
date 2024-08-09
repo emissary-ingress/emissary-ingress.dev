@@ -1,9 +1,9 @@
-import Alert from '@material-ui/lab/Alert';
-
-# Upgrade $productName$ 2.4.X to $productName$ $version$ (Helm)
+---
+title: 2.4.x to latest 2.x
+---
 
 <Alert severity="info">
-  This guide covers migrating from $productName$ 2.4 to $productName$ $version$. If
+  This guide covers migrating from Emissary 2.4 to Emissary $version$. If
   this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
   matrix</a>.
 </Alert>
@@ -14,15 +14,15 @@ import Alert from '@material-ui/lab/Alert';
   upgrade instructions</a>.
 </Alert>
 
-Since $productName$'s configuration is entirely stored in Kubernetes resources, upgrading between minor
+Since Emissary's configuration is entirely stored in Kubernetes resources, upgrading between minor
 versions is straightforward.
 
 Migration is a two-step process:
 
 1. **Install new CRDs.**
 
-   Before installing $productName$ $version$ itself, you need to update the CRDs in
-   your cluster; Helm will not do this for you. This is mandatory during any upgrade of $productName$.
+   Before installing Emissary $version$ itself, you need to update the CRDs in
+   your cluster; Helm will not do this for you. This is mandatory during any upgrade of Emissary.
 
    ```
    kubectl apply -f https://app.getambassador.io/yaml/emissary/$version$/emissary-crds.yaml
@@ -30,9 +30,9 @@ Migration is a two-step process:
    ```
 
    <Alert severity="info">
-     $productName$ $version$ includes a Deployment in the `emissary-system` namespace
+     Emissary $version$ includes a Deployment in the `emissary-system` namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
-     that supports converting $productName$ CRDs between <code>getambassador.io/v2</code>
+     that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at
      all times.
    </Alert>
@@ -44,13 +44,13 @@ Migration is a two-step process:
    </Alert>
 
    <Alert severity="warning">
-    There is a known issue with the <code>emissary-apiext</code> service that impacts all $productName$ 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running $productName$/$AESproductName$ 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
+    There is a known issue with the <code>emissary-apiext</code> service that impacts all Emissary 2.x and 3.x users. Specifically, the TLS certificate used by apiext expires one year after creation and does not auto-renew. All users who are running Emissary/Ambassador Edge Stack 2.x or 3.x with the apiext service should proactively renew their certificate as soon as practical by running <code>kubectl delete --all secrets --namespace=emissary-system</code> to delete the existing certificate, and then restart the <code>emissary-apiext</code> deployment with <code>kubectl rollout restart deploy/emissary-apiext -n emissary-system</code>.
     This will create a new certificate with a one year expiration. We will issue a software patch to address this issue well before the one year expiration. Note that certificate renewal will not cause any downtime.
    </Alert>
 
-2. **Install $productName$ $version$.**
+2. **Install Emissary $version$.**
 
-   After installing the new CRDs, use Helm to install $productName$ $version$. Start by
+   After installing the new CRDs, use Helm to install Emissary $version$. Start by
    making sure that your `datawire` Helm repo is set correctly:
 
    ```bash
@@ -59,7 +59,7 @@ Migration is a two-step process:
    helm repo update
    ```
 
-   Then, update your $productName$ installation in the `$productNamespace$` namespace.
+   Then, update your Emissary installation in the `$productNamespace$` namespace.
    If necessary for your installation (e.g. if you were running with
    `AMBASSADOR_SINGLE_NAMESPACE` set), you can choose a different namespace.
 
@@ -70,6 +70,6 @@ Migration is a two-step process:
    ```
 
    <Alert severity="warning">
-    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/$ossChartVersion$"><code>$productHelmName$</code> Helm chart</a> for $productName$ 2.X.
+    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/$ossChartVersion$"><code>$productHelmName$</code> Helm chart</a> for Emissary 2.X.
     Do not use the <a href="https://artifacthub.io/packages/helm/datawire/ambassador/6.9.3"><code>ambassador</code> Helm chart</a>.
    </Alert>

@@ -1,6 +1,6 @@
 # emissary-ingress.dev
 
-The [emissary-ingress.dev][] website, built using [Hugo][] and hosted on [Netlify][].
+The [emissary-ingress.dev](https://emissary-ingress.dev) website, built using [Hugo][] and hosted on [Netlify][].
 
 ## Local build
 
