@@ -1,4 +1,7 @@
-# Core concepts
+---
+title: "Core Concepts"
+description: "This section of the documentation introduces core concepts of Kubernetes and Emissary"
+---
 
 This section of the documentation introduces core concepts of Kubernetes and Ambassador. Kubernetes and microservices introduce a number of new, powerful paradigms for software development, and Ambassador takes full advantage of these paradigms.
 

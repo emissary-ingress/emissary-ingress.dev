@@ -1,3 +1,8 @@
+---
+title: "Architecture"
+description: "This section of the documentation provides an overview of the Emissary architecture"
+---
+
 # The $productName$ architecture
 
 ## $productName$ is a control plane

@@ -1,3 +1,8 @@
+---
+title: "Operating Model"
+description: "This section of the documentation provides an overview of the operating model of Emissary"
+---
+
 # The Ambassador operating model: GitOps and continuous delivery
 
 Containerized applications deployed in Kubernetes generally follow the microservices design pattern, where an application composed of dozens or even hundreds of services communicate with each other. Independent application development teams are responsible for the full lifecycle of a service, including coding, testing, deployment, release, and operations. By giving these teams independence, microservices enable organizations to scale their development without sacrificing agility.
