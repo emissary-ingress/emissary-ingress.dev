@@ -95,8 +95,11 @@ params:
   # Menu title if your navbar has a versions selector to access old versions of your site.
   # This menu appears only if you have at least one [params.versions] set.
   version_menu: Versions
-  latest_stable_version: 3.8
+  latest_stable_version: 3.9
   versions:
+    - version: v3.9
+      url: /docs/3.9/
+
     - version: v3.8
       url: /docs/3.8/
 
