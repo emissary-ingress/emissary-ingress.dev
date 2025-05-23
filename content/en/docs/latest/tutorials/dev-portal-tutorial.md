@@ -1,4 +1,7 @@
-# Dev Portal tutorial
+---
+title: "Dev Portal"
+description: "Tutorial to set up Dev Portal"
+---
 
 In this tutorial, you will access and explore some of the key features of the Dev Portal.
 

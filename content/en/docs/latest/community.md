@@ -1,3 +1,9 @@
+---
+title: Community
+weight: 50
+description: Community and contribution guide
+---
+
 # Community
 
 ## Contributor's guide
