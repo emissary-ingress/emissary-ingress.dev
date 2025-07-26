@@ -29,7 +29,7 @@ some changes that aren't backward-compatible with 1.X. These changes are detaile
 </Alert>
 
 The recommended strategy for migration is to run Emissary 1.14 and Emissary
-2.5 side-by-side in the same cluster. This gives Emissary $versionTwoX$
+2.5 side-by-side in the same cluster. This gives Emissary 2.X
 and Emissary 1.14 access to all the same configuration resources, with some
 important caveats:
 
@@ -166,7 +166,7 @@ Migration is a seven-step process:
    ```
 
    <Alert severity="info">
-     Emissary 2.5 includes a Deployment in the $productNamespace$ namespace
+     Emissary 2.5 includes a Deployment in the emissary namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
      that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at

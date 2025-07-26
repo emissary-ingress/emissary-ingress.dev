@@ -44,7 +44,7 @@ You can refer to the [Major changes in Emissary 3.x](../../../../../../about/cha
 
     The `AuthService`, `RatelimitService`, and `LogServices` that use the `grpc` protocol will now need to explicilty set `protocol_version: "v3"`. If not set or set to `v2` then an error will be posted and a static response will be returned.
 
-    `protocol_version` should be updated to `v3` for all of the above resources while still running Emissary $versionTwoX$. As of version `2.3.z`+, support for `protocol_version` `v2` and `v3` is supported in order to allow migration from `protocol_version` `v2` to `v3` before upgrading to Emissary 3.10 where support for `v2` is removed.
+    `protocol_version` should be updated to `v3` for all of the above resources while still running Emissary 2.X. As of version `2.3.z`+, support for `protocol_version` `v2` and `v3` is supported in order to allow migration from `protocol_version` `v2` to `v3` before upgrading to Emissary 3.10 where support for `v2` is removed.
 
     Upgrading any application code for your own implementations of these services is very straightforward.
 

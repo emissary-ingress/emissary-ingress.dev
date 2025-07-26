@@ -10,7 +10,7 @@ footprint, and improve performance. We welcome feedback!! Join us on
 
 While Emissary 2 is functionally compatible with Emissary 1.14, note
 that this is a **major version change** and there are important differences between
-Emissary 1.X and Emissary $version$. For details, read on.
+Emissary 1.X and Emissary 2.0. For details, read on.
 
 ## 1. Configuration API Version `getambassador.io/v3alpha1`
 
@@ -198,7 +198,7 @@ for compatibility with Kubernetes 1.22.
 
 By default, Emissary 2.X will configure Envoy using the
 [V3 Envoy API](https://www.envoyproxy.io/docs/envoy/latest/api-v3/api). In Emissary
-$version$, you may switch back to Envoy V2 by setting the `AMBASSADOR_ENVOY_API_VERSION`
+2.0, you may switch back to Envoy V2 by setting the `AMBASSADOR_ENVOY_API_VERSION`
 environment variable to "V2"; in Emissary 2.2.0, support for the Envoy V2 API (and
 the `AMBASSADOR_ENVOY_API_VERSION` environment variable) will be removed.
 

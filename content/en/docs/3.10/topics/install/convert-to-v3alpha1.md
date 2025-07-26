@@ -2,7 +2,7 @@
 title: Convert to v3alpha1
 ---
 
-Once your Emissary $version$ installation is running, it is **strongly recommended** that
+Once your Emissary 3.X installation is running, it is **strongly recommended** that
 you convert your existing configuration resources from `getambassador.io/v2` to
 `getambassador.io/v3alpha1`.
 

@@ -26,8 +26,8 @@ Now create a `NodePort` service for Emissary installation with two entries. Use 
    apiVersion: v1
    kind: Service
    metadata:
-     name: $productDeploymentName$-http3
-     namespace: $productNamespace$
+     name: emissary-http3
+     namespace: emissary
    spec:
      type: NodePort
      ports:
@@ -167,8 +167,8 @@ Now you need to create the `Listener` resources for Emissary. The first `Listene
    apiVersion: getambassador.io/v3alpha1
    kind: Listener
    metadata:
-     name: $productDeploymentName$-https-listener
-     namespace: $productNamespace$
+     name: emissary-https-listener
+     namespace: emissary
    spec:
      port: 8443
      protocol: HTTPS
@@ -182,8 +182,8 @@ Now you need to create the `Listener` resources for Emissary. The first `Listene
    apiVersion: getambassador.io/v3alpha1
    kind: Listener
    metadata:
-     name: $productDeploymentName$-https-listener-udp
-     namespace: $productNamespace$
+     name: emissary-https-listener-udp
+     namespace: emissary
    spec:
      port: 8443
      # Order is important here. UDP must be last item. HTTP is required.
@@ -206,8 +206,8 @@ Create a `Host` resource for your domain name.
    apiVersion: getambassador.io/v3alpha1
    kind: Host
    metadata:
-     name: $productDeploymentName$-aws-host
-     namespace: $productNamespace$
+     name: emissary-aws-host
+     namespace: emissary
    spec:
      hostname: <your-hostname>
      acmeProvider:
@@ -226,7 +226,7 @@ Create a `Host` resource for your domain name.
 Finally, apply the quote service to a Emissary `Mapping`.
 
    ```shell
-   kubectl apply -f https://app.getambassador.io/yaml/v2-docs/$version$/quickstart/qotm.yaml
+   kubectl apply -f https://app.getambassador.io/yaml/v2-docs/3.10/quickstart/qotm.yaml
    kubectl apply -f - <<EOF
    ---
    apiVersion: getambassador.io/v3alpha1

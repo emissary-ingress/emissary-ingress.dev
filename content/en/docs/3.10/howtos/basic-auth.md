@@ -2,11 +2,8 @@
 title: Basic Authentication
 ---
 
-Emissary can authenticate incoming requests before routing them to a backing
-service. In this tutorial, we'll configure Emissary to use an external third
-party authentication service. We're assuming also that you are running the
-quote application in your cluster as described in the
-[Emissary tutorial](../../tutorials/quickstart-demo/).
+Emissary can authenticate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use an external third
+party authentication service. We're assuming also that you are running the quote application in your cluster as described in the [Emissary tutorial](../../tutorials/quickstart-demo/).
 
 ## Before you get started
 
@@ -74,14 +71,6 @@ spec:
 
 Note that the cluster does not yet contain any Emissary AuthService definition. This is intentional: we want the service running before we tell Emissary about it.
 
-The YAML above is published at getambassador.io, so if you like, you can just do
-
-```
-kubectl apply -f https://app.getambassador.io/yaml/v2-docs/$ossVersion$/demo/demo-auth.yaml
-```
-
-to spin everything up. (Of course, you can also use a local file, if you prefer.)
-
 Wait for the pod to be running before continuing. The output of `kubectl get pods` should look something like
 
 ```
@@ -113,14 +102,6 @@ spec:
 This configuration tells Emissary about the auth service, notably that it needs the `/extauth` prefix, and that it's OK for it to pass back the `x-qotm-session` header. Note that `path_prefix` and `allowed_*_headers` are optional.
 
 If the auth service uses a framework like [Gorilla Toolkit](http://www.gorillatoolkit.org) which enforces strict slashes as HTTP path separators, it is possible to end up with an infinite redirect where the auth service's framework redirects any request with non-conformant slashing. This would arise if the above example had `path_prefix: "/extauth/"`, the auth service would see a request for `/extauth//backend/get-quote/` which would then be redirected to `/extauth/backend/get-quote/` rather than actually be handled by the authentication handler. For this reason, remember that the full path of the incoming request including the leading slash, will be appended to `path_prefix` regardless of non-conformant slashing.
-
-You can apply this file from getambassador.io with
-
-```
-kubectl apply -f https://app.getambassador.io/yaml/v2-docs/$ossVersion$/demo/demo-auth-enable.yaml
-```
-
-or, again, apply it from a local file if you prefer.
 
 Note that the cluster does not yet contain any Emissary AuthService definition.
 

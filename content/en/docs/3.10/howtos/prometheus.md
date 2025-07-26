@@ -84,7 +84,7 @@ standard YAML files.  Alternatively, you can install it with
     First, create RBAC resources for your Prometheus instance
 
     ```
-    kubectl apply -f https://app.getambassador.io/yaml/v2-docs/$ossVersion$/monitoring/prometheus-rbac.yaml
+    kubectl apply -f https://app.getambassador.io/yaml/v2-docs/3.10/monitoring/prometheus-rbac.yaml
     ```
 
     Then, copy the YAML below, and save it in a file called

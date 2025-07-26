@@ -18,37 +18,37 @@ certificate errors.
 
 ## Check Emissary status
 
-1. First, check the Emissary Deployment with the following: `kubectl get -n $productNamespace$ deployments`
+1. First, check the Emissary Deployment with the following: `kubectl get -n emissary deployments`
 
     After a brief period, the terminal will print something similar to the following:
 
     ```
-    $ kubectl get -n $productNamespace$ deployments
+    $ kubectl get -n emissary deployments
     NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-    $productDeploymentName$          3         3         3            3           1m
-    $productDeploymentName$-apiext   3         3         3            3           1m
+    emissary          3         3         3            3           1m
+    emissary-apiext   3         3         3            3           1m
     ```
 
 2. Check that the “desired” number of Pods matches the “current” and “available” number of Pods.
 
-3. If they are **not** equal, check the status of the associated Pods with the following command: `kubectl get pods -n $productNamespace$`.
+3. If they are **not** equal, check the status of the associated Pods with the following command: `kubectl get pods -n emissary`.
 
     The terminal should print something similar to the following:
 
     ```
-    $ kubectl get pods -n $productNamespace$
+    $ kubectl get pods -n emissary
     NAME                         READY     STATUS    RESTARTS   AGE
-    $productDeploymentName$-85c4cf67b-4pfj2   1/1       Running   0          1m
-    $productDeploymentName$-85c4cf67b-fqp9g   1/1       Running   0          1m
-    $productDeploymentName$-85c4cf67b-vg6p5   1/1       Running   0          1m
-    $productDeploymentName$-apiext-736f8497d-j34pf   1/1       Running   0          1m
-    $productDeploymentName$-apiext-736f8497d-9gfpq   1/1       Running   0          1m
-    $productDeploymentName$-apiext-736f8497d-p5wgx   1/1       Running   0          1m
+    emissary-85c4cf67b-4pfj2   1/1       Running   0          1m
+    emissary-85c4cf67b-fqp9g   1/1       Running   0          1m
+    emissary-85c4cf67b-vg6p5   1/1       Running   0          1m
+    emissary-apiext-736f8497d-j34pf   1/1       Running   0          1m
+    emissary-apiext-736f8497d-9gfpq   1/1       Running   0          1m
+    emissary-apiext-736f8497d-p5wgx   1/1       Running   0          1m
     ```
 
     The actual names of the Pods will vary. All the Pods should indicate `Running`, and all should show 1/1 containers ready.
 
-4. If the Pods do not seem reasonable, use the following command for details about the history of the Deployment: `kubectl describe -n $productNamespace$ deployment $productDeploymentName$`
+4. If the Pods do not seem reasonable, use the following command for details about the history of the Deployment: `kubectl describe -n emissary deployment emissary`
 
     * Look for data in the “Replicas” field near the top of the output. For example:
         `Replicas: 3 desired | 3 updated | 3 total | 3 available | 0 unavailable`
@@ -59,10 +59,10 @@ certificate errors.
         Events:
         Type    Reason              Age     From                      Message
         ----    ------              ----    ----                      -------
-        Normal  ScalingReplicaSet    2m     deployment-controller      Scaled up replica set $productDeploymentName$-85c4cf67b to 3
+        Normal  ScalingReplicaSet    2m     deployment-controller      Scaled up replica set emissary-85c4cf67b to 3
         ```
 
-5. Additionally, use the following command to “describe” the individual Pods: `kubectl describe pods -n $productNamespace$ <$productDeploymentName$-pod-name>`
+5. Additionally, use the following command to “describe” the individual Pods: `kubectl describe pods -n emissary <emissary-pod-name>`
 
     * Look for data in the “Status” field near the top of the output. For example, `Status: Running`
 
@@ -71,12 +71,12 @@ certificate errors.
         Events:
         Type    Reason                 Age   From                                                     Message
         ----    ------                 ----  ----                                                     -------
-        Normal  Scheduled              4m    default-scheduler                                        Successfully assigned $productDeploymentName$-85c4cf67b-4pfj2 to gke-ambassador-demo-default-pool-912378e5-dkxc
-        Normal  SuccessfulMountVolume  4m    kubelet, gke-ambassador-demo-default-pool-912378e5-dkxc  MountVolume.SetUp succeeded for volume "$productDeploymentName$-token-tmk94"
+        Normal  Scheduled              4m    default-scheduler                                        Successfully assigned emissary-85c4cf67b-4pfj2 to gke-ambassador-demo-default-pool-912378e5-dkxc
+        Normal  SuccessfulMountVolume  4m    kubelet, gke-ambassador-demo-default-pool-912378e5-dkxc  MountVolume.SetUp succeeded for volume "emissary-token-tmk94"
         Normal  Pulling                4m    kubelet, gke-ambassador-demo-default-pool-912378e5-dkxc  pulling image "docker.io/datawire/ambassador:0.40.0"
-        Normal  Pulled                 4m    kubelet, gke-$productDeploymentName$-demo-default-pool-912378e5-dkxc  Successfully pulled image "docker.io/datawire/ambassador:0.40.0"
-        Normal  Created                4m    kubelet, gke-$productDeploymentName$-demo-default-pool-912378e5-dkxc  Created container
-        Normal  Started                4m    kubelet, gke-$productDeploymentName$-demo-default-pool-912378e5-dkxc  Started container
+        Normal  Pulled                 4m    kubelet, gke-emissary-demo-default-pool-912378e5-dkxc  Successfully pulled image "docker.io/datawire/ambassador:0.40.0"
+        Normal  Created                4m    kubelet, gke-emissary-demo-default-pool-912378e5-dkxc  Created container
+        Normal  Started                4m    kubelet, gke-emissary-demo-default-pool-912378e5-dkxc  Started container
         ```
 
 In both the Deployment Pod and the individual Pods, take the necessary action to address any discovered issues.
@@ -131,22 +131,22 @@ This will turn on Envoy debug logging for ten seconds, then turn it off again.
 
 To view the logs from Emissary:
 
-1. Use the following command to target an individual Emissary Pod: `kubectl get pods -n $productNamespace$`
+1. Use the following command to target an individual Emissary Pod: `kubectl get pods -n emissary`
 
     The terminal will print something similar to the following:
 
     ```
-    $ kubectl get pods -n $productNamespace$
+    $ kubectl get pods -n emissary
     NAME                         READY     STATUS    RESTARTS   AGE
-    $productDeploymentName$-85c4cf67b-4pfj2   1/1       Running   0          3m
+    emissary-85c4cf67b-4pfj2   1/1       Running   0          3m
     ```
 
-2. Then, run the following: `kubectl logs -n $productNamespace$ <$productDeploymentName$-pod-name>`
+2. Then, run the following: `kubectl logs -n emissary <emissary-pod-name>`
 
 The terminal will print something similar to the following:
 
     ```
-    $ kubectl logs -n $productNamespace$ $productDeploymentName$-85c4cf67b-4pfj2
+    $ kubectl logs -n emissary emissary-85c4cf67b-4pfj2
     2018-10-10 12:26:50 kubewatch 0.40.0 INFO: generating config with gencount 1 (0 changes)
     /usr/lib/python3.6/site-packages/pkg_resources/__init__.py:1235: UserWarning: /ambassador is writable by group/others and vulnerable to attack when used with get_resource_filename. Consider a more secure location (set with .set_extraction_path or the PYTHON_EGG_CACHE environment variable).
     warnings.warn(msg, UserWarning)
@@ -170,7 +170,7 @@ You can examine the contents of the Emissary Pod for issues, such as if volume m
 1. To look into an Emissary Pod, get a shell on the Pod using `kubectl exec`. For example,
 
     ```
-    kubectl exec -it -n $productNamespace$ <$productDeploymentName$-pod-name> -- bash
+    kubectl exec -it -n emissary <emissary-pod-name> -- bash
     ```
 
 2. Determine the latest configuration. If you haven't overridden the configuration directory, the latest configuration will be in `/ambassador/snapshots`. If you have overridden it, Emissary saves configurations in `$AMBASSADOR_CONFIG_BASE_DIR/snapshots`.

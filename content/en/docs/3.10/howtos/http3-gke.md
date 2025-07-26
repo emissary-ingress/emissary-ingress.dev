@@ -20,8 +20,8 @@ An example of the two load balancer services described above looks as follows:
 apiVersion: v1
 kind: Service
 metadata:
-  name: $productDeploymentName$
-  namespace: $productNamespace$
+  name: emissary
+  namespace: emissary
 spec:
   type: LoadBalancer
   loadBalancerIP: xx.xx.xx.xx # Enter your public static IP address here.
@@ -38,8 +38,8 @@ spec:
   apiVersion: v1
 kind: Service
 metadata:
-  name: $productDeploymentName$-udp
-  namespace: $productNamespace$
+  name: emissary-udp
+  namespace: emissary
 spec:
   type: LoadBalancer
   loadBalancerIP: xx.xx.xx.xx # Enter your public static IP address here.

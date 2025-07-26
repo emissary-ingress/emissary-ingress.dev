@@ -103,7 +103,7 @@ You'll now register a demo application with Linkerd 2, and show how Emissary can
         spec:
           containers:
           - name: qotm
-            image: docker.io/datawire/qotm:$qotmVersion$
+            image: docker.io/datawire/qotm:1.7
             ports:
             - name: http-api
               containerPort: 5000

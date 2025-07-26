@@ -10,21 +10,21 @@ certain that each installation cannot affect the other: it is extremely safe,
 but is also significantly more effort.
 
 For example, to upgrade from some other version of Ambassador Edge Stack or
-Emissary to Emissary $versionTwoX$:
+Emissary to Emissary 2.X:
 
-1. Install Emissary $versionTwoX$ in a completely new cluster.
+1. Install Emissary 2.X in a completely new cluster.
 
-2. **Create `Listener`s for Emissary $versionTwoX$.**
+2. **Create `Listener`s for Emissary 2.X.**
 
-   When Emissary $versionTwoX$ starts, it will not have any `Listener`s, and it will not
-   create any. You must create `Listener` resources by hand, or Emissary $versionTwoX$
+   When Emissary 2.X starts, it will not have any `Listener`s, and it will not
+   create any. You must create `Listener` resources by hand, or Emissary 2.X
    will not listen on any ports.
 
 3. Copy the entire configuration from the Emissary 1.X cluster to the Emissary
-   $versionTwoX$ cluster. This is most simply done with `kubectl get -o yaml | kubectl apply -f -`.
+   2.X cluster. This is most simply done with `kubectl get -o yaml | kubectl apply -f -`.
 
-   This will create `getambassador.io/v2` resources in the Emissary $versionTwoX$ cluster.
-   Emissary $versionTwoX$ will translate them internally to `getambassador.io/v3alpha1`
+   This will create `getambassador.io/v2` resources in the Emissary 2.X cluster.
+   Emissary 2.X will translate them internally to `getambassador.io/v3alpha1`
    resources.
 
 4. Each Emissary instance has its own cluster, so you can test the new
@@ -34,4 +34,4 @@ Emissary to Emissary $versionTwoX$:
    resource you're changing to `getambassador.io/v3alpha1` by using `kubectl edit`.
 
 6. Once everything is working with both versions, transfer incoming traffic to the Emissary
-   $versionTwoX$ cluster.
+   2.X cluster.

@@ -48,7 +48,7 @@ We've created an example filter that you can customize for your particular use c
               value: '60'
             - name: AMBASSADOR_INTERNAL_URL
               value: https://127.0.0.1:8443
-   -        image: docker.io/datawire/aes:$version$
+   -        image: docker.io/datawire/aes:3.10
    +        image: DOCKER_REGISTRY/aes-plugin:VERSION
             imagePullPolicy: Always
             livenessProbe:
@@ -61,8 +61,8 @@ During development, you may want to sidestep the deployment process for a faster
 
 To install the runner, download the latest version:
 
-<a class="pro-runner-dl" href="https://s3.amazonaws.com/datawire-static-files/aes-plugin-runner/$version$/darwin/amd64/aes-plugin-runner">Mac 64-bit</a> |
-<a class="pro-runner-linux-dl" href="https://s3.amazonaws.com/datawire-static-files/aes-plugin-runner/$version$/linux/amd64/aes-plugin-runner">Linux 64-bit</a>
+<a class="pro-runner-dl" href="https://s3.amazonaws.com/datawire-static-files/aes-plugin-runner/3.10/darwin/amd64/aes-plugin-runner">Mac 64-bit</a> |
+<a class="pro-runner-linux-dl" href="https://s3.amazonaws.com/datawire-static-files/aes-plugin-runner/3.10/linux/amd64/aes-plugin-runner">Linux 64-bit</a>
 
 Note that the plugin runner must match the version of Ambassador Edge Stack that you are running. Place the binary somewhere in your `$PATH`.
 

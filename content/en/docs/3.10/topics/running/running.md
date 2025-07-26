@@ -58,7 +58,7 @@ spec:
         profile: main
     spec:
       containers:
-        image: docker.io/emissaryingress/emissary:$version$
+        image: docker.io/emissaryingress/emissary
         name: emissary-ingresss
      restartPolicy: Always
      securityContext:
@@ -137,7 +137,7 @@ env:
 
 ## `AMBASSADOR_ID`
 
-Emissary supports running multiple $productNamePlural$ in the same cluster, without restricting a given Emissary to a single namespace. This is done with the `AMBASSADOR_ID` setting. In the `ambassador Module`, set the `ambassador_id`, e.g.,
+Emissary supports running multiple emissaries in the same cluster, without restricting a given Emissary to a single namespace. This is done with the `AMBASSADOR_ID` setting. In the `ambassador Module`, set the `ambassador_id`, e.g.,
 
 ```yaml
 ---

@@ -89,7 +89,7 @@ and then add the `HOST_IP` environment variable to your Kubernetes deployment:
 ```yaml
 containers:
   - name: example
-    image: docker.io/datawire/ambassador:$version$
+    image: docker.io/datawire/ambassador
     env:
       - name: HOST_IP
         valueFrom:

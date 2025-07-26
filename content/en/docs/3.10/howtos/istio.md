@@ -51,7 +51,7 @@ kubectl label namespace $namespace istio-injection=enabled --overwrite
 
 <Alert severity="warning">
   The following example uses the `istio-injection` label to arrange for auto-injection in the
-  `$productNamespace$` Namespace below. You can manage sidecar injection by hand if you wish; what
+  `emissary` Namespace below. You can manage sidecar injection by hand if you wish; what
   is <b>critical</b> is that every service that participates in the Istio mesh have the Istio
   sidecar.
 </Alert>
@@ -125,16 +125,16 @@ env:
 
 To install Emissary with Helm, use these values to configure Istio integration:
 
-1. Create the `$productNamespace$` Namespace:
+1. Create the `emissary` Namespace:
 
     ```yaml
-    kubectl create namespace $productNamespace$
+    kubectl create namespace emissary
     ```
 
 2. Enable Istio auto-injection for it:
 
     ```yaml
-    kubectl label namespace $productNamespace$ istio-injection=enabled --overwrite
+    kubectl label namespace emissary istio-injection=enabled --overwrite
     ```
 
 3. Make sure the Helm repo is configured:
@@ -144,11 +144,11 @@ To install Emissary with Helm, use these values to configure Istio integration:
     helm repo update
     ```
 
-4. Use Helm to install Emissary in $productNamespace$:
+4. Use Helm to install Emissary in emissary:
 
     ```bash
-    helm install $productHelmName$ --namespace $productNamespace$ -f istio-integration.yaml datawire/$productHelmName$ && \
-    kubectl -n $productNamespace$ wait --for condition=available --timeout=90s deploy -lapp.kubernetes.io/instance=$productDeploymentName$
+    helm install emissary --namespace emissary -f istio-integration.yaml datawire/emissary && \
+    kubectl -n emissary wait --for condition=available --timeout=90s deploy -lapp.kubernetes.io/instance=emissary
     ```
 
 ### Installation Using YAML
@@ -157,15 +157,15 @@ To install using YAML files, you need to manually incorporate the contents of th
 file shown above into your deployment YAML:
 
 * `pod-annotations` should be configured as Kubernetes `annotations` on the Emissary Pods;
-* `volumes`, `volumeMounts`, and `env` contents should be included in the $productDeploymentName$ Deployment; and
-* you must also label the $productNamespace$ Namespace for auto-injection as described above.
+* `volumes`, `volumeMounts`, and `env` contents should be included in the emissary Deployment; and
+* you must also label the emissary Namespace for auto-injection as described above.
 
 ### Configuring an Existing Installation
 
 If you have already installed Emissary and want to enable Istio:
 
 1. Install Istio.
-2. Label the $productNamespace$ namespace for Istio auto-injection, as above.
+2. Label the emissary namespace for Istio auto-injection, as above.
 2. Edit the Emissary Deployments to contain the `annotations`, `volumes`, `volumeMounts`, and `env` elements
    shown above.
     * If you installed with Helm, you can use `helm upgrade` with `-f istio-integration.yaml` to modify the
@@ -196,7 +196,7 @@ To make use of the `istio-certs` Secret, create a `TLSContext` referencing it:
    kind: TLSContext
    metadata:
      name: istio-upstream
-     namespace: $productNamespace$
+     namespace: emissary
    spec:
      secret: istio-certs     # This Secret name cannot currently be changed.
      alpn_protocols: istio   # This is required for Istio.
@@ -410,7 +410,7 @@ by default. To take advantage of this support, you need to:
    kind:  TracingService
    metadata:
      name:  tracing
-     namespace: $productNamespace$
+     namespace: emissary
    spec:
      service: "zipkin:9411"
      driver: zipkin

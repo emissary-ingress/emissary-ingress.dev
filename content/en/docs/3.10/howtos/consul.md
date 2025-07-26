@@ -207,7 +207,7 @@ on a VM.
        spec:
          containers:
          - name: backend
-           image: docker.io/datawire/quote:$quoteVersion$
+           image: docker.io/datawire/quote:1.7
            ports:
            - name: http
              containerPort: 8080
@@ -326,7 +326,7 @@ on a VM.
    validate that Emissary is now making use of that service:
 
    ```console
-   $ AMBASSADOR_IP=$(kubectl --namespace $productNamespace$ get services/$productDeploymentName$ -o "go-template={{range .status.loadBalancer.ingress}}{{or .ip .hostname}}{{end}}")
+   $ AMBASSADOR_IP=$(kubectl --namespace emissary get services/emissary -o "go-template={{range .status.loadBalancer.ingress}}{{or .ip .hostname}}{{end}}")
    $ curl -Lk http://$AMBASSADOR_IP/quote-consul/
    {
     "server": "janky-elderberry-vtqtolsz",
@@ -359,7 +359,7 @@ discovery, as detailed above.
    `kubectl`:
 
    ```shell
-   kubectl apply -f https://app.getambassador.io/yaml/v2-docs/$ossVersion$/consul/ambassador-consul-connector.yaml
+   kubectl apply -f https://app.getambassador.io/yaml/v2-docs/3.10/consul/ambassador-consul-connector.yaml
    ```
 
    This installs in to your cluster:
@@ -399,7 +399,7 @@ discovery, as detailed above.
        spec:
          containers:
          - name: quote
-           image: docker.io/datawire/quote:$quoteVersion$
+           image: docker.io/datawire/quote:1.7
            ports:
            - name: http
              containerPort: 8080
@@ -527,7 +527,7 @@ discovery, as detailed above.
    authenticate communication with that service:
 
    ```console
-   $ AMBASSADOR_IP=$(kubectl --namespace $productNamespace$ get services/$productDeploymentName$ -o "go-template={{range .status.loadBalancer.ingress}}{{or .ip .hostname}}{{end}}")
+   $ AMBASSADOR_IP=$(kubectl --namespace emissary get services/emissary -o "go-template={{range .status.loadBalancer.ingress}}{{or .ip .hostname}}{{end}}")
    $ curl -Lk http://$AMBASSADOR_IP/quote-connect/
    {
     "server": "tasty-banana-2h6qpwme",
@@ -550,7 +550,7 @@ environment variables.  The defaults are best for most use-cases.
 
 | Environment Variable               | Description                                                                                                                                                                                             | Default                                              |
 |------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| `_AMBASSADOR_ID`                   | Set the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple $productNamePlural$ (Required if `AMBASSADOR_ID` is set in your Emissary `Deployment`) | `""`                                                 |
+| `_AMBASSADOR_ID`                   | Set the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple emissaries (Required if `AMBASSADOR_ID` is set in your Emissary `Deployment`) | `""`                                                 |
 | `_CONSUL_HOST`                     | Set the IP or DNS name of the target Consul HTTP API server                                                                                                                                             | `127.0.0.1`                                          |
 | `_CONSUL_PORT`                     | Set the port number of the target Consul HTTP API server                                                                                                                                                | `8500`                                               |
 | `_AMBASSADOR_TLS_SECRET_NAME`      | Set the name of the Kubernetes `v1.Secret` created by this program that contains the Consul-generated TLS certificate.                                                                                  | `$AMBASSADOR_ID-consul-connect`                      |

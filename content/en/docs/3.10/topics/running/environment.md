@@ -255,7 +255,7 @@ How often, in seconds, to submit statsd reports (if `STATSD_ENABLED`)
 
 ### `_AMBASSADOR_ID`
 
-Used with the Ambassador Consul connector. Sets the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple $productNamePlural$ (Required if `AMBASSADOR_ID` is set in your Emissary `Deployment`
+Used with the Ambassador Consul connector. Sets the Ambassador ID so multiple instances of this integration can run per-Cluster when there are multiple emissaries (Required if `AMBASSADOR_ID` is set in your Emissary `Deployment`
 
 [More information](../../../howtos/consul#environment-variables)
 

@@ -59,14 +59,14 @@ Migration is a two-step process:
    helm repo update
    ```
 
-   Then, update your Emissary installation in the `$productNamespace$` namespace.
+   Then, update your Emissary installation in the `emissary` namespace.
    If necessary for your installation (e.g. if you were running with
    `AMBASSADOR_SINGLE_NAMESPACE` set), you can choose a different namespace.
 
    ```bash
-   helm upgrade -n $productNamespace$ \
-        $productHelmName$ datawire/$productHelmName$ && \
-   kubectl rollout status  -n $productNamespace$ deployment/emissary-ingress -w
+   helm upgrade -n emissary \
+        emissary datawire/emissary && \
+   kubectl rollout status  -n emissary deployment/emissary-ingress -w
    ```
 
    <Alert severity="warning">

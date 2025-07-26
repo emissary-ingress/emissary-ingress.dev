@@ -29,7 +29,7 @@ some changes that aren't backward-compatible with 1.X. These changes are detaile
 </Alert>
 
 The recommended strategy for migration is to run Emissary 1.14 and Emissary
-2.5 side-by-side in the same cluster. This gives Emissary $versionTwoX$
+2.5 side-by-side in the same cluster. This gives Emissary 2.X
 and Emissary 1.14 access to all the same configuration resources, with some
 important caveats:
 
@@ -159,8 +159,8 @@ Migration is a seven-step process:
       ```bash
       helm install -n ambassador \
            --set agent.enabled=false \
-           $productHelmName$ datawire/$productHelmName$ && \
-      kubectl rollout status  -n $productNamespace$ deployment/$productDeploymentName$ -w
+           emissary datawire/emissary && \
+      kubectl rollout status  -n emissary deployment/emissary -w
       ```
 
    - If you do need to set `AMBASSADOR_LABEL_SELECTOR`, use `--set`, for example:
@@ -169,17 +169,17 @@ Migration is a seven-step process:
       helm install -n ambassador \
            --set agent.enabled=false \
            --set env.AMBASSADOR_LABEL_SELECTOR="version-two=true" \
-           $productHelmName$ datawire/$productHelmName$ && \
-      kubectl rollout status  -n $productNamespace$ deployment/$productDeploymentName$ -w
+           emissary datawire/emissary && \
+      kubectl rollout status  -n emissary deployment/emissary -w
       ```
 
    <Alert severity="warning">
-    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/$ossChartVersion$"><code>$productHelmName$</code> Helm chart</a> for Emissary 2.X.
+    You must use the <a href="https://artifacthub.io/packages/helm/datawire/emissary-ingress/"><code>emissary</code> Helm chart</a> for Emissary 2.X.
     Do not use the <a href="https://artifacthub.io/packages/helm/datawire/ambassador/6.9.3"><code>ambassador</code> Helm chart</a>.
    </Alert>
 
    <Alert severity="info">
-     Emissary 2.5 includes a Deployment in the $productNamespace$ namespace
+     Emissary 2.5 includes a Deployment in the emissary namespace
      called <code>emissary-apiext</code>. This is the APIserver extension
      that supports converting Emissary CRDs between <code>getambassador.io/v2</code>
      and <code>getambassador.io/v3alpha1</code>. This Deployment needs to be running at
@@ -296,8 +296,8 @@ Migration is a seven-step process:
    ```bash
    helm upgrade -n ambassador \
         --set agent.enabled=true \
-        $productHelmName$ datawire/$productHelmName$ \
-   kubectl rollout status  -n $productNamespace$ deployment/$productDeploymentName$ -w
+        emissary datawire/emissary \
+   kubectl rollout status  -n emissary deployment/emissary -w
    ```
 
 Congratulations! At this point, Emissary 2.5 is fully running and it's safe to remove the `ambassador` and `ambassador-agent` Deployments:

@@ -118,7 +118,7 @@ kind: Host
 metadata:
   name: your-hostname
   annotations:
-    external-dns.ambassador-service: $productDeploymentName$.$productNamespace$
+    external-dns.ambassador-service: emissary.emissary
 spec:
   acmeProvider:
     authority: none

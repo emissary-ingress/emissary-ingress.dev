@@ -25,7 +25,7 @@ tls-broken-cert.default.1 2 errors:;  1. K8sSecret secret tls-broken-cert.defaul
 
 If you set the `AMBASSADOR_FORCE_SECRET_VALIDATION` environment variable, the invalid
 Secret will be rejected, and a `Host` or `TLSContext` resource attempting to use an invalid
-certificate will be disabled entirely. **Note** that in Emissary $version$, this
+certificate will be disabled entirely. **Note** that in Emissary 3.X, this
 includes disabling cleartext communication for such a `Host`.
 
 [TLS Certificates]: https://protonmail.com/blog/tls-ssl-certificate/

@@ -44,8 +44,8 @@ The current default of <code>alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=8640
 apiVersion: getambassador.io/v3alpha1
 kind: Listener
 metadata:
-  name: $productDeploymentName$-https-listener
-  namespace: $productNamespace$
+  name: emissary-https-listener
+  namespace: emissary
 spec:
   port: 8443
   protocol: HTTPS
@@ -59,8 +59,8 @@ spec:
 apiVersion: getambassador.io/v3alpha1
 kind: Listener
 metadata:
-  name: $productDeploymentName$-https-listener-udp
-  namespace: $productNamespace$
+  name: emissary-https-listener-udp
+  namespace: emissary
 spec:
   port: 8443
   # Order is important here. HTTP is required.
@@ -121,8 +121,8 @@ An example `LoadBalancer` configuration that fits the criteria listed above:
 apiVersion: v1
 kind: Service
 metadata:
-  name: $productDeploymentName$
-  namespace: $productNamespace$
+  name: emissary
+  namespace: emissary
 spec:
   ports:
     - name: http

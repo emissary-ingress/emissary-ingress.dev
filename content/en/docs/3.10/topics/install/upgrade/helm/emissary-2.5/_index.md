@@ -44,7 +44,7 @@ You can refer to the [Major changes in Emissary 3.x](../../../../../../about/cha
 
     The `AuthService`, `RatelimitService`, and `LogServices` that use the `grpc` protocol will now need to explicilty set `protocol_version: "v3"`. If not set or set to `v2` then an error will be posted and a static response will be returned.
 
-    `protocol_version` should be updated to `v3` for all of the above resources while still running Emissary $versionTwoX$. As of version `2.3.z`+, support for `protocol_version` `v2` and `v3` is supported in order to allow migration from `protocol_version` `v2` to `v3` before upgrading to Emissary 3.10 where support for `v2` is removed.
+    `protocol_version` should be updated to `v3` for all of the above resources while still running Emissary 2.X. As of version `2.3.z`+, support for `protocol_version` `v2` and `v3` is supported in order to allow migration from `protocol_version` `v2` to `v3` before upgrading to Emissary 3.10 where support for `v2` is removed.
 
     Upgrading any application code for your own implementations of these services is very straightforward.
 
@@ -138,14 +138,14 @@ Migration is a two-step process:
    helm repo update
    ```
 
-   Then, update your Emissary installation in the `$productNamespace$` namespace.
+   Then, update your Emissary installation in the `emissary` namespace.
    If necessary for your installation (e.g. if you were running with
    `AMBASSADOR_SINGLE_NAMESPACE` set), you can choose a different namespace.
 
    ```bash
-   helm upgrade -n $productNamespace$ \
-        $productHelmName$ datawire/$productHelmName$ && \
-   kubectl rollout status  -n $productNamespace$ deployment/emissary-ingress -w
+   helm upgrade -n emissary \
+        emissary datawire/emissary && \
+   kubectl rollout status  -n emissary deployment/emissary-ingress -w
    ```
 
    <Alert severity="warning">
