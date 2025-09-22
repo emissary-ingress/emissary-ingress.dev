@@ -89,7 +89,7 @@ check. First, install Faces itself using Helm:
 ```bash
 helm install faces \
  --namespace faces --create-namespace \
- oci://ghcr.io/buoyantio/faces-chart --version 2.0.0-rc.4 \
+ oci://ghcr.io/buoyantio/faces-chart --version 2.0.0 \
  --wait
 ```
 
