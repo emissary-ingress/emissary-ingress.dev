@@ -18,7 +18,7 @@ the old versions of the CRDs and the conversion webhook:
 ```bash
 helm install emissary-crds \
  --namespace emissary --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=3.10.0 \
+ oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.0 \
  --set enableLegacyVersions=false \
  --wait
 ```
@@ -33,7 +33,7 @@ tell Emissary not to wait for the conversion webhook to be ready:
 ```bash
 helm install emissary \
  --namespace emissary \
- oci://ghcr.io/emissary-ingress/emissary-ingress --version=3.10.0 \
+ oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.0 \
  --set waitForApiext.enabled=false \
  --wait
 ```
@@ -45,7 +45,7 @@ First, install the CRDs and the conversion webhook:
 ```bash
 helm install emissary-crds \
  --namespace emissary-system --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=3.10.0 \
+ oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.0 \
  --wait
 ```
 
@@ -55,7 +55,7 @@ conversion webhook into the `emissary-system` namespace. Once that's done, you'l
 ```bash
 helm install emissary \
  --namespace emissary --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-ingress --version=3.10.0 \
+ oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.0 \
  --wait
 ```
 
