@@ -19,7 +19,6 @@ the old versions of the CRDs and the conversion webhook:
 helm install emissary-crds \
  --namespace emissary --create-namespace \
  oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.0 \
- --set enableLegacyVersions=false \
  --wait
 ```
 
@@ -34,7 +33,6 @@ tell Emissary not to wait for the conversion webhook to be ready:
 helm install emissary \
  --namespace emissary \
  oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.0 \
- --set waitForApiext.enabled=false \
  --wait
 ```
 
@@ -67,13 +65,13 @@ connect to that Service will vary with your cluster provider, but you can
 start with the following:
 
 ```bash
-kubectl get svc -n emissary emissary-emissary-ingress
+kubectl get svc -n emissary emissary
 ```
 
 That should get you started. Or, of course, you can use something like this:
 
 ```bash
-kubectl port-forward -n emissary svc/emissary-emissary-ingress 8080:80
+kubectl port-forward -n emissary svc/emissary 8080:80
 ```
 
 (after you configure a Listener!) and then talk to localhost:8080 with any
@@ -174,9 +172,9 @@ EOF
 ```
 
 Once that's done, then you'll be able to access the Faces Demo at `/faces/`,
-on whatever IP address or hostname your cluster provides for the
-`emissary-emissary-ingress` Service. Or you can port-forward as above and
-access it at `http://localhost:8080/faces/`.
+on whatever IP address or hostname your cluster provides for the `emissary`
+Service. Or you can port-forward as above and access it at
+`http://localhost:8080/faces/`.
 
 # Next Steps
 
