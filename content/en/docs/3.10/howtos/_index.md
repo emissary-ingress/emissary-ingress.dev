@@ -12,6 +12,7 @@ These guides are designed to help users quickly accomplish common tasks. The gui
 * Distributed tracing. Emissary natively supports a number of distributed tracing systems to enable developers to visualize request flow in microservice and service-oriented architectures.
   * [Datadog](tracing-datadog)
   * [Zipkin](tracing-zipkin)
+  * [Dash0](tracing-dash0)
 * Monitoring. Emissary integrates with a number of different monitoring/metrics providers.
   * [Prometheus](prometheus)
 * [Developing Custom Filters](filter-dev-guide)
