@@ -3,77 +3,106 @@ title: "Quick Start"
 weight: 5
 ---
 
-**We recommend using Helm** to install Emissary.
+**We recommend using Helm** to install Emissary. If you really need to
+work directly with YAML, use `helm template` to generate the YAML
+manifests you need.
 
-### Installing if you're starting fresh
+## Installing Emissary
 
-**If you are already running Emissary and just want to upgrade, DO NOT FOLLOW
-THESE DIRECTIONS.** Instead, check out "Upgrading from an earlier Emissary"
-below.
+Installing Emissary is a two-step process: first, you install the Custom
+Resource Definitions (CRDs) that Emissary uses to configure itself, and
+then you install Emissary itself. There are two different paths here,
+depending on whether you're installing Emissary for the first time, or
+upgrading from an earlier version where you're using older versions of
+the CRDs.
 
-If you're starting from scratch and you don't need to worry about older CRD
-versions, install using `--set enableLegacyVersions=false` to avoid install
-the old versions of the CRDs and the conversion webhook:
+### Path 1: Fresh Install
+
+**If you have never run Emissary before, this path is for you!**
+
+(This is also the path for you if you're running Emissary 3 and you're
+absolutely, positively, 100% _certain_ that you have no v1 or v2 Emissary
+CRDs in your cluster. If you're not _completely_ certain, though, check
+out the upgrade path below.)
+
+Starting from scratch with Emissary is straightforward: since there won't
+be any concerns about old CRD versions, the default installation is
+exactly what you want. First, install the CRDs:
 
 ```bash
 helm install emissary-crds \
- --namespace emissary --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.0 \
- --set enableLegacyVersions=false \
+ oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.1 \
  --wait
 ```
 
-This will install only v3alpha1 CRDs and skip the conversion webhook entirely.
-It will create the `emissary` namespace for you, but there won't be anything
-in it at this point.
+This will install only the most recent (v3alpha1) CRD versions, without
+any conversion-webhook stuff.
 
-Next up, install Emissary itself, with `--set waitForApiext.enabled=false` to
-tell Emissary not to wait for the conversion webhook to be ready:
+Next up, install Emissary itself:
 
 ```bash
 helm install emissary \
- --namespace emissary \
- oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.0 \
- --set waitForApiext.enabled=false \
+ --namespace emissary --create-namespace \
+ oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.1 \
  --wait
 ```
 
-### Upgrading from an earlier Emissary
+This will take a minute or so to finish, since it'll wait for Emissary to
+be fully running, but once it's done, you're ready to go!
 
-First, install the CRDs and the conversion webhook:
+### Path 2: Upgrading from an earlier Emissary
+
+This time, we're going to deliberately install the old CRD versions and
+the conversion webhook:
 
 ```bash
 helm install emissary-crds \
  --namespace emissary-system --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.0 \
+ oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.1 \
+ --set enableLegacyVersions=true \
+ --set enableV1=true \
  --wait
 ```
 
-This will install all the versions of the CRDs (v1, v2, and v3alpha1) and the
-conversion webhook into the `emissary-system` namespace. Once that's done, you'll install Emissary itself:
+(If you're sure you have no v1 CRDs, you can skip the `--set enableV1=true` line.)
+
+This will install all the versions of the CRDs (v1, v2, and v3alpha1) and
+also install the conversion webhook into the `emissary-system` namespace.
+Once that's done, you'll install Emissary itself, but you'll need to tell
+it to be sure the conversion webhook is running before fully starting up:
 
 ```bash
 helm install emissary \
  --namespace emissary --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.0 \
+ oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.1 \
+ --set waitForApiext.enabled=true \
  --wait
 ```
 
-### Using Emissary
+This will take a minute or so to finish, since it'll wait for Emissary to
+be fully running, but once it's done, you're ready to go!
 
-In either case above, you should have a running Emissary behind the Service
-named `emissary-emissary-ingress` in the `emissary` namespace. How exactly you
+### Listing Emissary with Helm
+
+The `emissary-crds-chart` and `emissary-ingress` installations will
+always end up in different namespaces, so `helm list -A` is the easiest
+way to see everything related to Emissary.
+
+## Using Emissary
+
+After installing Emissary, you'll have a running Emissary behind the
+Service named `emissary` in the `emissary` namespace. How exactly you
 connect to that Service will vary with your cluster provider, but you can
 start with the following:
 
 ```bash
-kubectl get svc -n emissary emissary-emissary-ingress
+kubectl get svc -n emissary emissary
 ```
 
 That should get you started. Or, of course, you can use something like this:
 
 ```bash
-kubectl port-forward -n emissary svc/emissary-emissary-ingress 8080:80
+kubectl port-forward -n emissary svc/emissary 8080:80
 ```
 
 (after you configure a Listener!) and then talk to localhost:8080 with any
@@ -174,9 +203,9 @@ EOF
 ```
 
 Once that's done, then you'll be able to access the Faces Demo at `/faces/`,
-on whatever IP address or hostname your cluster provides for the
-`emissary-emissary-ingress` Service. Or you can port-forward as above and
-access it at `http://localhost:8080/faces/`.
+on whatever IP address or hostname your cluster provides for the `emissary`
+Service. Or you can port-forward as above and access it at
+`http://localhost:8080/faces/`.
 
 # Next Steps
 
