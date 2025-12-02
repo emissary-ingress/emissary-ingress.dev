@@ -5,7 +5,7 @@ description: "This section of the documentation provides an overview of the oper
 
 # The Ambassador operating model: GitOps and continuous delivery
 
-Containerized applications deployed in Kubernetes generally follow the microservices design pattern, where an application composed of dozens or even hundreds of services communicate with each other. Independent application development teams are responsible for the full lifecycle of a service, including coding, testing, deployment, release, and operations. By giving these teams independence, microservices enable organizations to scale their development without sacrificing agility.
+Containerized applications deployed in Kubernetes generally follow the microservices design pattern, where applications composed of dozens or even hundreds of services communicate with each other. Independent application development teams are responsible for the full lifecycle of a service, including coding, testing, deployment, release, and operations. By giving these teams independence, microservices enable organizations to scale their development without sacrificing agility.
 
 ## Policies, declarative configuration, and Custom Resource Definitions
 
@@ -32,7 +32,7 @@ workflow is also self-service; an operations team does not need to be
 directly involved in managing the change process (except in the review/approval
 process, if desirable).
 
-Contrast this a **traditional, manual workflow:**
+Contrast this with a **traditional, manual workflow:**
 
 1. App developer defines configuration.
 2. App developer opens a ticket for operations.
@@ -63,7 +63,7 @@ In a typical Emissary GitOps workflow:
 * Each service has its own Emissary policy. This policy consists of one or more Emissary custom resource definitions, specified in YAML.
 * This policy is stored in the same repository as the service, and managed by the service team.
 * Changes to the policy follow the GitOps workflow discussed above (e.g., pull request, approval, and continuous delivery).
-* Global configuration that is managed by operations are stored in a central repository alongside other cluster configuration. This repository is also set up for continuous delivery with a GitOps workflow.
+* Global configurations that are managed by operations are stored in a central repository alongside other cluster configurations. This repository is also set up for continuous delivery with a GitOps workflow.
 
 ## Further reading
 
