@@ -31,7 +31,7 @@ exactly what you want. First, install the CRDs:
 
 ```bash
 helm install emissary-crds \
- oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.1 \
+ oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.2 \
  --wait
 ```
 
@@ -43,7 +43,7 @@ Next up, install Emissary itself:
 ```bash
 helm install emissary \
  --namespace emissary --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.1 \
+ oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.2 \
  --wait
 ```
 
@@ -58,7 +58,7 @@ the conversion webhook:
 ```bash
 helm install emissary-crds \
  --namespace emissary-system --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.1 \
+ oci://ghcr.io/emissary-ingress/emissary-crds-chart --version=4.0.0-rc.2 \
  --set enableLegacyVersions=true \
  --set enableV1=true \
  --wait
@@ -74,7 +74,7 @@ it to be sure the conversion webhook is running before fully starting up:
 ```bash
 helm install emissary \
  --namespace emissary --create-namespace \
- oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.1 \
+ oci://ghcr.io/emissary-ingress/emissary-ingress --version=4.0.0-rc.2 \
  --set waitForApiext.enabled=true \
  --wait
 ```
