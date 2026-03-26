@@ -180,7 +180,7 @@ outputs:
 menu:
   main:
     - name: Docs
-      url: /docs/3.10/
+      url: /docs/4.0/
       weight: -10
     - name: Install
-      url: /docs/3.10/quick-start/
+      url: /docs/4.0/quick-start/
