@@ -4,7 +4,6 @@ cascade:
   version: v4.0
   versName: &name v4.0
   git_version_tag: v4.0.1
-  exclude_search: true
 linkTitle: *name
 simple_list: true
 weight: -4000 # Weight for doc version vX.Y should be -XY0

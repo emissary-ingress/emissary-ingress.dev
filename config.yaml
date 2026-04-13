@@ -174,7 +174,7 @@ outputFormats:
     notAlternative: true
 
 outputs:
-  home: [HTML, REDIRECTS, RSS]
+  home: [HTML, REDIRECTS, RSS, JSON]
 
 # Site menu (partial -- also see pages with 'menu' in front matter)
 menu:
