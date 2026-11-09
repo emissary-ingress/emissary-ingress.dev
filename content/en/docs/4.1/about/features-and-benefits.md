@@ -15,7 +15,7 @@ Emissary is built from the start to support _self-service_ deployments -- a deve
 
 [//]: # (+FIX+ Forge is no more)
 
-Canary deployments are an essential component of cloud-native development workflows. In a canary deployment, a small percentage of production traffic is routed to a new version of a service to test it under real-world conditions. Emissary allows developers to easily control and manage the amount of traffic routed to a given service through annotations. [This tutorial](https://www.datawire.io/faster/canary-workflow/) covers a complete canary workflow using the Emissary.
+Canary deployments are an essential component of cloud-native development workflows. In a canary deployment, a small percentage of production traffic is routed to a new version of a service to test it under real-world conditions. Emissary allows developers to easily control and manage the amount of traffic routed to a given service through annotations.
 
 ## Kubernetes-native architecture
 
@@ -39,7 +39,7 @@ Emissary supports authenticating incoming requests using a custom authentication
 
 ## Rate limiting
 
-Emissary supports rate limiting incoming requests. When configured, the Emissary will check with a third party rate limit service prior to routing an incoming request. For more information, see the [rate limiting guide](../../topics/using/rate-limits/).
+Emissary supports rate limiting incoming requests. When configured, the Emissary will check with a third party rate limit service prior to routing an incoming request. For more information, see the [rate limiting guide](../../topics/using/base-rate-limiting/).
 
 ## Integrated UI
 

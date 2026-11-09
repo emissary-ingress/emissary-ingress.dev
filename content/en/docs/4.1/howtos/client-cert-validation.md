@@ -15,7 +15,7 @@ certificates.
 
 - [openssl](https://www.openssl.org/source/) For creating client certificates
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-- [Emissary](../../tutorials/getting-started)
+- [Emissary](../../quick-start/)
 - [cURL](https://curl.haxx.se/download.html)
 
 

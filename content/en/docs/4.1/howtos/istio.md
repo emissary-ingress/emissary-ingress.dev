@@ -8,7 +8,7 @@ Emissary and Istio can be deployed together on Kubernetes. In this configuration
 traditional edge functions such as authentication, TLS termination, and edge routing. Istio mediates communication
 from Emissary to services, and communication between services.
 
-This allows the operator to have the best of both worlds: a high performance, modern edge service (Emissary) combined with a state-of-the-art service mesh (Istio). While Istio has introduced a [Gateway](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/) abstraction, Emissary still has a much broader feature set for edge routing than Istio. For more on this topic, see our blog post on [API Gateway vs Service Mesh](https://blog.getambassador.io/api-gateway-vs-service-mesh-104c01fa4784).
+This allows the operator to have the best of both worlds: a high performance, modern edge service (Emissary) combined with a state-of-the-art service mesh (Istio). While Istio has introduced a [Gateway](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/) abstraction, Emissary still has a much broader feature set for edge routing than Istio.
 
 This guide explains how to take advantage of both Emissary and Istio to have complete control and observability over how requests are made in your cluster:
 
@@ -253,7 +253,7 @@ TLS using the `istio-upstream` `TLSContext` above:
    ```
 
 For example, if you have installed the Quote service as described on the
-[Getting Started](../../tutorials/getting-started) page, you will have a `Mapping` as follows:
+[Getting Started](../../quick-start/) page, you will have a `Mapping` as follows:
 
    ```yaml
    apiVersion: getambassador.io/v3alpha1

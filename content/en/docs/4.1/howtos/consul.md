@@ -5,10 +5,10 @@ title: Consul integration
 <div class="docs-article-toc">
 <h3>Contents</h3>
 
-- [Consul integration](#consul-integration)
+- Consul integration
   - [Architecture overview](#architecture-overview)
   - [Installing Consul](#installing-consul)
-  - [Installing Emissary](#installing-consul)
+  - [Installing Emissary](#installing-emissary)
   - [Using Consul for service discovery](#using-consul-for-service-discovery)
   - [Using Consul for authorization and encryption](#using-consul-for-authorization-and-encryption)
     - [Environment variables](#environment-variables)
@@ -39,7 +39,7 @@ Consul agent or API.  When you send a request through Emissary,
 Emissary sends the request to an endpoint based on the data in
 Consul.
 
-![ambassador-consul](../images/consul-ambassador.png)
+![ambassador-consul](../../images/consul-ambassador.png)
 
 This guide first instructs you on registering a service with Consul
 and using Emissary to dynamically route requests to that service
@@ -120,7 +120,7 @@ and skip to the next section.
 ## Installing Emissary
 
 If you have not already installed Emissary in to your cluster,
-then go to the [quick start guide](../../tutorials/getting-started)
+then go to the [quick start guide](../../quick-start/)
 before continuing any further in this guide.
 
 ## Using Consul for service discovery
@@ -425,7 +425,7 @@ discovery, as detailed above.
        a8r.io/bugs: "https://github.com/datawire/quote/issues"
        a8r.io/documentation: "https://github.com/datawire/quote/blob/master/README.md"
        a8r.io/repository: "https://github.com/datawire/quote"
-       a8r.io/support: "http://a8r.io/Slack"
+       a8r.io/support: "https://slack.cncf.io/"
        a8r.io/runbook: "https://github.com/datawire/quote/blob/master/README.md"
        a8r.io/incidents: "https://github.com/datawire/quote/issues"
        a8r.io/dependencies: "None"
@@ -447,9 +447,7 @@ discovery, as detailed above.
    For more information on annotations, refer to the [Annotating
    Kubernetes Services for
    Humans](https://kubernetes.io/blog/2021/04/20/annotating-k8s-for-humans/)
-   article, or get started with annotations in your own cluster with
-   the [Ambassador Cloud Quick start
-   guide](https://www.getambassador.io/docs/cloud/latest/service-catalog/quick-start/).
+   article.
 
    </Alert>
 

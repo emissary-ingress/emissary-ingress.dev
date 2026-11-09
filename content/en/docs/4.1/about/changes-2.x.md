@@ -6,7 +6,7 @@ The 2.X family introduces a number of changes to allow Emissary
 to more gracefully handle larger installations, reduce global configuration to
 better handle multitenant or multiorganizational installations, reduce memory
 footprint, and improve performance. We welcome feedback!! Join us on
-[Slack](http://a8r.io/slack) and let us know what you think.
+[Slack](https://slack.cncf.io/) and let us know what you think.
 
 While Emissary 2 is functionally compatible with Emissary 1.14, note
 that this is a **major version change** and there are important differences between
@@ -185,7 +185,7 @@ A `getambassador.io/v2` `Mapping` or `TCPMapping` could specify `tls: true` to i
 ### `Mapping`s and `labels`
 
 The `Mapping` CRD includes a `labels` field, used with rate limiting. The
-[syntax of the `labels`](../../topics/using/rate-limits#attaching-labels-to-requests) has changed
+[syntax of the `labels`](../../topics/using/base-rate-limiting/#attaching-labels-to-requests) has changed
 for compatibility with Kubernetes 1.22.
 
 <Alert severity="info">

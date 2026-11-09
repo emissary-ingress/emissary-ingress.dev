@@ -2,11 +2,11 @@
 title: Rate Limiting Tutorial
 ---
 
-Emissary can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use a simple third party rate limit service. (If you don't want to implement your own rate limiting service, Ambassador Edge Stack integrates a [powerful, flexible rate limiting service](/docs/edge-stack/latest/topics/using/rate-limits/rate-limits/).)
+Emissary can validate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use a simple third party rate limit service.
 
 ## Before you get started
 
-This tutorial assumes you have already followed the Emissary [Installation](../../topics/install/) and [Quickstart Tutorial](../../tutorials/quickstart-demo) guides. If you haven't done that already, you should do so now.
+This tutorial assumes you have already followed the Emissary [Installation](../../topics/install/) and [Quickstart Tutorial](../../quick-start/) guides. If you haven't done that already, you should do so now.
 
 Once completed, you'll have a Kubernetes cluster running Emissary and the Quote service. Let's walk through adding rate limiting to this setup.
 
@@ -84,7 +84,7 @@ Once this configuration is applied Kubernetes will startup the example ratelimit
 ## 2. Configure Emissary Mappings
 
 Emissary only validates requests on `Mapping`s which set labels to use for rate limiting, so you'll need to apply `labels` to your `Mapping`s to enable rate limiting. For more information
-on the labelling process, see the [Rate Limits configuration documentation](../../topics/using/rate-limits/).
+on the labelling process, see the [Rate Limits configuration documentation](../../topics/using/base-rate-limiting/).
 
 <Alert severity="info">
   These <code>labels</code> require <code>Mapping</code> resources with <code>apiVersion</code> <code>getambassador.io/v2</code> or newer &mdash; if you're updating an old installation, check the
@@ -172,4 +172,4 @@ TCP_NODELAY set
 
 ## More
 
-For more details about configuring the external rate limit service, read the [rate limit documentation](../../topics/using/rate-limits/).
+For more details about configuring the external rate limit service, read the [rate limit documentation](../../topics/using/base-rate-limiting/).

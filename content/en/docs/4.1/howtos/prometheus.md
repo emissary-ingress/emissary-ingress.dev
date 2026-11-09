@@ -232,7 +232,7 @@ Definitions (CRDs) for managing Prometheus in Kubernetes.
 | `ServiceMonitor` | Tells Prometheus where to scrape metrics from.  |
 
 The prometheus-operator project published a full [API
-reference](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md)
+reference](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api-reference/api.md)
 to these different CRDs.
 
 ### Grafana
