@@ -20,15 +20,6 @@ spec:
     diagnostics:
       enabled: true
 ```
-Set the `AES_DIAGNOSTICS_URL` environment variable to `"http://emissary-ingress-admin:8877/ambassador/v0/diag/?json=true"`
-
-  ```shell
-  # Namespace, deployment name, and pod url/port depend on your current install
-
-  kubectl set env deployment/edge-stack-agent -n ambassador AES_DIAGNOSTICS_URL="http://emissary-ingress-admin:8877/ambassador/v0/diag/?json=true"
-  ```
-
-After setting up `AES_DIAGNOSTICS_URL`, you can access diagnostics information by using the same URL value. 
 
 ### Still can't see Emissary Diagnostics?
 
@@ -37,7 +28,7 @@ Do a port forward on your Emissary pod
   ```shell
   # Namespace, deployment name, and pod url/port depend on your current install
 
-  kubectl port-forward edge-stack-76f785767-n2l2v -n ambassador 8877
+  kubectl port-forward -n emissary deploy/emissary 8877
   ```
 
 You will be able to access the diagnostics overview page by going to `http://localhost:8877/ambassador/v0/diag/`
