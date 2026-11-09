@@ -19,7 +19,7 @@ Because many different teams may need to write policies, Emissary supports a dec
 
 Code cannot provide value to end-users until it is running in production. [Continuous Delivery](https://continuousdelivery.com/) is the ability to get changes of all types -- including new features, configuration changes, bug fixes, and experiments -- into production, and in front of customers safely and quickly in a sustainable way.
 
-[GitOps](https://www.weave.works/technologies/gitops/) is an approach to continuous delivery that relies on using a source control system as a single source of truth for all infrastructure and configuration. **In the GitOps model, configuration changes go through a specific workflow:**
+GitOps is an approach to continuous delivery that relies on using a source control system as a single source of truth for all infrastructure and configuration. **In the GitOps model, configuration changes go through a specific workflow:**
 
 1. All configuration is stored in source control.
 2. A configuration change is made via pull request.
@@ -67,5 +67,5 @@ In a typical Emissary GitOps workflow:
 
 ## Further reading
 
-* The [AppDirect engineering team](https://blog.getambassador.io/fireside-chat-with-alex-gervais-accelerating-appdirect-developer-workflow-with-ambassador-7586597b1c34) writes Emissary configurations within each team's Kubernetes service YAML manifests. These are stored in git and follow the same review/approval process as any other code unit, and a continuous delivery pipeline listens on changes to the repository and applies changes to Kubernetes.
+* The AppDirect engineering team writes Emissary configurations within each team's Kubernetes service YAML manifests. These are stored in git and follow the same review/approval process as any other code unit, and a continuous delivery pipeline listens on changes to the repository and applies changes to Kubernetes.
 * Netflix introduces [full cycle development](https://netflixtechblog.com/full-cycle-developers-at-netflix-a08c31f83249), a model for developing microservices

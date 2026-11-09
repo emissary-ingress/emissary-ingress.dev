@@ -14,24 +14,7 @@ combine multiple `AuthServices`.  While it is possible to create
 multiple `AuthService` resources, Emissary load-balances between
 them in a round-robin fashion.  This is useful for canarying an
 `AuthService` change, but is not useful for deploying multiple
-distinct `AuthServices`.  In order to combine multiple external
-services (either having multiple services apply to the same request,
-or selecting between different services for the different requests),
-instead of using an `AuthService`, use an [Ambassador Edge Stack `External`
-`Filter`](/docs/edge-stack/latest/topics/using/filters/).
-
-<Alert severity="info">
-
-Because of the limitations described above, **Ambassador Edge Stack does
-not support `AuthService` resources, and you should instead use an
-[`External`
-`Filter`](/docs/edge-stack/latest/topics/using/filters/external),**
-which is mostly a drop-in replacement for an `AuthService`.  The
-`External` `Filter` relies on the Ambassador Edge Stack `AuthService`.
-Make sure the Ambassador Edge Stack `AuthService` is deployed before
-configuring `External` `Filters`.
-
-</Alert>
+distinct `AuthServices`. 
 
 The currently supported version of the `AuthService` resource is
 `getambassador.io/v3alpha1`.  Earlier versions are deprecated.

@@ -235,7 +235,7 @@ to the new syntax:
 | `{ my_val }`                     | `{ generic_key: { value: my_val } }`                        |
 | `{ my_key: { header: my_hdr } }` | `{ request_headers: { key: my_key, header_name: my_hdr } }` |
 
-You can check the [Rate Limiting Labels documentation](../../using/rate-limits#attaching-labels-to-requests)
+You can check the [Rate Limiting Labels documentation](../../using/base-rate-limiting#attaching-labels-to-requests)
 for more examples.
 
 ## 9. `tls` cannot be `true` in `AuthService`, `Mapping`, `RateLimitService`, and `TCPMapping`
@@ -243,7 +243,7 @@ for more examples.
 <Alert severity="info">
   <a href="../../using/authservice/">Learn more about <code>AuthService</code></a><br/>
   <a href="../../using/intro-mappings/">Learn more about <code>Mapping</code></a><br/>
-  <a href="../../using/rate-limits/">Learn more about <code>RateLimitService</code></a><br/>
+  <a href="../../using/base-rate-limiting/">Learn more about <code>RateLimitService</code></a><br/>
   <a href="../../using/tcpmappings/">Learn more about <code>TCPMapping</code></a>
 </Alert>
 

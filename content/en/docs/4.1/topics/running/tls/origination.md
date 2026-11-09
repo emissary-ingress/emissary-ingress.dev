@@ -43,7 +43,7 @@ spec:
   The Kubernetes Secret named by `secret` must contain a valid TLS certificate. If the
   environment variable `AMBASSADOR_FORCE_SECRET_VALIDATION` is set and the Secret contains
   an invalid certificate, Emissary will reject the `TLSContext` and prevent its use;
-  see [**Certificates and Secrets**](../#certificates-and-secrets) in the TLS overview.
+  see [**Certificates and Secrets**](../../tls/#certificates-and-secrets) in the TLS overview.
 
 </Alert>
 
@@ -69,7 +69,7 @@ The `example-service` service must now support TLS v1.3 for Emissary to connect.
   The Kubernetes Secret named by `secret` must contain a valid TLS certificate. If the
   environment variable `AMBASSADOR_FORCE_SECRET_VALIDATION` is set and the Secret contains
   an invalid certificate, Emissary will reject the `TLSContext` and prevent its use;
-  see [**Certificates and Secrets**](../#certificates-and-secrets) in the TLS overview.
+  see [**Certificates and Secrets**](../../tls/#certificates-and-secrets) in the TLS overview.
 
 </Alert>
 

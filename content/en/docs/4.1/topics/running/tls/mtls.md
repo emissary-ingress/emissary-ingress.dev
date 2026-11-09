@@ -47,7 +47,7 @@ requests upstream.
   The Kubernetes Secret must contain a valid TLS certificate. If the environment
   variable `AMBASSADOR_FORCE_SECRET_VALIDATION` is set and the Secret contains an invalid
   certificate, Emissary will reject the Secret and completely disable the `Host`;
-  see [**Certificates and Secrets**](../#certificates-and-secrets) in the TLS overview.
+  see [**Certificates and Secrets**](../../tls/#certificates-and-secrets) in the TLS overview.
 
 </Alert>
 

@@ -2,8 +2,7 @@
 title: Diagnostics
 ---
 
-With Emissary Diagnostics and Ambassador Cloud, you get a summary of the current status and Mappings of your cluster and it's services, which gets displayed
-in [Diagnostics Overview](https://www.getambassador.io/docs/cloud/latest/diagnostics-ui/view-diagnostics/).
+Emissary Diagnostics gives you a summary of the current status and Mappings of your cluster and its services.
 
 ## Troubleshooting
 
@@ -21,15 +20,7 @@ spec:
     diagnostics:
       enabled: true
 ```
-Next, ensure that the <code>AES_REPORT_DIAGNOSTICS_TO_CLOUD</code> environment variable is set to `"true"` on the Agent deployment to allow diagnostics information to be reported to the cloud.
-
-  ```shell
-  # Namespace and deployment name depend on your current install
-
-  kubectl set env deployment/edge-stack-agent -n ambassador AES_REPORT_DIAGNOSTICS_TO_CLOUD="true"
-  ```
-
-Finally, set the `AES_DIAGNOSTICS_URL` environment variable to `"http://emissary-ingress-admin:8877/ambassador/v0/diag/?json=true"`
+Set the `AES_DIAGNOSTICS_URL` environment variable to `"http://emissary-ingress-admin:8877/ambassador/v0/diag/?json=true"`
 
   ```shell
   # Namespace, deployment name, and pod url/port depend on your current install

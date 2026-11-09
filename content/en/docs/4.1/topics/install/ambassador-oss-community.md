@@ -4,7 +4,7 @@ title: Integration to community projects
 
 **Ambassador Edge Stack is now available and includes additional functionality beyond the current Emissary.**
 These features include automatic HTTPS, OAuth/OpenID Connect authentication support, integrated rate
-limiting, a developer portal, and [more](/edge-stack-faq/).
+limiting, a developer portal, and more.
 
 ## Emissary integrations
 

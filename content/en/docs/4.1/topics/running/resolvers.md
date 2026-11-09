@@ -14,7 +14,7 @@ Emissary supports different mechanisms for service discovery. These mechanisms a
 
 ### Kubernetes service-level discovery
 
-By default, Emissary uses Kubernetes DNS and service-level discovery. In a `Mapping` resource, specifying `service: foo` will prompt Emissary to look up the DNS address of the `foo` Kubernetes service. Traffic will be routed to the `foo` service. Kubernetes will then load balance that traffic between multiple pods. For more details on Kubernetes networking and how this works, see our blog post on [Session affinity, load balancing controls, gRPC-Web, and Emissary](https://blog.getambassador.io/session-affinity-load-balancing-controls-grpc-web-and-ambassador-0-52-2b916b396d0c).
+By default, Emissary uses Kubernetes DNS and service-level discovery. In a `Mapping` resource, specifying `service: foo` will prompt Emissary to look up the DNS address of the `foo` Kubernetes service. Traffic will be routed to the `foo` service. Kubernetes will then load balance that traffic between multiple pods. For more details on Kubernetes networking and how this works.
 
 ### Kubernetes endpoint-level discovery
 
