@@ -119,7 +119,7 @@ For the exact set of headers covered by this config, see the [Envoy documentatio
 
 * `ambassador_id` allows using multiple instances of Emissary in the same cluster. The default is unset.
 
-We recommend _not_ setting `ambassador_id` if you are running only one instance of Emissary in your cluster. For more information, see the [Running and Deployment documentation](../running#ambassador_id).
+We recommend _not_ setting `ambassador_id` if you are running only one instance of Emissary in your cluster. For more information, see the [Running and Deployment documentation](running#ambassador_id).
 
 If used, the `ambassador_id` value must be an array, for example:
 

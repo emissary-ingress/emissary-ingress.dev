@@ -65,7 +65,7 @@ If you're new to Emissary and to Kubernetes, we'd recommend you start with our [
 
 - You may need to set your Ingress resource's `ambassador-id`.
 
-  If you are [using `amabssador-id` on your Module](../running#ambassador_id), you'll need to add the `getambassador.io/ambassador-id`
+  If you are [using `amabssador-id` on your Module](running#ambassador_id), you'll need to add the `getambassador.io/ambassador-id`
   annotation to your Ingress. See the [examples below](#name-based-virtual-hosting-with-an-ambassador-id).
 
 - You must create a Service resource with the correct `app.kubernetes.io/component` label.
@@ -109,7 +109,7 @@ Emissary supports basic core functionality of the Ingress resource, as defined b
 
 Emissary does **not** extend the basic Ingress specification with the following exceptions:
 
-- The `getambassador.io/ambassador-id` annotation allows you to set [the Ambassador ID](../running#ambassador_id) for the Ingress itself.
+- The `getambassador.io/ambassador-id` annotation allows you to set [the Ambassador ID](running#ambassador_id) for the Ingress itself.
 
 - The `getambassador.io/config` annotation can be provided on the Ingress resource, just as on a Service.
 
