@@ -3,7 +3,7 @@ title: "3.10"
 ---
 
 <Alert severity="info">
-  This guide covers migrating from Emissary 3.10.Z to Emissary 4.1. If
+  This guide covers migrating from Emissary 3.10.Z to Emissary 4.2. If
   this is not your <b>exact</b> situation, see the <a href="../../../migration-matrix/">migration
   matrix</a>.
 </Alert>
@@ -18,7 +18,7 @@ Emissary 4 publishes its Helm charts only to the GitHub Container Registry, as t
 `oci://ghcr.io/emissary-ingress/emissary-crds-chart` for the CRDs and
 `oci://ghcr.io/emissary-ingress/emissary-ingress` for Emissary itself. The chart version now matches
 the Emissary version. Review the breaking changes for 4.0.1 in the
-[CHANGELOG](https://github.com/emissary-ingress/emissary/blob/v4.1.0/CHANGELOG.md) before you start.
+[CHANGELOG](https://github.com/emissary-ingress/emissary/blob/v4.2.0/CHANGELOG.md) before you start.
 
 These steps use the release names and namespaces from the 3.10 quick start: CRDs in the
 `emissary-crds` release in `emissary-system`, and Emissary in the `emissary` release in `emissary`.
@@ -32,7 +32,7 @@ Adjust them if yours differ.
    kubectl get crd mappings.getambassador.io -o jsonpath='{.status.storedVersions}'
    ```
 
-   If the list includes `v2`, you must install the 4.1 CRDs with `enableLegacyVersions=true`. Without
+   If the list includes `v2`, you must install the 4.2 CRDs with `enableLegacyVersions=true`. Without
    it, the upgrade fails with `status.storedVersions[0]: Invalid value: "v2": must appear in
    spec.versions` and nothing is changed. If the list also includes `v1`, add `enableV1=true` as well.
    The commands below assume `v2` only.
@@ -59,7 +59,7 @@ Adjust them if yours differ.
 
    ```bash
    helm upgrade emissary-crds -n emissary-system \
-     oci://ghcr.io/emissary-ingress/emissary-crds-chart --version 4.1.0 \
+     oci://ghcr.io/emissary-ingress/emissary-crds-chart --version 4.2.0 \
      --set enableLegacyVersions=true \
      --wait
    ```
@@ -80,19 +80,19 @@ Adjust them if yours differ.
      meta.helm.sh/release-name=emissary-crds meta.helm.sh/release-namespace=emissary-system
 
    helm install emissary-crds -n emissary-system \
-     oci://ghcr.io/emissary-ingress/emissary-crds-chart --version 4.1.0 \
+     oci://ghcr.io/emissary-ingress/emissary-crds-chart --version 4.2.0 \
      --set enableLegacyVersions=true \
      --wait
    ```
 
    Upgrading the CRDs does not interrupt traffic. Your `getambassador.io/v2` resources continue to
-   be served by the 4.1 `emissary-apiext` conversion webhook.
+   be served by the 4.2 `emissary-apiext` conversion webhook.
 
 2. **Upgrade Emissary.**
 
    ```bash
    helm upgrade emissary -n emissary \
-     oci://ghcr.io/emissary-ingress/emissary-ingress --version 4.1.0 \
+     oci://ghcr.io/emissary-ingress/emissary-ingress --version 4.2.0 \
      --reset-values -f your-values.yaml \
      --set waitForApiext.enabled=true \
      --wait
@@ -119,12 +119,12 @@ Adjust them if yours differ.
    kubectl get mappings.v2.getambassador.io -A
    ```
 
-   The Emissary Pods should run `ghcr.io/emissary-ingress/emissary:4.1.0`.
+   The Emissary Pods should run `ghcr.io/emissary-ingress/emissary:4.2.0`.
 
 ## Keeping the existing Service
 
 This replaces step 2 above. It keeps the old Service, and its LoadBalancer address, serving traffic
-throughout the upgrade, then points it at the 4.1 Pods.
+throughout the upgrade, then points it at the 4.2 Pods.
 
 1. Tell Helm to keep the old Deployment and Service when it upgrades the release:
 
@@ -138,7 +138,7 @@ throughout the upgrade, then points it at the 4.1 Pods.
 
    ```bash
    helm upgrade emissary -n emissary \
-     oci://ghcr.io/emissary-ingress/emissary-ingress --version 4.1.0 \
+     oci://ghcr.io/emissary-ingress/emissary-ingress --version 4.2.0 \
      --reset-values -f your-values.yaml \
      --set waitForApiext.enabled=true
    kubectl -n emissary rollout status deploy/emissary
@@ -146,7 +146,7 @@ throughout the upgrade, then points it at the 4.1 Pods.
 
    The 3.10 Pods keep serving traffic until you remove them in the next step.
 
-3. Point the old Service at the 4.1 Pods, then remove the old Deployment:
+3. Point the old Service at the 4.2 Pods, then remove the old Deployment:
 
    ```bash
    kubectl -n emissary patch svc emissary-emissary-ingress --type merge \

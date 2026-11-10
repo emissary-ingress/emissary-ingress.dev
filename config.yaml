@@ -95,8 +95,10 @@ params:
   # Menu title if your navbar has a versions selector to access old versions of your site.
   # This menu appears only if you have at least one [params.versions] set.
   version_menu: Versions
-  latest_stable_version: "4.1"
+  latest_stable_version: "4.2"
   versions:
+    - version: v4.2.0
+      url: /docs/4.2/
     - version: v4.1.0
       url: /docs/4.1/
 
@@ -183,7 +185,7 @@ outputs:
 menu:
   main:
     - name: Docs
-      url: /docs/4.1/
+      url: /docs/4.2/
       weight: -10
     - name: Install
-      url: /docs/4.1/quick-start/
+      url: /docs/4.2/quick-start/
