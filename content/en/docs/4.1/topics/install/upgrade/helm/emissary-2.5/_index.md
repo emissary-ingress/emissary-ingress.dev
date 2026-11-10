@@ -1,5 +1,6 @@
 ---
 title: 2.5
+weight: 25
 ---
 
 <Alert severity="info">
