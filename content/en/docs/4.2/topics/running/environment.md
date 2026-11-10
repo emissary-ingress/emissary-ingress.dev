@@ -13,6 +13,7 @@ Use the following variables for the environment of your Emissary container:
 | [`AMBASSADOR_AMBEX_SNAPSHOT_COUNT`](#ambassador_ambex_snapshot_count)                                      | `30`                                                | Integer |
 | [`AMBASSADOR_CLUSTER_ID`](#ambassador_cluster_id)                                                          | Empty                                               | String |
 | [`AMBASSADOR_CONFIG_BASE_DIR`](#ambassador_config_base_dir)                                                | `/ambassador`                                       | String |
+| [`AMBASSADOR_DIAGD_SOCKET`](#ambassador_diagd_socket)                                                      | `$AMBASSADOR_CONFIG_BASE_DIR/diagd.sock`            | String (file path) |
 | [`AMBASSADOR_DISABLE_FEATURES`](#ambassador_disable_features)                                              | Empty                                               | Any |
 | [`AMBASSADOR_DRAIN_TIME`](#ambassador_drain_time)                                                          | `600`                                               | Integer |
 | [`AMBASSADOR_ENVOY_API_VERSION`](#ambassador_envoy_api_version)                                            | `V3`                                                | String Enum; `V3` or `V2` |
@@ -105,6 +106,14 @@ if not granted this permission it will generate a UUID based only on the Emissar
 Controls where Emissary will store snapshots. By default, the latest configuration will be in `/ambassador/snapshots`. If you have overridden it, Emissary saves configurations in `$AMBASSADOR_CONFIG_BASE_DIR/snapshots`.
 
 [More information](../../running/debugging#examine-pod-and-container-contents)
+
+### `AMBASSADOR_DIAGD_SOCKET`
+
+Path of the Unix-domain socket that `diagd` listens on. `diagd` has no TCP listener, so its internal
+API (including `POST /_internal/v0/watt`, which submits a new configuration snapshot) can only be
+reached from inside the pod. The server on the admin port (8877) refuses to proxy `/_internal/`.
+Health checks and the diagnostics UI on 8877 are not affected. Linux limits socket paths to 108
+bytes, so keep this short.
 
 ### `AMBASSADOR_DISABLE_FEATURES`
 
@@ -285,7 +294,7 @@ Used with the Ambassador Consul connector. Sets the port number of the target Co
 
 ### `AMBASSADOR_DISABLE_SNAPSHOT_SERVER`
 
-Disables the built-in snapshot server
+Disables the snapshot server on port 8005, which serves the sanitized snapshot (with secrets removed).
 
 ### `AMBASSADOR_ENVOY_BASE_ID`
 
@@ -321,6 +330,11 @@ The default is `false`. We recommend leaving `AMBASSADOR_UPDATE_MAPPING_STATUS` 
 
 Configures the optional [--concurrency](https://www.envoyproxy.io/docs/envoy/latest/operations/cli#cmdoption-concurrency) command line option when launching Envoy.
 This controls the number of worker threads used to serve requests and can be used to fine-tune system resource usage.
+
+When `ENVOY_CONCURRENCY` is not set, Envoy sizes its worker threads to the container's cgroup CPU
+limit (or the CPU affinity or hardware thread count, if lower) rather than to the node's CPU count.
+To size worker threads to the node's CPU count instead, set `ENVOY_CGROUP_CPU_DETECTION=false` on the
+Emissary container. Envoy reads this variable directly.
 
 ### `DISABLE_STRICT_LABEL_SELECTORS`
 

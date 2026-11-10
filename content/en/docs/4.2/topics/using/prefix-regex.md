@@ -25,3 +25,10 @@ spec:
 will map requests to both `/v1` and `/v2` to the `qotm` service.
 
 Note that enclosing regular expressions in quotes can be important to prevent backslashes from being doubled.
+
+## Character encoding
+
+Emissary matches every regular expression in a `Mapping` (`prefix_regex`, `regex_headers`,
+`regex_rewrite`, and so on) in Latin-1 mode, not UTF-8. Each byte of the input counts as one
+character, so `.` matches a single byte, and a non-ASCII character takes as many bytes as its UTF-8
+encoding.

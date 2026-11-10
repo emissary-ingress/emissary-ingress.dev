@@ -68,20 +68,9 @@ would allow 30 seconds to validate the generated Envoy configuration.
 
 ##### Error response overrides
 
-* `error_response_overrides` permits changing the status code and body text for 4XX and 5XX response codes. The default is not to override any error responses.
-
-By default, Emissary will pass through error responses without modification, and errors generated locally will use Envoy's default response body, if any.
-
-For example, this configuration:
-
-```yaml
-error_response_overrides:
- - on_status_code: 404
-   body:
-     text_format: "File not found"
-```
-
-would explicitly modify the body of 404s to say "File not found".
+Emissary 4 does not support `error_response_overrides`. If the `Module` or a `Mapping` sets it,
+Emissary posts an error and ignores the setting. Emissary passes error responses through without
+modification, and errors generated locally use Envoy's default response body, if any.
 
 ##### Forwarding client cert details
 

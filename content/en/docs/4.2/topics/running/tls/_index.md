@@ -143,6 +143,7 @@ tls:
   max_tls_version:    # string
   cipher_suites:      # array of strings
   ecdh_curves:        # array of strings
+  signature_algorithms: # array of strings
   sni:                # string
   crl_secret:         # string
 ```
@@ -411,7 +412,13 @@ support a matching cipher a handshake error will result.
 
 The `ecdh_curves` setting configures the supported ECDH curves when negotiating
 a TLS connection.  When a client does not support a matching ECDH a handshake
-error will result.
+error will result. If `ecdh_curves` is not set, Envoy's defaults apply, which
+include the post-quantum hybrid `X25519MLKEM768`.
+
+The `signature_algorithms` setting configures the signature algorithms accepted
+during the TLS handshake, for example `ecdsa_secp256r1_sha256` or `ed25519`. If it
+is not set, Envoy's defaults apply. Envoy's default list does not include
+`ed25519`, so set `signature_algorithms` to accept Ed25519 client certificates.
 
 ```
   - AES128-SHA
