@@ -72,7 +72,7 @@ would allow 30 seconds to validate the generated Envoy configuration.
 
 By default, Emissary will pass through error responses without modification, and errors generated locally will use Envoy's default response body, if any.
 
-See using error response overrides for usage details. For example, this configuration:
+For example, this configuration:
 
 ```yaml
 error_response_overrides:

@@ -14,7 +14,7 @@ combine multiple `AuthServices`.  While it is possible to create
 multiple `AuthService` resources, Emissary load-balances between
 them in a round-robin fashion.  This is useful for canarying an
 `AuthService` change, but is not useful for deploying multiple
-distinct `AuthServices`. 
+distinct `AuthServices`.
 
 The currently supported version of the `AuthService` resource is
 `getambassador.io/v3alpha1`.  Earlier versions are deprecated.

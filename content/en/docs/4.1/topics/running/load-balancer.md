@@ -18,8 +18,6 @@ Supported load balancer policies:
 - `ring_hash`
 - `maglev`
 
-For more information on the different policies and the implications, see load balancing strategies in Kubernetes.
-
 ## Round robin
 When `policy` is set to `round_robin`, Emissary discovers healthy endpoints for the given mapping, and load balances the incoming L7 requests with round robin scheduling. To specify this:
 

@@ -3,8 +3,8 @@ title: Rate limit service
 ---
 
 Rate limiting is a powerful technique to improve the availability and
-resilience of your
-services.
+resilience of your services.
+
 In Emissary, each request can have one or more _labels_. These labels are
 exposed to a third-party service via a gRPC API. The third-party service can
 then rate limit requests based on the request labels.
