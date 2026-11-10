@@ -4,13 +4,13 @@ title: 3.8
 
 <Alert severity="info">
   This guide covers migrating from Emissary 3.8.Z to Emissary 3.10. If
-  this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
+  this is not your <b>exact</b> situation, see the <a href="../../../migration-matrix/">migration
   matrix</a>.
 </Alert>
 
 <Alert severity="warning">
   This guide is written for upgrading an installation made without using Helm.
-  If you originally installed with Helm, see the <a href="../../../helm/emissary-3.8/emissary-3.X">Helm-based
+  If you originally installed with Helm, see the <a href="../../helm/emissary-3.8/">Helm-based
   upgrade instructions</a>.
 </Alert>
 
@@ -29,7 +29,7 @@ Migration is a two-step process:
    your cluster. This is mandatory during any upgrade of Emissary.
 
    ```bash
-   kubectl apply -f https://app.getambassador.io/yaml/emissary/3.10/emissary-crds.yaml
+   kubectl apply -f https://emissary-ingress.dev/yaml/emissary/3.10.0/emissary-crds.yaml
    kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
    ```
 
@@ -57,13 +57,13 @@ Migration is a two-step process:
    After installing the new CRDs, upgrade Emissary 3.10.
 
    <Alert severity="info">
-     Our <a href="https://app.getambassador.io/yaml/emissary/3.10/emissary-emissaryns.yaml"><code>emissary-emissaryns.yaml</code></a> file
+     Our <a href="/yaml/emissary/3.10.0/emissary-emissaryns.yaml"><code>emissary-emissaryns.yaml</code></a> file
      uses the `emissary` namespace, since this is the default for Emissary.
-     We also publish <a href="https://app.getambassador.io/yaml/emissary/3.10/emissary-defaultns.yaml"><code>emissary-defaultns.yaml</code></a> for the
+     We also publish <a href="/yaml/emissary/3.10.0/emissary-defaultns.yaml"><code>emissary-defaultns.yaml</code></a> for the
      `default` namespace. For any other namespace, you should download one of these files and edit the namespaces manually.
    </Alert>
 
    ```bash
-   kubectl apply -f https://app.getambassador.io/yaml/emissary/3.10/emissary-emissaryns.yaml && \
+   kubectl apply -f https://emissary-ingress.dev/yaml/emissary/3.10.0/emissary-emissaryns.yaml && \
    kubectl rollout status  -n emissary deployment/emissary-ingress -w
    ```

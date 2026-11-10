@@ -25,10 +25,7 @@ Emissary is listed. If so, you installed using Helm.)
 | Emissary 3.8.X         | [Emissary 3.10](upgrade/helm/emissary-3.8)                 |
 | Emissary 3.7.X         | [Emissary 3.10](upgrade/helm/emissary-3.7)                 |
 | Emissary 2.5           | [Emissary 3.10](upgrade/helm/emissary-2.5)                 |
-| Emissary 2.4.X         | [Emissary 2.5](upgrade/helm/emissary-2.4)                  |
-| Emissary 2.0.5         | [Emissary 2.5](upgrade/helm/emissary-2.0)                  |
-| Emissary 1.14          | [Emissary 2.5](upgrade/helm/emissary-1.14)                 |
-| Emissary prior to 1.14 | [Emissary 1.14](../../../../1.14/topics/install/upgrading) |
+| Emissary 2.4 or earlier | See the [3.10 migration matrix](/docs/3.10/topics/install/migration-matrix/) |
 
 ## If you installed Emissary manually by applying YAML
 
@@ -38,7 +35,4 @@ Emissary is listed. If so, you installed using Helm.)
 | Emissary 3.8.X         | [Emissary 3.10](upgrade/yaml/emissary-3.8/)                |
 | Emissary 3.7.X         | [Emissary 3.10](upgrade/yaml/emissary-3.7/)                |
 | Emissary 2.5           | [Emissary 3.10](upgrade/yaml/emissary-2.5/)                |
-| Emissary 2.4.X         | [Emissary 2.5](upgrade/yaml/emissary-2.4/)                 |
-| Emissary 2.0.5         | [Emissary 2.5](upgrade/yaml/emissary-2.0/)                 |
-| Emissary 1.14          | [Emissary 2.5](upgrade/yaml/emissary-1.14/)                |
-| Emissary prior to 1.14 | [Emissary 1.14](../../../../1.14/topics/install/upgrading) |
+| Emissary 2.4 or earlier | See the [3.10 migration matrix](/docs/3.10/topics/install/migration-matrix/) |

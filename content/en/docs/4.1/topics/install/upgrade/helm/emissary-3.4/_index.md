@@ -4,13 +4,13 @@ title: 3.4
 
 <Alert severity="info">
   This guide covers migrating from Emissary 3.4.Z to Emissary 3.10. If
-  this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
+  this is not your <b>exact</b> situation, see the <a href="../../../migration-matrix/">migration
   matrix</a>.
 </Alert>
 
 <Alert severity="warning">
   This guide is written for upgrading an installation originally made using Helm.
-  If you did not install with Helm, see the <a href="../../../yaml/emissary-3.4/emissary-3.X">YAML-based
+  If you did not install with Helm, see the <a href="../../yaml/emissary-3.4/">YAML-based
   upgrade instructions</a>.
 </Alert>
 
@@ -23,7 +23,7 @@ versions is straightforward.
   As of Emissary 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read below before upgrading.
 </Alert>
 
-Emissary 3.4 has been upgraded from Envoy 1.23 to Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/latest/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
+Emissary 3.4 has been upgraded from Envoy 1.23 to Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="../../../../../howtos/tracing-lightstep/">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
 
 ## Migration Steps
 
@@ -38,7 +38,7 @@ Migration is a two-step process:
    your cluster. This is mandatory during any upgrade of Emissary.
 
    ```bash
-   kubectl apply -f https://app.getambassador.io/yaml/emissary/3.10/emissary-crds.yaml
+   kubectl apply -f https://emissary-ingress.dev/yaml/emissary/3.10.0/emissary-crds.yaml
    kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
    ```
 

@@ -226,7 +226,7 @@ Create a `Host` resource for your domain name.
 Finally, apply the quote service to a Emissary `Mapping`.
 
    ```shell
-   kubectl apply -f https://app.getambassador.io/yaml/v2-docs/3.10/quickstart/qotm.yaml
+   kubectl apply -f https://emissary-ingress.dev/yaml/v2-docs/3.10.0/quickstart/qotm.yaml
    kubectl apply -f - <<EOF
    ---
    apiVersion: getambassador.io/v3alpha1

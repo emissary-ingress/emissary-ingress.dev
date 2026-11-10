@@ -4,13 +4,13 @@ title: 2.5
 
 <Alert severity="info">
   This guide covers migrating from Emissary 2.5.Z to Emissary 3.10. If
-  this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
+  this is not your <b>exact</b> situation, see the <a href="../../../migration-matrix/">migration
   matrix</a>.
 </Alert>
 
 <Alert severity="warning">
   This guide is written for upgrading an installation originally made using Helm.
-  If you did not install with Helm, see the <a href="../../../yaml/emissary-2.5/emissary-3.X">YAML-based
+  If you did not install with Helm, see the <a href="../../yaml/emissary-2.5/">YAML-based
   upgrade instructions</a>.
 </Alert>
 
@@ -28,7 +28,7 @@ Emissary 3 is functionally compatible with Emissary 2.x, but with any major upgr
 
 Emissary 3.X has been upgraded from Envoy 1.17.X to Envoy 1.22 which removed support for the Envoy V2 Transport Protocol. This means all `AuthService`, `RatelimitService`, and `LogServices` must be updated to use the V3 Protocol. Additionally support for some of the runtime bootstrap flags has been removed.
 
-You can refer to the [Major changes in Emissary 3.x](../../../../../../about/changes-3.y/) guide for an overview of the changes.
+You can refer to the [Major changes in Emissary 3.x](../../../../../about/changes-3.y/) guide for an overview of the changes.
 
 1. Emissary 3.2 fixed a bug with `Host.spec.selector\mappingSelector` and `Listener.spec.selector` not being properly enforced.
    In previous versions, if only a single label from the selector was present on the resource then they would be associated. Additionally, when associating `Hosts` with `Mappings`, if the `Mapping` configured a `hostname` that matched the `hostname` of the `Host` then they would be associated regardless of the configuration of the `selector\mappingSelector` on the `Host`.
@@ -38,7 +38,7 @@ You can refer to the [Major changes in Emissary 3.x](../../../../../../about/cha
    The environment variable `DISABLE_STRICT_LABEL_SELECTORS` can be set to `"true"` on the Emissary deployment to revert to the
    old incorrect behavior to help prevent any configuration issues after upgrading in the event that not all manifests making use of the selectors have been corrected yet.
 
-   For more information on `DISABLE_STRICT_LABEL_SELECTORS` see the [Environment Variables page](../../../../../running/environment).
+   For more information on `DISABLE_STRICT_LABEL_SELECTORS` see the [Environment Variables page](../../../../running/environment).
 
 2. Check Transport Protocol usage on all resources before migrating.
 
@@ -89,7 +89,7 @@ You can refer to the [Major changes in Emissary 3.x](../../../../../../about/cha
   As of Emissary 3.4.Z, the <code>LightStep</code> tracing driver is no longer supported. To ensure you do not drop any tracing data, be sure to read before upgrading.
 </Alert>
 
-Emissary 3.4 is based on Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="/docs/emissary/latest/howtos/tracing-lightstep">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
+Emissary 3.4 is based on Envoy 1.24.1 which removed support for the `LightStep` tracing driver. The team at LightStep and the maintainers of Envoy-Proxy recommend that users instead leverage the OpenTelemetry Collector to send tracing information to LightStep. We have written a guide which can be found here <a href="../../../../../howtos/tracing-lightstep/">Distributed Tracing with OpenTelemetry and Lightstep</a> that outlines how to set this up. **It is important that you follow this upgrade path prior to upgrading or you will drop tracing data.**
 
 ## Migration Steps
 
@@ -104,7 +104,7 @@ Migration is a two-step process:
    your cluster. This is mandatory during any upgrade of Emissary.
 
    ```bash
-   kubectl apply -f https://app.getambassador.io/yaml/emissary/3.10/emissary-crds.yaml
+   kubectl apply -f https://emissary-ingress.dev/yaml/emissary/3.10.0/emissary-crds.yaml
    kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
    ```
 
