@@ -4,13 +4,13 @@ title: 3.8
 
 <Alert severity="info">
   This guide covers migrating from Emissary 3.8.Z to Emissary 3.10. If
-  this is not your <b>exact</b> situation, see the <a href="../../../../migration-matrix">migration
+  this is not your <b>exact</b> situation, see the <a href="../../../migration-matrix/">migration
   matrix</a>.
 </Alert>
 
 <Alert severity="warning">
   This guide is written for upgrading an installation originally made using Helm.
-  If you did not install with Helm, see the <a href="../../../yaml/emissary-3.9/emissary-3.X">YAML-based
+  If you did not install with Helm, see the <a href="../../yaml/emissary-3.8/">YAML-based
   upgrade instructions</a>.
 </Alert>
 
@@ -32,7 +32,7 @@ Migration is a two-step process:
    your cluster. This is mandatory during any upgrade of Emissary.
 
    ```bash
-   kubectl apply -f https://app.getambassador.io/yaml/emissary/3.10/emissary-crds.yaml
+   kubectl apply -f https://emissary-ingress.dev/yaml/emissary/3.10.0/emissary-crds.yaml
    kubectl wait --timeout=90s --for=condition=available deployment emissary-apiext -n emissary-system
    ```
 
