@@ -2,7 +2,7 @@
 title: Distributed Tracing with OpenTelemetry and Lightstep
 ---
 
-In this tutorial, we'll configure [Emissary](https://www.getambassador.io/products/edge-stack/api-gateway) to initiate a trace on some sample requests, collect them with the OpenTelemetry Collector and use Lightstep to visualize them.
+In this tutorial, we'll configure Emissary to initiate a trace on some sample requests, collect them with the OpenTelemetry Collector and use Lightstep to visualize them.
 
 <Alert severity="warning">
   Please note that the <code>TracingService</code> no longer supports the native Envoy Lightstep tracing driver as of Emissary version 3.4.0. If you are currently using the native Lightstep tracing driver, please refer to the bottom of the page on how to migrate.
@@ -10,7 +10,7 @@ In this tutorial, we'll configure [Emissary](https://www.getambassador.io/produc
 
 ## Before you get started
 
-This tutorial assumes you have already followed the Emissary [Getting Started](../../tutorials/getting-started) guide. If you haven't done that already, you should do that now.
+This tutorial assumes you have already followed the Emissary [Getting Started](../../quick-start/) guide. If you haven't done that already, you should do that now.
 
 After completing the Getting Started guide you will have a Kubernetes cluster running Emissary and the Quote service. Let's walk through adding tracing to this setup.
 

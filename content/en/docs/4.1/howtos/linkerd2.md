@@ -53,7 +53,7 @@ Setting up Linkerd 2 requires to install three components. The first is the CLI 
 
     Note that this simple command automatically enables mTLS by default and registers the AutoInject Webhook with your Kubernetes API Server. You now have a production-ready Linkerd 2 setup rolled out into your cluster!
 
-3. Deploy Emissary if you have not already, by following the Emissary [Getting Started](../../tutorials/getting-started) guide. 
+3. Deploy Emissary if you have not already, by following the Emissary [Getting Started](../../quick-start/) guide. 
 
 4. Configure Emissary to add it to the Linkerd 2 service mesh.
 

@@ -4,7 +4,7 @@ title: Major Changes in Emissary 3.X
 
 The 3.X family introduces a number of changes to ensure Emissary
 keeps up with latest Envoy versions and to support new features such as HTTP/3.
-We welcome feedback! Join us on [Slack](http://a8r.io/slack) and let us know what you think.
+We welcome feedback! Join us on [Slack](https://slack.cncf.io/) and let us know what you think.
 
 Emissary 3 is functionally compatible with Emissary 2.x, but with any major upgrade there are some changes to consider. Such as, Envoy removing support for V2 Transport Protocol features. Below we will outline some of these changes and things to consider when upgrading.
 

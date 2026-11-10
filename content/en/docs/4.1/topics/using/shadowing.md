@@ -14,7 +14,7 @@ Traffic shadowing is a deployment pattern where production traffic is asynchrono
 
 Emissary lets you easily shadow traffic to a given endpoint. In Emissary, only requests are shadowed; responses from a service are dropped. All normal metrics are collected for the shadow services. This makes it easy to compare the performance of the shadow service versus the production service on the same data set. Emissary also prioritizes the production path, i.e., it will return responses from the production service without waiting for any responses from the shadow service.
 
-![Shadowing](../../images/shadowing.png)
+![Shadowing](../../../images/shadowing.png)
 
 ## The `shadow` Mapping
 

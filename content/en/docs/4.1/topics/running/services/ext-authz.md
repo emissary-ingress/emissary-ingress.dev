@@ -2,7 +2,7 @@
 title: ExtAuth protocol
 ---
 
-By design, the ExtAuth protocol used by [the AuthService](../auth-service) and by [External Filters](/docs/edge-stack/latest/topics/using/filters/external) is highly flexible. The authentication service is the first external service invoked on an incoming request (e.g., it runs before the rate limit filter). Because the logic of authentication is encapsulated in an external service, you can use this to support a wide variety of use cases. For example:
+By design, the ExtAuth protocol used by [the AuthService](../auth-service) is highly flexible. The authentication service is the first external service invoked on an incoming request (e.g., it runs before the rate limit filter). Because the logic of authentication is encapsulated in an external service, you can use this to support a wide variety of use cases. For example:
 
 * Supporting traditional SSO authentication protocols, e.g., OAuth, OpenID Connect, etc.
 * Supporting HTTP basic authentication ([see a sample implementation](https://github.com/datawire/ambassador-auth-httpbasic)).
@@ -19,7 +19,7 @@ Giving the ExtAuth service the ability to control the response allows many diffe
 
 - The ExtAuth service can simply return an error page with an HTTP 401 response.
 - The ExtAuth service can choose to include a `WWW-Authenticate` header in the 401 response, to ask the client to perform HTTP Basic Auth.
-- The ExtAuth service can issue a 301 `Redirect` to divert the client into an OAuth or OIDC authentication sequence.  The control flow of this is shown below.  ![Authentication flow](../../../images/auth-flow.png)
+- The ExtAuth service can issue a 301 `Redirect` to divert the client into an OAuth or OIDC authentication sequence.  The control flow of this is shown below.  ![Authentication flow](../../../../images/auth-flow.png)
 
 There are two variants of the ExtAuth: gRPC and plain HTTP.
 

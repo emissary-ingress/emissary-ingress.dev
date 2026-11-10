@@ -3,7 +3,7 @@ title: Basic Authentication
 ---
 
 Emissary can authenticate incoming requests before routing them to a backing service. In this tutorial, we'll configure Emissary to use an external third
-party authentication service. We're assuming also that you are running the quote application in your cluster as described in the [Emissary tutorial](../../tutorials/quickstart-demo/).
+party authentication service. We're assuming also that you are running the quote application in your cluster as described in the [Emissary tutorial](../../quick-start/).
 
 ## Before you get started
 
@@ -160,7 +160,3 @@ $ curl -Lv -u username:password $AMBASSADORURL/backend/get-quote/
 * Connection #0 to host 54.165.128.189 left intact
 }
 ```
-
-## More
-
-For more details about configuring authentication, see the [`External` filter](/docs/edge-stack/latest/topics/using/filters/) documentation.

@@ -18,4 +18,4 @@ This section of the documentation is designed for operators and site reliability
 * *Troubleshooting:* [Diagnostics](diagnostics) | [Debugging](debugging)
 * *Scaling Emissary:* [Scaling Emissary](scaling)
 * *Ingress:* Emissary can function as an [Ingress Controller](ingress-controller)
-* *Error Response Overrides:* Emissary can override 4xx and 5xx responses with [custom response bodies](custom-error-responses)
+* *Error Response Overrides:* Emissary can override 4xx and 5xx responses with custom response bodies

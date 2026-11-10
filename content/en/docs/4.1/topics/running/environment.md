@@ -62,14 +62,14 @@ Use the following variables for the environment of your Emissary container:
 Emissary supports running multiple installs in the same cluster without restricting a given instance of Emissary to a single namespace.
 The resources that are visible to an installation can be limited with the `AMBASSADOR_ID` environment variable.
 
-[More information](../../running/running#ambassador_id)
+[More information](running#ambassador_id)
 
 ### `AES_LOG_LEVEL`
 
 Adjust the log level by setting the `AES_LOG_LEVEL` environment variable; from least verbose to most verbose, the valid values are `error`, `warn`/`warning`, `info`, `debug`, and `trace`. The default is `info`.
 Log level names are case-insensitive.
 
-[More information](../../running/running#log-levels-and-debugging)
+[More information](running#log-levels-and-debugging)
 
 ### `AGENT_CONFIG_RESOURCE_NAME`
 
@@ -98,7 +98,7 @@ to reveal the namespace name nor Emissary ID itself. Emissary needs RBAC permiss
 if not granted this permission it will generate a UUID based only on the Emissary ID. To disable cluster ID generation entirely, set the environment variable
 `AMBASSADOR_CLUSTER_ID` to a UUID that will be used for the cluster ID.
 
-[More information](../../running/running#emissary-ingress-usage-telemetry-scout)
+[More information](running#emissary-usage-telemetry-scout)
 
 ### `AMBASSADOR_CONFIG_BASE_DIR`
 
@@ -110,7 +110,7 @@ Controls where Emissary will store snapshots. By default, the latest configurati
 
 To completely disable feature reporting, set the environment variable `AMBASSADOR_DISABLE_FEATURES` to any non-empty value.
 
-[More information](../../running/running#emissary-ingress-usage-telemetry-scout)
+[More information](running#emissary-usage-telemetry-scout)
 
 ### `AMBASSADOR_DRAIN_TIME`
 
@@ -156,7 +156,7 @@ environment variable and create a secret in that location named `istio-certs`.
 When `AMBASSADOR_JSON_LOGGING` is set to `true`, JSON format will be used for most of the control plane logs.
 Some (but few) logs from `gunicorn` and the Kubernetes `client-go` package will still be in text only format.
 
-[More information](../../running/running#log-format)
+[More information](running#log-format)
 
 ### `AMBASSADOR_READY_PORT`
 
@@ -179,7 +179,7 @@ Resources without the specified label will be ignored.
 
 Controls namespace configuration for Amabssador.
 
-[More information](../../running/running#namespaces)
+[More information](running#namespaces)
 
 ### `AMBASSADOR_RECONFIG_MAX_DELAY`
 
@@ -190,7 +190,7 @@ in seconds and must be > 0.
 
 When set, configures Emissary to only work within a single namespace.
 
-[More information](../../running/running#namespaces)
+[More information](running#namespaces)
 
 ### `AMBASSADOR_SNAPSHOT_COUNT`
 
@@ -201,7 +201,7 @@ The number of snapshots that Emissary should save.
 By default, Emissary will verify the TLS certificates provided by the Kubernetes API. In some situations, the cluster may be
 deployed with self-signed certificates. In this case, set `AMBASSADOR_VERIFY_SSL_FALSE` to `true` to disable verifying the TLS certificates.
 
-[More information](../../running/running#ambassador_verify_ssl_false)
+[More information](running#ambassador_verify_ssl_false)
 
 ### `DD_ENTITY_ID`
 
@@ -224,14 +224,14 @@ Emissary integrates Scout, a service that periodically checks with Ambassador La
 
 We do not recommend you disable Scout. This check can be disabled by setting the environment variable `SCOUT_DISABLE` to `1` in your Emissary deployment.
 
-[More information](../../running/running#emissary-ingress-usage-telemetry-scout)
+[More information](running#emissary-usage-telemetry-scout)
 
 ### `STATSD_ENABLED`
 
 If enabled, then Emissary has Envoy expose metrics information via the ubiquitous and well-tested [StatsD](https://github.com/etsy/statsd)
 protocol.  To enable this, you will simply need to set the environment variable `STATSD_ENABLED=true` in Emissary's deployment YAML
 
-[More information](../../running/statistics/envoy-statsd#envoy-statistics-with-statsd)
+[More information](../statistics/envoy-statsd)
 
 ### `STATSD_HOST`
 
@@ -239,19 +239,19 @@ When this variable is set, Emissary by default sends statistics to a Kubernetes 
 port of the StatsD protocol).  You may instead tell Emissary to send the statistics to a different StatsD server by setting the
 `STATSD_HOST` environment variable.  This can be useful if you have an existing StatsD sink available in your cluster.
 
-[More information](../../running/statistics/envoy-statsd#envoy-statistics-with-statsd)
+[More information](../statistics/envoy-statsd)
 
 ### `STATSD_PORT`
 
 Allows for configuring StatsD on a port other than the default (8125)
 
-[More information](../../running/statistics/envoy-statsd#envoy-statistics-with-statsd)
+[More information](../statistics/envoy-statsd)
 
 ### `STATSD_FLUSH_INTERVAL`
 
 How often, in seconds, to submit statsd reports (if `STATSD_ENABLED`)
 
-[More information](../../running/statistics/envoy-statsd#envoy-statistics-with-statsd)
+[More information](../statistics/envoy-statsd)
 
 ### `_AMBASSADOR_ID`
 
@@ -301,7 +301,7 @@ caused by certification rotation relating to a delay between EDS + CDS.
 If you set the `AMBASSADOR_FORCE_SECRET_VALIDATION` environment variable, invalid Secrets will be rejected,
 and a `Host` or `TLSContext` resource attempting to use an invalid certificate will be disabled entirely.
 
-[More information](../../running/tls#certificates-and-secrets)
+[More information](../tls/#certificates-and-secrets)
 
 ### `AMBASSADOR_KNATIVE_SUPPORT`
 
@@ -315,7 +315,7 @@ performance burden on installations with many `Mapping`s. It has no effect for `
 
 The default is `false`. We recommend leaving `AMBASSADOR_UPDATE_MAPPING_STATUS` turned off unless required for external systems.
 
-[More information](../../running/running#ambassador_update_mapping_status)
+[More information](running#ambassador_update_mapping_status)
 
 ### `ENVOY_CONCURRENCY`
 

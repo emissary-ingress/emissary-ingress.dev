@@ -32,5 +32,5 @@ Application development teams use Emissary to manage edge policies associated wi
   * [Traffic Shadowing](shadowing)
 * [Advanced Mapping Configuration](mappings)
 * Rate Limiting
-  * [Introduction to Rate Limits](rate-limits/)
+  * [Introduction to Rate Limits](base-rate-limiting/)
 * [Gateway API](gateway-api)

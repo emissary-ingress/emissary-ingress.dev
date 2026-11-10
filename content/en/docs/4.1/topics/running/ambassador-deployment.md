@@ -14,10 +14,10 @@ In an on-premise data center, Emissary is deployed on the Kubernetes cluster. In
 
 ## Hybrid data center
 
-Many data centers include services that are running outside of Kubernetes on virtual machines. For Emissary to route to services both inside and outside of Kubernetes, it needs the real-time network location of all services. This problem is known as "[service discovery](https://www.datawire.io/guide/traffic/service-discovery-microservices/)" and Emissary supports using [Consul](https://www.consul.io). Services in your data center register themselves with Consul, and Emissary uses Consul-supplied data to dynamically route requests to available services.
+Many data centers include services that are running outside of Kubernetes on virtual machines. For Emissary to route to services both inside and outside of Kubernetes, it needs the real-time network location of all services. This problem is known as "service discovery" and Emissary supports using [Consul](https://www.consul.io). Services in your data center register themselves with Consul, and Emissary uses Consul-supplied data to dynamically route requests to available services.
 
 ## Hybrid on-premise data center
 
 The diagram below details a common network architecture for a hybrid on-premise data center. Traffic flows from core routers to MetalLB, which routes to Emissary running in Kubernetes. Emissary routes traffic to individual services running on both Kubernetes and VMs. Consul tracks the real-time network location of the services, which Emissary uses to route to the given services.
 
-![Architecture](../../images/consul-ambassador.png)
+![Architecture](../../../images/consul-ambassador.png)

@@ -2,9 +2,9 @@
 title: Rate limit service
 ---
 
-Rate limiting is a powerful technique to improve the [availability and
-resilience of your
-services](https://blog.getambassador.io/rate-limiting-a-useful-tool-with-distributed-systems-6be2b1a4f5f4).
+Rate limiting is a powerful technique to improve the availability and
+resilience of your services.
+
 In Emissary, each request can have one or more _labels_. These labels are
 exposed to a third-party service via a gRPC API. The third-party service can
 then rate limit requests based on the request labels.
@@ -16,7 +16,7 @@ built-in rate limit service.**
 ## Request labels
 
 See [Attaching labels to
-requests](../../../using/rate-limits#attaching-labels-to-requests)
+requests](../../../using/base-rate-limiting#attaching-labels-to-requests)
 for how to configure the labels that are attached to a request.
 
 ## Domains
@@ -27,7 +27,7 @@ team can assign their own labels to a given request, and independently set the
 rate limits based on their own labels.
 
 See [Attaching labels to
-requests](../../../using/rate-limits/#attaching-labels-to-requests)
+requests](../../../using/base-rate-limiting/#attaching-labels-to-requests)
 for how to labels under different domains.
 
 ## External rate limit service
@@ -114,10 +114,3 @@ If `tls` is present with a value that is not `true`, the value is assumed to be 
 The [Emissary Rate Limiting
 Tutorial](../../../../howtos/rate-limiting-tutorial) has a simple rate limiting
 example.
-
-## Further reading
-
-- [Rate limiting: a useful tool with distributed systems](https://blog.getambassador.io/rate-limiting-a-useful-tool-with-distributed-systems-6be2b1a4f5f4)
-- [Rate limiting for API Gateways](https://blog.getambassador.io/rate-limiting-for-api-gateways-892310a2da02)
-- [Implementing a Java Rate Limiting Service for Emissary](https://blog.getambassador.io/implementing-a-java-rate-limiting-service-for-the-ambassador-api-gateway-e09d542455da)
-- [Designing a Rate Limit Service for Emissary](https://blog.getambassador.io/designing-a-rate-limiting-service-for-ambassador-f460e9fabedb)

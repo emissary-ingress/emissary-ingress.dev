@@ -6,7 +6,7 @@ In this tutorial, we'll configure Emissary to initiate a trace on some sample re
 
 ## Before you get started
 
-This tutorial assumes you have already followed Emissary [Getting Started](../../tutorials/getting-started) guide. If you haven't done that already, you should do that now.
+This tutorial assumes you have already followed Emissary [Getting Started](../../quick-start/) guide. If you haven't done that already, you should do that now.
 
 After completing the Getting Started guide you will have a Kubernetes cluster running Emissary and the Quote service. Let's walk through adding tracing to this setup.
 

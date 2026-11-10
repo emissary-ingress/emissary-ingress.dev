@@ -7,9 +7,9 @@ description: "This section of the documentation provides an overview of the Emis
 
 ## Emissary is a control plane
 
-Emissary is a specialized [control plane for Envoy Proxy](https://blog.getambassador.io/the-importance-of-control-planes-with-service-meshes-and-front-proxies-665f90c80b3d). In this architecture, Emissary translates configuration (in the form of Kubernetes Custom Resources) to Envoy configuration. All actual traffic is directly handled by the high-performance [Envoy Proxy](https://www.envoyproxy.io).
+Emissary is a specialized control plane for Envoy Proxy. In this architecture, Emissary translates configuration (in the form of Kubernetes Custom Resources) to Envoy configuration. All actual traffic is directly handled by the high-performance [Envoy Proxy](https://www.envoyproxy.io).
 
-![Architecture](../../images/ambassador-arch.png)
+![Architecture](../../../images/ambassador-arch.png)
 
 ## Details
 

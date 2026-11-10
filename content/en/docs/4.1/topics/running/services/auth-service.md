@@ -14,24 +14,7 @@ combine multiple `AuthServices`.  While it is possible to create
 multiple `AuthService` resources, Emissary load-balances between
 them in a round-robin fashion.  This is useful for canarying an
 `AuthService` change, but is not useful for deploying multiple
-distinct `AuthServices`.  In order to combine multiple external
-services (either having multiple services apply to the same request,
-or selecting between different services for the different requests),
-instead of using an `AuthService`, use an [Ambassador Edge Stack `External`
-`Filter`](/docs/edge-stack/latest/topics/using/filters/).
-
-<Alert severity="info">
-
-Because of the limitations described above, **Ambassador Edge Stack does
-not support `AuthService` resources, and you should instead use an
-[`External`
-`Filter`](/docs/edge-stack/latest/topics/using/filters/external),**
-which is mostly a drop-in replacement for an `AuthService`.  The
-`External` `Filter` relies on the Ambassador Edge Stack `AuthService`.
-Make sure the Ambassador Edge Stack `AuthService` is deployed before
-configuring `External` `Filters`.
-
-</Alert>
+distinct `AuthServices`.
 
 The currently supported version of the `AuthService` resource is
 `getambassador.io/v3alpha1`.  Earlier versions are deprecated.
@@ -77,7 +60,7 @@ spec:
 
 | Attribute                    | Default value                                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | ---------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ambassador_id`              | `[ "default" ]`                                                                     | Which [Ambassador ID](../../running/#ambassador_id) the `AuthService` should apply to.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `ambassador_id`              | `[ "default" ]`                                                                     | Which [Ambassador ID](../running#ambassador_id) the `AuthService` should apply to.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `auth_service`               | (none; a value is required)                                                         | Identifies the external auth service to talk to.  The format of this field is `scheme://host:port` where `scheme://` and `:port` are optional.  The scheme-part, if present, must be either `http://` or `https://`; if the scheme-part is not present, it behaves as if `http://` is given.  The scheme-part controls whether TLS or plaintext is used and influences the default value of the port-part.  The host-part must be the [namespace-qualified DNS name](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#namespaces-of-services) of the service you want to use for authentication. |
 | `tls`                        | `""`                                                                                | This field is populated with the name of the defined TLSContext, which determines the TLS certificate presented to external auth services.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `proto`                      | `http`                                                                              | Specifies which variant of the [`ext_authz` protocol](../ext-authz/) to use when communicating with the external auth service.  Valid options are `http` or `grpc`.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |

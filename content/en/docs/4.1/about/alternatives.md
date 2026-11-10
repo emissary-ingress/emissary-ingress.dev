@@ -15,7 +15,7 @@ Both hosted API gateways and traditional API gateways are:
 * Not Kubernetes-native. They're typically configured using REST APIs, making it challenging to adopt cloud-native patterns such as GitOps and declarative configuration.
 * [Designed for API management, rather than designed for microservices](../../topics/concepts/microservices-api-gateways).
 
-A Layer 7 proxy can be used as an API gateway, but typically requires additional bespoke development to support microservices use cases. In fact, many API gateways package the additional features needed for an API gateway on top of an L7 proxy. Emissary uses Envoy, while Kong uses NGINX. If you're interested in deploying Envoy directly, we've written an [introductory tutorial](https://www.datawire.io/guide/traffic/getting-started-lyft-envoy-microservices-resilience/).
+A Layer 7 proxy can be used as an API gateway, but typically requires additional bespoke development to support microservices use cases. In fact, many API gateways package the additional features needed for an API gateway on top of an L7 proxy. Emissary uses Envoy, while Kong uses NGINX.
 
 ## Istio
 

@@ -63,4 +63,4 @@ We provide a [sample Grafana dashboard](https://grafana.com/grafana/dashboards/4
 that displays information collected by Prometheus from the
 `:8877/metrics` endpoint.
 
-![Screenshot of a Grafana dashboard that displays just information from Envoy](../../../images/grafana.png)
+![Screenshot of a Grafana dashboard that displays just information from Envoy](../../../../images/grafana.png)

@@ -89,7 +89,7 @@ Previous versions of Emissary only supported adding additional tags through the 
 If both <code>tag_headers</code> and <code>custom_tags</code> are set then <code>tag_headers</code> will be ignored.
 </Alert>
 
-`custom_tags` provides support for configuring additional tags based on [Envoy Custom Tags](https://www.envoyproxy.io/docs/envoy/latest/api-v3/type/tracing/v3/custom_tag.proto%23custom-tag). The following custom tag kinds supported are:
+`custom_tags` provides support for configuring additional tags based on [Envoy Custom Tags](https://www.envoyproxy.io/docs/envoy/latest/api-v3/type/tracing/v3/custom_tag.proto#custom-tag). The following custom tag kinds supported are:
 
 - `request_header` - set tag from header in the request
 - `environment` - set tag from an environment variable

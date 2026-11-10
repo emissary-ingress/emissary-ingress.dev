@@ -7,7 +7,7 @@ description: Community and contribution guide
 # Community
 
 ## Contributor's guide
-Please review our [contributor's guide](https://github.com/emissary-ingress/emissary/blob/master/DevDocumentation/DEVELOPING.md)
+Please review our [contributor's guide](https://github.com/emissary-ingress/emissary/blob/main/DevDocumentation/CONTRIBUTING.md)
 on GitHub to learn how you can help make Emissary-ingress better.
 
 ## Changelog

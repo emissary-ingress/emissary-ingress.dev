@@ -15,7 +15,7 @@ While there are a number of techniques for routing traffic to a Kubernetes clust
 
 <div class="docs-diagram-wrapper">
 
-![Kubernetes Network Architecture](/../../images/documentation/kubernetes-network.inline.svg)
+![Kubernetes Network Architecture](../../../images/kubernetes-network.inline.svg)
 
 </div>
 
@@ -50,8 +50,3 @@ When traffic is routed to the pods via a Kubernetes service, Kubernetes uses a b
 Traffic can also be routed directly to pods, bypassing the Kubernetes service. Since pods are much more ephemeral than Kubernetes services, this approach requires an edge proxy that is optimized for this use case. In particular, the edge proxy needs to support real-time discovery of pods, and be able to dynamically update pod locations without downtime.
 
 Emissary supports routing both to Kubernetes services and directly to pods.
-
-## Further reading
-
-* [Kubernetes Ingress 101](https://blog.getambassador.io/kubernetes-ingress-nodeport-load-balancers-and-ingress-controllers-6e29f1c44f2d)
-* [Envoy Proxy Performance on Kubernetes](/resources/envoyproxy-performance-on-k8s/)

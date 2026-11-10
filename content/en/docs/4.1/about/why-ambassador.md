@@ -3,11 +3,11 @@ title: Why Emissary?
 weight: 10
 ---
 
-Emissary gives platform engineers a comprehensive, self-service edge stack for managing the boundary between end-users and Kubernetes. Built on the [Envoy Proxy](https://www.envoyproxy.io) and fully Kubernetes-native, Emissary is made to support multiple, independent teams that need to rapidly publish, monitor, and update services for end-users. A true edge stack, Emissary can also be used to handle the functions of an API Gateway, a Kubernetes ingress controller, and a layer 7 load balancer (for more, see [this blog post](https://blog.getambassador.io/kubernetes-ingress-nodeport-load-balancers-and-ingress-controllers-6e29f1c44f2d)).
+Emissary gives platform engineers a comprehensive, self-service edge stack for managing the boundary between end-users and Kubernetes. Built on the [Envoy Proxy](https://www.envoyproxy.io) and fully Kubernetes-native, Emissary is made to support multiple, independent teams that need to rapidly publish, monitor, and update services for end-users. A true edge stack, Emissary can also be used to handle the functions of an API Gateway, a Kubernetes ingress controller, and a layer 7 load balancer.
 
 ## How Does Emissary work?
 
-Emissary is an open-source, Kubernetes-native [microservices API gateway](../../topics/concepts/microservices-api-gateways) built on the [Envoy Proxy](https://www.envoyproxy.io). Emissary is built from the ground up to support multiple, independent teams that need to rapidly publish, monitor, and update services for end-users. Emissary can also be used to handle the functions of a Kubernetes ingress controller and load balancer (for more, see [this blog post](https://blog.getambassador.io/kubernetes-ingress-nodeport-load-balancers-and-ingress-controllers-6e29f1c44f2d)).
+Emissary is an open-source, Kubernetes-native [microservices API gateway](../../topics/concepts/microservices-api-gateways) built on the [Envoy Proxy](https://www.envoyproxy.io). Emissary is built from the ground up to support multiple, independent teams that need to rapidly publish, monitor, and update services for end-users. Emissary can also be used to handle the functions of a Kubernetes ingress controller and load balancer.
 
 ## Cloud-native applications today
 
@@ -49,9 +49,8 @@ Emissary takes full advantage of Kubernetes and Envoy Proxy.
 
 ## For more information
 
-[Deploy Emissary today](../../tutorials/getting-started) and join the community [Slack Channel](http://a8r.io/slack).
+[Deploy Emissary today](../../quick-start/) and join the community [Slack Channel](https://slack.cncf.io/).
 
 Interested in learning more?
 
-* [Why did we start building Emissary?](https://blog.getambassador.io/building-ambassador-an-open-source-api-gateway-on-kubernetes-and-envoy-ed01ed520844)
 * [Emissary Architecture overview](../../topics/concepts/architecture)

@@ -21,7 +21,7 @@ An Ingress resource is a popular way to expose Kubernetes services to the Intern
 
 ## When and how to use the Ingress resource
 
-If you're new to Emissary and to Kubernetes, we'd recommend you start with our [quickstart](../../../tutorials/getting-started/) instead of this Ingress guide. If you're a power user and need to integrate with other software that leverages the Ingress resource, read on. The Ingress specification is very basic and does not support many of the features of Emissary, so you'll be using both the Ingress resource and Emissary's Mapping resource to manage your Kubernetes services.
+If you're new to Emissary and to Kubernetes, we'd recommend you start with our [quickstart](../../../quick-start/) instead of this Ingress guide. If you're a power user and need to integrate with other software that leverages the Ingress resource, read on. The Ingress specification is very basic and does not support many of the features of Emissary, so you'll be using both the Ingress resource and Emissary's Mapping resource to manage your Kubernetes services.
 
 ### What is required to use the Ingress resource?
 
@@ -34,7 +34,6 @@ If you're new to Emissary and to Kubernetes, we'd recommend you start with our [
   - Kubernetes 1.18 introduced the IngressClass resource to the existing `networking.k8s.io/v1beta1` API.
 
   <Alert severity="info"> If you are using 1.14 and above, it is recommended to use <code>apiVersion: networking.k8s.io/v1beta1</code> when defining an Ingress. Since both are still supported in all 1.14+ versions of Kubernetes, this document will use <code>extensions/v1beta1</code> for compatibility reasons.
-  If you are using 1.18 and above, sample usage of the IngressClass resource and <code>pathType</code> field are <a href="https://blog.getambassador.io/new-kubernetes-1-18-extends-ingress-c34abdc2f064"> available on our blog</a>.
   </Alert>
 
 - You will need RBAC permissions to create Ingress resources in either
@@ -44,8 +43,7 @@ If you're new to Emissary and to Kubernetes, we'd recommend you start with our [
 
 - Emissary will need RBAC permissions to get, list, watch, and update Ingress resources.
 
-  You can see this in the [`aes-crds.yaml`](https://app.getambassador.io/yaml/ambassador-docs/latest/aes.yaml)
-  file, but this is the critical rule to add to Emissary's `Role` or `ClusterRole`:
+  This is the critical rule to add to Emissary's `Role` or `ClusterRole`:
 
   ```yaml
   - apiGroups: ['extensions', 'networking.k8s.io']
@@ -67,7 +65,7 @@ If you're new to Emissary and to Kubernetes, we'd recommend you start with our [
 
 - You may need to set your Ingress resource's `ambassador-id`.
 
-  If you are [using `amabssador-id` on your Module](../running/#ambassador_id), you'll need to add the `getambassador.io/ambassador-id`
+  If you are [using `amabssador-id` on your Module](running#ambassador_id), you'll need to add the `getambassador.io/ambassador-id`
   annotation to your Ingress. See the [examples below](#name-based-virtual-hosting-with-an-ambassador-id).
 
 - You must create a Service resource with the correct `app.kubernetes.io/component` label.
@@ -111,7 +109,7 @@ Emissary supports basic core functionality of the Ingress resource, as defined b
 
 Emissary does **not** extend the basic Ingress specification with the following exceptions:
 
-- The `getambassador.io/ambassador-id` annotation allows you to set [the Ambassador ID](../running/#ambassador_id) for the Ingress itself.
+- The `getambassador.io/ambassador-id` annotation allows you to set [the Ambassador ID](running#ambassador_id) for the Ingress itself.
 
 - The `getambassador.io/config` annotation can be provided on the Ingress resource, just as on a Service.
 

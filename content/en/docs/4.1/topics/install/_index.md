@@ -8,18 +8,13 @@ description: "This section of the documentation provides installation instructio
 ## <img class="os-logo" src="../../images/helm-navy.png"/> Install with Helm
 
 Helm, the package manager for Kubernetes, is the recommended way to install
-Emissary. Full details are in the [Helm instructions.](helm/)
+Emissary. Full details are in the [quick start](../../quick-start/).
 
 ## <img class="os-logo" src="../../images/kubernetes.png"/> Install with Kubernetes YAML
 
 Another way to install Emissary if you are unable to use Helm is to
-directly apply Kubernetes YAML. See details in the
-[manual YAML installation instructions.](yaml-install).
-
-## <img class="os-logo" src="../../images/docker.png"/> Try the demo with Docker
-
-The Docker install will let you try the Emissary locally in seconds,
-but is not supported for production workloads. [Try Emissary on Docker.](docker/)
+directly apply Kubernetes YAML. Use `helm template` to render the
+Helm chart into YAML, as described in the [quick start](../../quick-start/).
 
 ## Upgrade or migrate to a newer version
 
@@ -43,7 +38,7 @@ your production needs for Ambassador Edge Stack or Emissary. Read more about
 
 # What’s Next?
 
-Emissary has a comprehensive range of [features](/features/) to
+Emissary has a comprehensive range of features to
 support the requirements of any edge microservice. To learn more about how Emissary works, along with use cases, best practices, and more,
-check out the [Welcome page](../../tutorials/getting-started) or read the [Emissary
+check out the [quick start](../../quick-start/) or read the [Emissary
 Story](../../about/why-ambassador).

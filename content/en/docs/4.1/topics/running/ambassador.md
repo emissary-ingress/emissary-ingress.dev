@@ -72,7 +72,7 @@ would allow 30 seconds to validate the generated Envoy configuration.
 
 By default, Emissary will pass through error responses without modification, and errors generated locally will use Envoy's default response body, if any.
 
-See [using error response overrides](../custom-error-responses) for usage details. For example, this configuration:
+For example, this configuration:
 
 ```yaml
 error_response_overrides:
@@ -119,7 +119,7 @@ For the exact set of headers covered by this config, see the [Envoy documentatio
 
 * `ambassador_id` allows using multiple instances of Emissary in the same cluster. The default is unset.
 
-We recommend _not_ setting `ambassador_id` if you are running only one instance of Emissary in your cluster. For more information, see the [Running and Deployment documentation](../running/#ambassador_id).
+We recommend _not_ setting `ambassador_id` if you are running only one instance of Emissary in your cluster. For more information, see the [Running and Deployment documentation](running#ambassador_id).
 
 If used, the `ambassador_id` value must be an array, for example:
 
@@ -278,8 +278,6 @@ Some caveats around the embedded scripts:
 * They run in-process, so any bugs in your Lua script can break every request.
 * They're run on every request/response to every URL.
 * They're inlined in the Emissary YAML; as such, we do not recommend using Lua scripts for long, complex logic.
-
-If you need more flexible and configurable options, Ambassador Edge Stack supports a [pluggable Filter system](/docs/edge-stack/latest/topics/using/filters/).
 
 ##### Merge slashes
 
@@ -576,7 +574,7 @@ You can override the circuit breaker settings for individual `Mapping`s. By defa
 
 * `default_labels` sets default domains and labels to apply to every request.
 
-For more on how to use the default labels, , see the [Rate Limit reference](../../using/rate-limits/#attaching-labels-to-requests).
+For more on how to use the default labels, , see the [Rate Limit reference](../../using/base-rate-limiting/#attaching-labels-to-requests).
 
 ##### Default load balancer
 

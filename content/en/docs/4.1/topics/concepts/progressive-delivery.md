@@ -32,7 +32,7 @@ In addition to allowing verification that the service is not crashing or otherwi
 
 Canary tests can be automated, and are typically run after testing in a pre-production environment has been completed. The canary release is only visible to a fraction of actual users, and any bugs or negative changes can be reversed quickly by either routing traffic away from the canary or by rolling-back the canary deployment.
 
-![Canary release process overview](../../images/canary-release-overview.png)
+![Canary release process overview](../../../images/canary-release-overview.png)
 
 Canary releases are not a panacea. In particular, many services may not receive sufficient traffic in order for canary releases to provide useful information in an actionable timeframe.
 
@@ -43,7 +43,3 @@ This approach “shadows” or mirrors a small amount of real user traffic from 
 Although the shadowed results can be verified (both the downstream response and associated upstream side effects) they are not returned to the user -- the user only sees the results from the currently released service. Typically any side effects are not persisted or are executed as a no-op and verified (much like setting up a mock, and verifying that a method/function was called with the correct parameters).
 
 This allows verification that the service is not crashing or otherwise behaving badly from an operational perspective when dealing with real user traffic and behavior (and the larger the percentage of traffic shadowed, the higher the probability of confidence).
-
-## Further reading
-
-* [Canary release pattern](https://blog.getambassador.io/cloud-native-patterns-canary-release-1cb8f82d371a)
