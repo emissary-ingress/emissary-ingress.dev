@@ -48,11 +48,9 @@ In order to take the luck out of the equation, Emissary will periodically log it
 memory usage so you can see in the logs if memory limits might be a problem and require adjustment:
 
 ```
-2020/11/26 22:35:20 Memory Usage 0.56Gi (28%)
+2020/11/26 22:35:20 Memory Usage 0.34Gi (17%)
     PID 1, 0.22Gi: busyambassador entrypoint
-    PID 14, 0.04Gi: /usr/bin/python /usr/bin/diagd /ambassador/snapshots /ambassador/bootstrap-ads.json /ambassador/envoy/envoy.json --notices /ambassador/notices.json --port 8004 --kick kill -HUP 1
-    PID 16, 0.12Gi: /ambassador/sidecars/amb-sidecar
-    PID 37, 0.07Gi: /usr/bin/python /usr/bin/diagd /ambassador/snapshots /ambassador/bootstrap-ads.json /ambassador/envoy/envoy.json --notices /ambassador/notices.json --port 8004 --kick kill -HUP 1
+    PID 14, 0.04Gi: /usr/bin/python /usr/bin/diagd /ambassador/snapshots /ambassador/bootstrap-ads.json /ambassador/envoy/envoy.json --notices /ambassador/notices.json --socket-path /ambassador/diagd.sock --kick kill -HUP 1
     PID 48, 0.08Gi: envoy -c /ambassador/bootstrap-ads.json --base-id 0 --drain-time-s 600 -l error
 ```
 

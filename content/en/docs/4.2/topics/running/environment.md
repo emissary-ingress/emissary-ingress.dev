@@ -363,7 +363,6 @@ Emissary uses the following ports to listen for HTTP/HTTPS traffic automatically
 | 8001 | envoy    | Internal stats, logging, etc.; not exposed outside pod  |
 | 8002 | watt     | Internal watt snapshot access; not exposed outside pod  |
 | 8003 | ambex    | Internal ambex snapshot access; not exposed outside pod |
-| 8004 | diagd    | Internal `diagd` access; not exposed outside pod        |
 | 8005 | snapshot | Exposes a scrubbed Emissary snapshot outside of the pod |
 | 8080 | envoy    | Default HTTP service port                               |
 | 8443 | envoy    | Default HTTPS service port                              |
