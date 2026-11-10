@@ -21,6 +21,7 @@ Emissary is listed. If so, you installed using Helm.)
 
 | If you're running.     | You can upgrade to                                         |
 |------------------------|------------------------------------------------------------|
+| Emissary 3.10          | [Emissary 4.1](upgrade/helm/emissary-3.10/)                |
 | Emissary 3.9           | [Emissary 3.10](upgrade/helm/emissary-3.9/)                |
 | Emissary 3.8.X         | [Emissary 3.10](upgrade/helm/emissary-3.8)                 |
 | Emissary 3.7.X         | [Emissary 3.10](upgrade/helm/emissary-3.7)                 |
@@ -31,6 +32,7 @@ Emissary is listed. If so, you installed using Helm.)
 
 | If you're running.     | You can upgrade to                                         |
 |------------------------|------------------------------------------------------------|
+| Emissary 3.10          | [Emissary 4.1](upgrade/yaml/emissary-3.10/)                |
 | Emissary 3.9           | [Emissary 3.10](upgrade/yaml/emissary-3.9/)                |
 | Emissary 3.8.X         | [Emissary 3.10](upgrade/yaml/emissary-3.8/)                |
 | Emissary 3.7.X         | [Emissary 3.10](upgrade/yaml/emissary-3.7/)                |
